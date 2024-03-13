@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+<!--    GuideLine    -->
+    <style name="GuideLine">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="GuideLine_Horizontal" parent="GuideLine">
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="GuideLine_Vertical" parent="GuideLine">
+        <item name="android:orientation">vertical</item>
+    </style>
+<!--    GuideLine    -->
+
+
+<!--    TextView    -->
+
+    <style name="TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="TextView_Black" parent="TextView">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TextView_Blue" parent="TextView">
+        <item name="android:textColor">@color/main_blue</item>
+    </style>
+
+<!--    TextView    -->
+
+</resources>
