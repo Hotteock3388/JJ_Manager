@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="EquipmentInfoTitle" parent="TextView_Blue">
+        <item name="android:textSize">16dp</item>
+        <item name="android:fontFamily">@font/notosanskr_bold</item>
+        <item name="android:layout_marginTop">26dp</item>
+    </style>
+
+    <style name="EquipmentInfoContents" parent="EditText">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">9dp</item>
+        <item name="android:textSize">13dp</item>
+        <item name="android:fontFamily">@font/notosanskr_medium</item>
+    </style>
+    
+    <style name="AddEquipmentButton" parent="Button_b_20">
+        <item name="android:layout_width">83dp</item>
+        <item name="android:layout_height">39dp</item>
+    </style>
+
+</resources>
