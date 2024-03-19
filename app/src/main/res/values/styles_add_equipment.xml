@@ -14,10 +14,38 @@
         <item name="android:textSize">13dp</item>
         <item name="android:fontFamily">@font/notosanskr_medium</item>
     </style>
-    
+
     <style name="AddEquipmentButton" parent="Button_b_20">
         <item name="android:layout_width">83dp</item>
         <item name="android:layout_height">39dp</item>
+    </style>
+
+    <style name="AddImageButton">
+        <item name="android:layout_width">86dp</item>
+        <item name="android:layout_height">86dp</item>
+        <item name="android:padding">30dp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:src">@drawable/ic_add_image</item>
+        <item name="android:background">@drawable/bg_add_image</item>
+    </style>
+
+    <style name="DeleteImageButton">
+        <item name="android:layout_width">30dp</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:elevation">6dp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:src">@drawable/ic_close</item>
+        <item name="android:background">@drawable/bg_delete_image</item>
+    </style>
+
+    <style name="CategorySpinner">
+        <item name="android:layout_width">200dp</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:layout_margin">9dp</item>
+        <item name="android:background">@drawable/bg_spinner</item>
+        <item name="android:paddingVertical">5dp</item>
+        <item name="android:spinnerMode">dropdown</item>
     </style>
 
 </resources>
