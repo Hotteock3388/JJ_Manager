@@ -13,6 +13,9 @@
         android:theme="@style/Theme.JubJub_Manager"
         tools:targetApi="31">
         <activity
+            android:name="com.depotato.view.equipment_info.EquipmentInfoActivity"
+            android:exported="false" />
+        <activity
             android:name="com.depotato.view.edit_equipment.EditEquipmentActivity"
             android:exported="false" />
         <activity

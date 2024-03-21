@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context="com.depotato.view.equipment_info.EquipmentInfoActivity">
+
+        <ImageView
+            style="@style/IC_mainLogo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/guideline23" />
+
+        <ImageView
+            android:id="@+id/imageView_image"
+            style="@style/EquipmentInfoImage"
+            app:layout_constraintBottom_toTopOf="@+id/guideline27"
+            app:layout_constraintEnd_toStartOf="@+id/guideline26"
+            app:layout_constraintStart_toStartOf="@+id/guideline25"
+            app:layout_constraintTop_toBottomOf="@id/guideline24" />
+
+        <TextView
+            android:id="@+id/textView_name"
+            style="@style/EquipmentInfoName"
+            app:layout_constraintEnd_toStartOf="@+id/textView2"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="@id/guideline25"
+            app:layout_constraintTop_toBottomOf="@id/imageView_image" />
+
+        <TextView
+            android:id="@+id/textView_category"
+            style="@style/EquipmentInfoCategory"
+            app:layout_constraintStart_toStartOf="@id/guideline25"
+            app:layout_constraintTop_toBottomOf="@+id/textView_name" />
+
+        <TextView
+            android:id="@+id/textView2"
+            style="@style/EquipmentInfoAmount"
+            app:layout_constraintEnd_toStartOf="@+id/guideline26"
+            app:layout_constraintTop_toTopOf="@+id/textView_name" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_editEquipmentInfo"
+            style="@style/EquipmentEditButton"
+            app:layout_constraintEnd_toStartOf="@+id/guideline26"
+            app:layout_constraintStart_toStartOf="@+id/guideline25"
+            app:layout_constraintTop_toBottomOf="@+id/textView_category" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline23"
+            style="@style/GuideLine_Horizontal"
+            app:layout_constraintGuide_percent="0.021" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline24"
+            style="@style/GuideLine_Horizontal"
+            app:layout_constraintGuide_percent="0.142" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline27"
+            style="@style/GuideLine_Horizontal"
+            app:layout_constraintGuide_percent="0.484" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline25"
+            style="@style/GuideLine_Vertical"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.1" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline26"
+            style="@style/GuideLine_Vertical"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.9" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
