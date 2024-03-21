@@ -13,14 +13,12 @@
         <item name="android:ellipsize">end</item>
         <item name="android:fontFamily">@font/notosanskr_bold</item>
         <item name="android:maxLines">1</item>
-        <item name="android:text">기자재 이름</item>
         <item name="android:textSize">18dp</item>
     </style>
 
     <style name="EquipmentInfoCategory" parent="TextView_Blue_W_Shadow">
         <item name="android:layout_marginTop">8dp</item>
         <item name="android:fontFamily">@font/notosanskr_regular</item>
-        <item name="android:text">기자재 카테고리</item>
         <item name="android:textSize">14dp</item>
     </style>
 
@@ -36,7 +34,6 @@
     <style name="EquipmentEditButton" parent="Button_b_10">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_marginTop">50dp</item>
-        <item name="android:text">수정하기</item>
 
     </style>
 
