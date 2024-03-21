@@ -4,13 +4,11 @@ package com.depotato.view.main
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import com.depotato.jubjub_manager.R
 import com.depotato.jubjub_manager.databinding.ActivityMainBinding
-import com.depotato.view.manage_equipment.ManageEquipmentFragment
+import com.depotato.view.equipment_list.EquipmentListFragment
 import com.depotato.view.my_page.MyPageFragment
 
 class MainActivity : AppCompatActivity() {
@@ -30,7 +28,7 @@ class MainActivity : AppCompatActivity() {
 
     fun onHomeClick(){
         changeSelectedIcon(binding.menuHome, binding.menuMyPage)
-        setFragment(ManageEquipmentFragment())
+        setFragment(EquipmentListFragment())
     }
 
     fun onMyPageClick(){

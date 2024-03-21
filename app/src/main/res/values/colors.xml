@@ -7,4 +7,5 @@
     <color name="red">#DA7272</color>
     <color name="gray_spinner_bg">#F4F4F4</color>
     <color name="gray_spinner_stroke">#DEDEDE</color>
+    <color name="gray_search_bar">#F5F5F5</color>
 </resources>
