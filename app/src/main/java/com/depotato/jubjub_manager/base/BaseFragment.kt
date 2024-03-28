@@ -10,6 +10,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.depotato.jubjub_manager.BR
 
 abstract class BaseFragment<B : ViewDataBinding, VM: BaseViewModel>(
     @LayoutRes
@@ -30,7 +31,7 @@ abstract class BaseFragment<B : ViewDataBinding, VM: BaseViewModel>(
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-//            setVariable(BR.fr, this@BaseFragment)
+            setVariable(BR.fr, this@BaseFragment)
 //            setVariable(BR.vm, viewModel)
             lifecycleOwner = viewLifecycleOwner
         }
