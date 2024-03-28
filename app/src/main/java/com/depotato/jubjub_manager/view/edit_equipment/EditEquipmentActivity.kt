@@ -1,4 +1,4 @@
-package com.depotato.view.edit_equipment
+package com.depotato.jubjub_manager.view.edit_equipment
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

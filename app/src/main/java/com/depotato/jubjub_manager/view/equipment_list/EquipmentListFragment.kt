@@ -1,4 +1,4 @@
-package com.depotato.view.equipment_list
+package com.depotato.jubjub_manager.view.equipment_list
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.depotato.jubjub_manager.R
 import com.depotato.jubjub_manager.databinding.FragmentEquipmentListBinding
-import com.depotato.view.equipment_list.adapter.Equipment
-import com.depotato.view.equipment_list.adapter.EquipmentListRVAdapter
+import com.depotato.jubjub_manager.view.equipment_list.adapter.Equipment
+import com.depotato.jubjub_manager.view.equipment_list.adapter.EquipmentListRVAdapter
 
 
 class EquipmentListFragment : Fragment() {

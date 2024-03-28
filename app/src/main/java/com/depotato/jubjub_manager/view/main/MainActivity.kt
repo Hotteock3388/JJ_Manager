@@ -1,4 +1,4 @@
-package com.depotato.view.main
+package com.depotato.jubjub_manager.view.main
 
 
 import androidx.appcompat.app.AppCompatActivity
@@ -8,8 +8,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.depotato.jubjub_manager.R
 import com.depotato.jubjub_manager.databinding.ActivityMainBinding
-import com.depotato.view.equipment_list.EquipmentListFragment
-import com.depotato.view.my_page.MyPageFragment
+import com.depotato.jubjub_manager.view.equipment_list.EquipmentListFragment
+import com.depotato.jubjub_manager.view.my_page.MyPageFragment
 
 class MainActivity : AppCompatActivity() {
 

@@ -1,4 +1,4 @@
-package com.depotato.view.signin
+package com.depotato.jubjub_manager.view.signin
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

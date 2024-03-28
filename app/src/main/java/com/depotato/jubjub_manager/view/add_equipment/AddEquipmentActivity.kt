@@ -1,12 +1,12 @@
-package com.depotato.view.equipment_info
+package com.depotato.jubjub_manager.view.add_equipment
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.depotato.jubjub_manager.R
 
-class EquipmentInfoActivity : AppCompatActivity() {
+class AddEquipmentActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_equipment_info)
+        setContentView(R.layout.activity_add_equipment)
     }
 }

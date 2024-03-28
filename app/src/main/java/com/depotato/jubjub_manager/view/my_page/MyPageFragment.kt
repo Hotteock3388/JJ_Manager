@@ -1,4 +1,4 @@
-package com.depotato.view.my_page
+package com.depotato.jubjub_manager.view.my_page
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

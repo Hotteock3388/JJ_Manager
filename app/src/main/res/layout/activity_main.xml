@@ -7,20 +7,20 @@
     <data>
         <variable
             name="ac"
-            type="com.depotato.view.main.MainActivity" />
+            type="com.depotato.jubjub_manager.view.main.MainActivity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        tools:context="com.depotato.view.main.MainActivity">
+        tools:context=".view.main.MainActivity">
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragment_container_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:name="com.depotato.view.equipment_list.EquipmentListFragment"
+            android:name="com.depotato.jubjub_manager.view.equipment_list.EquipmentListFragment"
             app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

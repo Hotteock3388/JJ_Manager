@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        tools:context="com.depotato.view.equipment_list.EquipmentListFragment">
+        tools:context=".view.equipment_list.EquipmentListFragment">
 
 
         <androidx.constraintlayout.widget.Guideline
