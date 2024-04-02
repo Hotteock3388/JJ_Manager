@@ -31,9 +31,9 @@ class EquipmentListRVAdapter(val dataList: ArrayList<Equipment>): RecyclerView.A
 }
 
 data class Equipment(
-    val name: String,
-    val category: String,
-    val currentAmount: Int,
-    val maxAmount: Int,
-    val imageUrl: String
+    var name: String,
+    var category: String,
+    var currentAmount: Int,
+    var maxAmount: Int,
+    var imageUrl: String
 )

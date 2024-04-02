@@ -10,7 +10,7 @@ import androidx.databinding.ViewDataBinding
 import com.depotato.jubjub_manager.BR
 
 
-abstract class BaseActivity <B: ViewDataBinding>(
+abstract class BaseActivity <B: ViewDataBinding, VM: BaseViewModel>(
     @LayoutRes
     private val layoutResId: Int,
     private val className: String
@@ -21,6 +21,8 @@ abstract class BaseActivity <B: ViewDataBinding>(
 
     lateinit var binding: B
 
+    abstract val viewModel: VM
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, layoutResId)
@@ -29,6 +31,7 @@ abstract class BaseActivity <B: ViewDataBinding>(
         with(binding) {
             try {
                 setVariable(BR.ac, this@BaseActivity)
+                setVariable(BR.vm, viewModel)
             } catch (e: Exception){
                 e.printStackTrace()
             }
@@ -38,10 +41,15 @@ abstract class BaseActivity <B: ViewDataBinding>(
         init()
         initLiveData()
         initListener()
+        observeToastMessage()
     }
 
     open fun init(){}
-    open fun initLiveData(){}
+    open fun initLiveData(){
+        viewModel.toastMessage.observe(this){
+            showToast(it)
+        }
+    }
     open fun initListener(){}
 
     // 토스트 메시지 띄우기
@@ -51,7 +59,7 @@ abstract class BaseActivity <B: ViewDataBinding>(
     fun showLog(msg: String) = Log.d("TestLog_$className", msg)
 
     // viewModel의 toastMessage를 관찰
-    fun observeToastMessage(viewModel: BaseViewModel){
+    private fun observeToastMessage(){
         viewModel.toastMessage.observe(this){
             showToast(it)
         }

@@ -18,7 +18,7 @@
 
         
         <ImageView
-            android:id="@+id/imageView_addImage"
+            android:id="@+id/imageView_equipmentImage"
             style="@style/AddImageButton"
             app:layout_constraintStart_toStartOf="@+id/guideline17"
             app:layout_constraintTop_toTopOf="@+id/guideline16" />
@@ -26,10 +26,10 @@
         <ImageView
             style="@style/DeleteImageButton"
             android:id="@+id/imageView_deleteImage"
-            app:layout_constraintBottom_toTopOf="@+id/imageView_addImage"
-            app:layout_constraintEnd_toEndOf="@+id/imageView_addImage"
-            app:layout_constraintStart_toEndOf="@+id/imageView_addImage"
-            app:layout_constraintTop_toTopOf="@+id/imageView_addImage" />
+            app:layout_constraintBottom_toTopOf="@+id/imageView_equipmentImage"
+            app:layout_constraintEnd_toEndOf="@+id/imageView_equipmentImage"
+            app:layout_constraintStart_toEndOf="@+id/imageView_equipmentImage"
+            app:layout_constraintTop_toTopOf="@+id/imageView_equipmentImage" />
 
 
         <TextView
@@ -38,7 +38,7 @@
             android:layout_marginTop="35dp"
             android:text="제품명"
             app:layout_constraintStart_toStartOf="@+id/guideline17"
-            app:layout_constraintTop_toBottomOf="@+id/imageView_addImage" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView_equipmentImage" />
 
         <EditText
             android:id="@+id/editText_name"
