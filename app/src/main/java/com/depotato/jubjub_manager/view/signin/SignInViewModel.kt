@@ -2,28 +2,30 @@ package com.depotato.jubjub_manager.view.signin
 
 import androidx.lifecycle.MutableLiveData
 import com.depotato.jubjub_manager.base.BaseViewModel
+import com.depotato.jubjub_manager.data.local.SharedPref
+import com.depotato.jubjub_manager.entity.singleton.Constants
 import com.depotato.jubjub_manager.function_module.SingleEventLiveData
 
-class SignInViewModel: BaseViewModel("SignInViewModel") {
+class SignInViewModel(private val sharedPref: SharedPref) : BaseViewModel("SignInViewModel") {
 
     val userId = MutableLiveData<String>("")
     val userPw = MutableLiveData<String>("")
 
-    val loginSuccess = SingleEventLiveData<Unit>()
+    val saveUserDataComplete = SingleEventLiveData<Unit>()
 
 
-    fun signIn(){
-        if(isInputValid()) {
+    fun signIn() {
+        if (isInputValid()) {
             checkUserAc()
         }
     }
 
     private fun isInputValid(): Boolean {
-        return if(userId.value!!.isBlank()){
+        return if (userId.value!!.isBlank()) {
             invalidInput("아이디를 입력해주세요.")
-        }else if(userPw.value!!.isBlank()){
+        } else if (userPw.value!!.isBlank()) {
             invalidInput("비밀번호를 입력해주세요.")
-        }else true
+        } else true
     }
 
     private fun invalidInput(msg: String): Boolean {
@@ -32,10 +34,31 @@ class SignInViewModel: BaseViewModel("SignInViewModel") {
     }
 
     private fun checkUserAc() {
-        if(userId.value.toString() == "1234" && userPw.value.toString() == "1234"){
-            loginSuccess.value = Unit
-        }else{
+        if (userId.value.toString() == "1234" && userPw.value.toString() == "1234") {
+            saveUserData()
+        } else {
             _toastMessage.value = "입력하신 계정 정보가 존재하지 않습니다."
         }
+    }
+
+    fun saveUserData(){
+        with(sharedPref){
+            saveData(Constants.USER_ID, userId.value!!)
+            saveData(Constants.USER_PW, userPw.value!!)
+        }
+
+        saveUserDataComplete.value = Unit
+    }
+
+    fun checkLoginHistoryExist() {
+        with(sharedPref){
+            if(isExist(Constants.USER_ID)){
+                userId.value = getDataString(Constants.USER_ID)
+                userPw.value = getDataString(Constants.USER_PW)
+
+                checkUserAc()
+            }
+        }
+
     }
 }

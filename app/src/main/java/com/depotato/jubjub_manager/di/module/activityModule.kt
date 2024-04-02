@@ -10,6 +10,6 @@ val activityModule = module {
 
     viewModel { AddEquipmentViewModel() }
     viewModel { MyPageViewModel() }
-    viewModel { SignInViewModel() }
+    viewModel { SignInViewModel(get()) }
 
 }

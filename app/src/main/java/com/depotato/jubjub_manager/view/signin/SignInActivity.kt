@@ -1,8 +1,6 @@
 package com.depotato.jubjub_manager.view.signin
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import com.depotato.jubjub_manager.R
 import com.depotato.jubjub_manager.base.BaseActivity
 import com.depotato.jubjub_manager.databinding.ActivitySignInBinding
@@ -13,12 +11,21 @@ class SignInActivity : BaseActivity<ActivitySignInBinding, SignInViewModel>(R.la
 
     override val viewModel: SignInViewModel by inject()
 
+    override fun init() {
+        viewModel.checkLoginHistoryExist()
+    }
+
     override fun initLiveData() {
-        viewModel.loginSuccess.observe(this){
-            startActivity(
-                Intent(this, MainActivity::class.java)
-            )
-            finish()
+        viewModel.saveUserDataComplete.observe(this){
+            openMain()
         }
+    }
+
+    fun openMain(){
+        startActivity(
+            Intent(this, MainActivity::class.java)
+        )
+        finish()
+
     }
 }
