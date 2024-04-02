@@ -5,7 +5,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="ac"
+            type="com.depotato.jubjub_manager.view.signin.SignInActivity" />
+        <variable
+            name="vm"
+            type="com.depotato.jubjub_manager.view.signin.SignInViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -37,6 +42,7 @@
         <EditText style="@style/EditText_SignIn"
             android:id="@+id/editText_id"
             android:hint="아이디를 입력하세요."
+            android:text="@={vm.userId}"
             app:layout_constraintEnd_toStartOf="@+id/guideline9"
             app:layout_constraintStart_toStartOf="@+id/guideline"
             app:layout_constraintTop_toBottomOf="@+id/textView_id" />
@@ -58,6 +64,7 @@
             android:id="@+id/editText_pw"
             android:hint="비밀번호를 입력하세요."
             android:inputType="textPassword"
+            android:text="@={vm.userPw}"
             app:layout_constraintEnd_toStartOf="@+id/guideline9"
             app:layout_constraintStart_toStartOf="@+id/guideline"
             app:layout_constraintTop_toBottomOf="@+id/textView_pw" />
@@ -76,6 +83,7 @@
 
         <androidx.appcompat.widget.AppCompatButton style="@style/Button_SignIn"
             android:text="로그인"
+            android:onClick="@{() -> vm.signIn()}"
             app:layout_constraintEnd_toStartOf="@+id/guideline9"
             app:layout_constraintStart_toStartOf="@+id/guideline"
             app:layout_constraintTop_toTopOf="@+id/guideline10" />
