@@ -12,6 +12,7 @@ import com.depotato.jubjub_manager.base.BaseFragment
 import com.depotato.jubjub_manager.base.BaseViewModel
 import com.depotato.jubjub_manager.databinding.FragmentMyPageBinding
 import com.depotato.jubjub_manager.view.add_equipment.AddEquipmentActivity
+import com.depotato.jubjub_manager.view.signin.SignInActivity
 import org.koin.android.ext.android.inject
 
 class MyPageFragment :
@@ -19,15 +20,23 @@ class MyPageFragment :
 
     override val viewModel: MyPageViewModel by inject()
 
+    override fun initLiveData() {
+
+        viewModel.logOutComplete.observe(this){
+            with(requireActivity()){
+                startActivity(Intent(
+                    requireContext(), SignInActivity::class.java)
+                )
+                requireActivity().finish()
+            }
+        }
+    }
+
     fun openAddEquipmentActivity() {
         startActivity(
             Intent(requireContext(), AddEquipmentActivity::class.java)
         )
     }
 
-    fun logOut() {
-        //로그아웃 처리
-        showToast("로그아웃 처리 추가 예정")
-    }
 
 }

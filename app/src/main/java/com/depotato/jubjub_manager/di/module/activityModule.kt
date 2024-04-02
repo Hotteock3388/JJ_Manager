@@ -9,7 +9,7 @@ import org.koin.dsl.module
 val activityModule = module {
 
     viewModel { AddEquipmentViewModel() }
-    viewModel { MyPageViewModel() }
+    viewModel { MyPageViewModel(get()) }
     viewModel { SignInViewModel(get()) }
 
 }

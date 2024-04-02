@@ -31,8 +31,12 @@ abstract class BaseFragment<B : ViewDataBinding, VM: BaseViewModel>(
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            setVariable(BR.fr, this@BaseFragment)
-//            setVariable(BR.vm, viewModel)
+            try{
+                setVariable(BR.fr, this@BaseFragment)
+                setVariable(BR.vm, viewModel)
+            } catch (e: Exception){
+                e.printStackTrace()
+            }
             lifecycleOwner = viewLifecycleOwner
         }
 
