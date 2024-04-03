@@ -1,39 +1,91 @@
 package com.depotato.jubjub_manager.view.equipment_list.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.depotato.jubjub_manager.R
 import com.depotato.jubjub_manager.databinding.LayoutEquipmentListItemBinding
 
-class EquipmentListRVAdapter(val dataList: ArrayList<Equipment>): RecyclerView.Adapter<EquipmentListRVAdapter.ViewHolder>() {
+class EquipmentListRVAdapter(private val _event: EquipmentItemEventListener) : RecyclerView.Adapter<EquipmentListRVAdapter.ViewHolder>(), Filterable {
+
+    var equipmentArray: Array<Equipment?> = arrayOfNulls(0)
+    private var filteredArray = equipmentArray.copyOf()
 
     override fun getItemCount(): Int {
-        return dataList.size
+        return filteredArray.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val b = DataBindingUtil.inflate<LayoutEquipmentListItemBinding>(LayoutInflater.from(parent.context), R.layout.layout_equipment_list_item, parent, false)
-        return ViewHolder(b)
+        return ViewHolder(b, _event)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, itemPosition: Int) {
-        holder.bind(dataList[itemPosition])
+        holder.bind(filteredArray[itemPosition])
     }
 
-    class ViewHolder(private val binding : LayoutEquipmentListItemBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: Equipment){
+    class ViewHolder(
+        private val binding : LayoutEquipmentListItemBinding,
+        private val _event: EquipmentItemEvent
+    ): RecyclerView.ViewHolder(binding.root) {
+        fun bind(_equipment: Equipment?){
+            with(binding){
+                equipment = _equipment
+                event = _event
+            }
+        }
 
-            binding.data = data
+        interface EquipmentItemEvent{
+            fun onItemClick(equipment: Equipment?)
+        }
 
+    }
+
+    fun updateItems(newEquipmentArray: Array<Equipment?>){
+        val diffCallback = EquipmentListDiffCallback(equipmentArray, newEquipmentArray)
+        val diffResult = DiffUtil.calculateDiff(diffCallback) // 계산
+        diffResult.dispatchUpdatesTo(this) // 리사이클러뷰 갱신!
+
+        updateEquipmentList(newEquipmentArray)
+    }
+    private fun updateEquipmentList(newEquipmentArray: Array<Equipment?>){
+        equipmentArray = newEquipmentArray
+        filteredArray = equipmentArray.copyOf()
+    }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence): FilterResults {
+
+                val searchText = constraint.toString().lowercase()
+
+                filteredArray = if (searchText.isEmpty()) {
+                    equipmentArray
+                } else {
+                    ArrayList<Equipment>().apply {
+                        for (equipment in equipmentArray) {
+                            if (equipment!!.name.lowercase().contains(searchText)
+                                || equipment.category.lowercase().contains(searchText)) {
+                                add(equipment)
+                            }
+                        }
+                    }.toTypedArray()
+                }
+
+                return FilterResults().apply {
+                    values = filteredArray
+                }
+
+            }
+
+            override fun publishResults(constraint: CharSequence, results: FilterResults) {
+                filteredArray = results.values as Array<Equipment?>
+                notifyDataSetChanged()
+            }
         }
     }
 }
 
-data class Equipment(
-    var name: String,
-    var category: String,
-    var currentAmount: Int,
-    var maxAmount: Int,
-    var imageUrl: String
-)
