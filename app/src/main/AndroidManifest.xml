@@ -23,10 +23,10 @@
             android:name=".view.add_equipment.AddEquipmentActivity"
             android:exported="false" />
         <activity
-            android:name=".view.signin.SignInActivity"
+            android:name=".view.main.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".view.main.MainActivity"
+            android:name=".view.sign_in.SignInActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

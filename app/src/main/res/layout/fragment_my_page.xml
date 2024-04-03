@@ -6,6 +6,10 @@
         <variable
             name="fr"
             type="com.depotato.jubjub_manager.view.my_page.MyPageFragment" />
+
+        <variable
+            name="vm"
+            type="com.depotato.jubjub_manager.view.my_page.MyPageViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -41,7 +45,7 @@
         <androidx.appcompat.widget.AppCompatButton
             style="@style/MyPageItem"
             android:text="로그아웃"
-            android:onClick="@{() -> fr.logOut()}"
+            android:onClick="@{() -> vm.logOut()}"
             android:textColor="@color/red"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
