@@ -2,7 +2,7 @@ package com.depotato.jubjub_manager.di.module
 
 import com.depotato.jubjub_manager.view.add_equipment.AddEquipmentViewModel
 import com.depotato.jubjub_manager.view.my_page.MyPageViewModel
-import com.depotato.jubjub_manager.view.signin.SignInViewModel
+import com.depotato.jubjub_manager.view.sign_in.SignInViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 

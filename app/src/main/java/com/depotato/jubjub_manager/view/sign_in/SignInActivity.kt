@@ -1,4 +1,4 @@
-package com.depotato.jubjub_manager.view.signin
+package com.depotato.jubjub_manager.view.sign_in
 
 import android.content.Intent
 import com.depotato.jubjub_manager.R

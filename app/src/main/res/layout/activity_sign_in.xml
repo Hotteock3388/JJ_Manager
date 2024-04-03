@@ -7,17 +7,17 @@
     <data>
         <variable
             name="ac"
-            type="com.depotato.jubjub_manager.view.signin.SignInActivity" />
+            type="com.depotato.jubjub_manager.view.sign_in.SignInActivity" />
         <variable
             name="vm"
-            type="com.depotato.jubjub_manager.view.signin.SignInViewModel" />
+            type="com.depotato.jubjub_manager.view.sign_in.SignInViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        tools:context=".view.signin.SignInActivity">
+        tools:context=".view.sign_in.SignInActivity">
 
         <ImageView
             android:layout_width="0dp"
