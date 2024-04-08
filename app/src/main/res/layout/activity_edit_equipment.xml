@@ -3,6 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="ac"
+            type="com.depotato.jubjub_manager.view.edit_equipment.EditEquipmentActivity" />
+        <variable
+            name="vm"
+            type="com.depotato.jubjub_manager.view.edit_equipment.EditEquipmentViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,16 +25,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline15" />
 
-        
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imageView_equipmentImage"
             style="@style/AddImageButton"
+            android:src="@drawable/ic_add_image_transparent"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Dp"
+            android:onClick="@{() -> ac.openGallery()}"
             app:layout_constraintStart_toStartOf="@+id/guideline17"
             app:layout_constraintTop_toTopOf="@+id/guideline16" />
 
         <ImageView
             style="@style/DeleteImageButton"
             android:id="@+id/imageView_deleteImage"
+            android:onClick="@{() -> ac.removeImage()}"
             app:layout_constraintBottom_toTopOf="@+id/imageView_equipmentImage"
             app:layout_constraintEnd_toEndOf="@+id/imageView_equipmentImage"
             app:layout_constraintStart_toEndOf="@+id/imageView_equipmentImage"
@@ -44,28 +56,50 @@
             android:id="@+id/editText_name"
             style="@style/EquipmentInfoContents"
             android:hint="제품명을 입력하세요."
+            android:text="@={vm.equipmentName}"
             app:layout_constraintEnd_toStartOf="@+id/guideline18"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="@+id/guideline17"
             app:layout_constraintTop_toBottomOf="@+id/textView_name" />
 
 
+
+
         <TextView
-            android:id="@+id/textView_amount"
+            android:id="@+id/textView_max_amount"
             style="@style/EquipmentInfoTitle"
-            android:text="수량"
+            android:text="전체 수량"
             app:layout_constraintStart_toStartOf="@+id/guideline17"
             app:layout_constraintTop_toBottomOf="@+id/editText_name" />
 
         <EditText
-            android:id="@+id/editText_amount"
+            android:id="@+id/editText_max_amount"
             style="@style/EquipmentInfoContents"
-            android:hint="수량을 입력하세요."
+            android:hint="기자재 전체 보유 수량을 입력하세요."
             android:inputType="number"
+            android:text="@={vm.equipmentMaxAmount}"
             app:layout_constraintEnd_toStartOf="@+id/guideline18"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="@+id/guideline17"
-            app:layout_constraintTop_toBottomOf="@+id/textView_amount" />
+            app:layout_constraintTop_toBottomOf="@+id/textView_max_amount" />
+
+        <TextView
+            android:id="@+id/textView_current_amount"
+            style="@style/EquipmentInfoTitle"
+            android:text="잔여 수량"
+            app:layout_constraintStart_toStartOf="@+id/guideline17"
+            app:layout_constraintTop_toBottomOf="@+id/editText_max_amount" />
+
+        <EditText
+            android:id="@+id/editText_current_amount"
+            style="@style/EquipmentInfoContents"
+            android:hint="대여 가능한 잔여 기자재 수량을 입력하세요."
+            android:inputType="number"
+            android:text="@={vm.equipmentCurrentAmount}"
+            app:layout_constraintEnd_toStartOf="@+id/guideline18"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="@+id/guideline17"
+            app:layout_constraintTop_toBottomOf="@+id/textView_current_amount" />
 
 
         <TextView
@@ -73,7 +107,7 @@
             style="@style/EquipmentInfoTitle"
             android:text="카테고리"
             app:layout_constraintStart_toStartOf="@+id/guideline17"
-            app:layout_constraintTop_toBottomOf="@+id/editText_amount" />
+            app:layout_constraintTop_toBottomOf="@+id/editText_current_amount" />
 
         <Spinner
             android:id="@+id/spinner_category"
@@ -100,6 +134,7 @@
             android:id="@+id/button_addEquipment"
             style="@style/AddEquipmentButton"
             android:text="수정"
+            android:onClick="@{() -> ac.editEquipment()}"
             app:layout_constraintBottom_toTopOf="@+id/guideline19"
             app:layout_constraintEnd_toStartOf="@+id/guideline18" />
 
