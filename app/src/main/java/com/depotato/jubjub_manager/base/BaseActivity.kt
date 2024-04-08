@@ -74,7 +74,7 @@ abstract class BaseActivity <B: ViewDataBinding, VM: BaseViewModel>(
         }
         //2초 안에 2번 눌렀을 때 종료
         else if (System.currentTimeMillis() <= backKeyPressedTime + 2000) {
-            finish()
+            super.onBackPressed()
         }
     }
 }

@@ -19,7 +19,7 @@ class EquipmentListViewModel: BaseViewModel("EquipmentListViewModel") {
         equipmentArray = arrayOf(
             Equipment("애플 iPad Pro 11형", "패드 & 탭", 14, 20, ""),
             Equipment("Macbook 13인치", "노트북", 2, 10, ""),
-            Equipment("Magic Mouse 2", "마우스", 10, 10, "")
+            Equipment("Magic Mouse 2", "악세서리", 10, 10, "")
         )
 
         _updateEquipmentArrayCompete.value = Unit
