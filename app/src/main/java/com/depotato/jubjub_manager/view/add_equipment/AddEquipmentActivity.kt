@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.provider.MediaStore
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import com.depotato.jubjub_manager.R
 import com.depotato.jubjub_manager.base.BaseActivity
 import com.depotato.jubjub_manager.databinding.ActivityAddEquipmentBinding
@@ -19,6 +20,19 @@ import org.koin.android.ext.android.inject
 class AddEquipmentActivity : BaseActivity<ActivityAddEquipmentBinding, AddEquipmentViewModel>(R.layout.activity_add_equipment, "AddEquipmentActivity") {
 
     override val viewModel: AddEquipmentViewModel by inject()
+
+    private val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+    private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+        if(result.resultCode == Activity.RESULT_OK){
+
+            //이미지가 Uri 형태로 제공
+            val imageUri : Uri? = result.data?.data
+
+            //예외처리 추가 예정
+            viewModel.imageUri.value = imageUri
+
+        }
+    }
 
     override fun init() {
 //        binding.vm = viewModel
@@ -46,6 +60,11 @@ class AddEquipmentActivity : BaseActivity<ActivityAddEquipmentBinding, AddEquipm
             }
 
         }
+
+        viewModel.equipmentMaxAmount.observe(this){
+            viewModel.equipmentCurrentAmount.value = it
+        }
+
         viewModel.addComplete.observe(this){
             finish()
         }
@@ -53,20 +72,7 @@ class AddEquipmentActivity : BaseActivity<ActivityAddEquipmentBinding, AddEquipm
     }
 
     fun openGallery(){
-        val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
-        startActivityForResult(gallery, Constants.GALLERY_REQUEST_CODE)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if(resultCode == Activity.RESULT_OK && requestCode == GALLERY_REQUEST_CODE){
-            //이미지가 Uri 형태로 제공
-            val imageUri : Uri? = data?.data
-
-            //예외처리 추가 예정
-            viewModel.imageUri.value = imageUri
-        }
+        resultLauncher.launch(gallery)
     }
 
     private fun setEquipmentImageViewStatus(currentState: ImageAddState){

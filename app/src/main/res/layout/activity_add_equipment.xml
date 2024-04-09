@@ -64,22 +64,40 @@
 
 
         <TextView
-            android:id="@+id/textView_amount"
+            android:id="@+id/textView_max_amount"
             style="@style/EquipmentInfoTitle"
-            android:text="수량"
+            android:text="전체 수량"
             app:layout_constraintStart_toStartOf="@+id/guideline17"
             app:layout_constraintTop_toBottomOf="@+id/editText_name" />
 
         <EditText
-            android:id="@+id/editText_amount"
+            android:id="@+id/editText_max_amount"
             style="@style/EquipmentInfoContents"
-            android:hint="수량을 입력하세요."
+            android:hint="기자재 전체 보유 수량을 입력하세요."
             android:inputType="number"
-            android:text="@={vm.equipmentAmount}"
+            android:text="@={vm.equipmentMaxAmount}"
             app:layout_constraintEnd_toStartOf="@+id/guideline18"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="@+id/guideline17"
-            app:layout_constraintTop_toBottomOf="@+id/textView_amount" />
+            app:layout_constraintTop_toBottomOf="@+id/textView_max_amount" />
+
+        <TextView
+            android:id="@+id/textView_current_amount"
+            style="@style/EquipmentInfoTitle"
+            android:text="잔여 수량"
+            app:layout_constraintStart_toStartOf="@+id/guideline17"
+            app:layout_constraintTop_toBottomOf="@+id/editText_max_amount" />
+
+        <EditText
+            android:id="@+id/editText_current_amount"
+            style="@style/EquipmentInfoContents"
+            android:hint="대여 가능한 잔여 기자재 수량을 입력하세요."
+            android:inputType="number"
+            android:text="@={vm.equipmentCurrentAmount}"
+            app:layout_constraintEnd_toStartOf="@+id/guideline18"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="@+id/guideline17"
+            app:layout_constraintTop_toBottomOf="@+id/textView_current_amount" />
 
 
         <TextView
@@ -87,7 +105,7 @@
             style="@style/EquipmentInfoTitle"
             android:text="카테고리"
             app:layout_constraintStart_toStartOf="@+id/guideline17"
-            app:layout_constraintTop_toBottomOf="@+id/editText_amount" />
+            app:layout_constraintTop_toBottomOf="@+id/editText_current_amount" />
 
         <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/spinner_category"
