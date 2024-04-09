@@ -3,19 +3,6 @@
     <style name="Base.Theme.JubJub_Manager" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/white</item>
-        <!-- Status bar Text Color -->
-        <item name="android:windowLightStatusBar">true</item>
-        <!-- Remove ActionBar & Activity Title -->
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-
-        <!-- System Navigation Bar Color -->
-        <item name="android:navigationBarColor">@android:color/white</item>
-        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
-
     </style>
 
     <style name="Theme.JubJub_Manager" parent="Base.Theme.JubJub_Manager" />
