@@ -6,17 +6,17 @@
     <data>
         <variable
             name="ac"
-            type="com.depotato.view.equipment_info.EquipmentInfoActivity" />
+            type="com.depotato.jubjub_manager.view.equipment_info.EquipmentInfoActivity" />
         <variable
             name="data"
-            type="com.depotato.view.equipment_list.adapter.Equipment" />
+            type="com.depotato.jubjub_manager.view.equipment_list.adapter.Equipment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        tools:context="com.depotato.view.equipment_info.EquipmentInfoActivity">
+        tools:context=".view.equipment_info.EquipmentInfoActivity">
 
         <ImageView
             style="@style/IC_mainLogo"

@@ -4,8 +4,11 @@
 
     <data>
         <variable
-            name="data"
-            type="com.depotato.view.equipment_list.adapter.Equipment" />
+            name="equipment"
+            type="com.depotato.jubjub_manager.view.equipment_list.adapter.Equipment" />
+        <variable
+            name="event"
+            type="com.depotato.jubjub_manager.view.equipment_list.adapter.EquipmentListRVAdapter.ViewHolder.EquipmentItemEvent" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,6 +18,7 @@
         android:clickable="true"
         android:layout_marginTop="18dp"
         android:elevation="8dp"
+        android:onClick="@{() -> event.onItemClick(equipment)}"
         android:outlineSpotShadowColor="@color/main_blue">
 
         <ImageView
@@ -30,7 +34,7 @@
         <TextView
             android:id="@+id/textView_name"
             style="@style/TextView_Blue"
-            android:text="@{data.name}"
+            android:text="@{equipment.name}"
             android:fontFamily="@font/notosanskr_bold"
             android:textSize="14dp"
             android:layout_marginStart="20dp"
@@ -42,17 +46,17 @@
             android:id="@+id/textView_category"
             style="@style/TextView_Blue"
             android:fontFamily="@font/notosanskr_regular"
-            android:text="@{data.category}"
+            android:text="@{equipment.category}"
             android:textSize="10dp"
             android:layout_marginTop="1dp"
             app:layout_constraintStart_toStartOf="@+id/textView_name"
             app:layout_constraintTop_toBottomOf="@+id/textView_name" />
 
         <TextView
-            android:id="@+id/textView_amount"
+            android:id="@+id/textView_max_amount"
             style="@style/TextView_Blue"
             android:fontFamily="@font/notosanskr_regular"
-            android:text="@{@string/equipment_amount_info(data.currentAmount, data.maxAmount)}"
+            android:text="@{@string/equipment_amount_info(equipment.currentAmount, equipment.maxAmount)}"
             android:textSize="10dp"
             app:layout_constraintBottom_toBottomOf="@+id/imageView_image"
             app:layout_constraintStart_toStartOf="@+id/textView_name"/>

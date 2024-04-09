@@ -3,11 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="ac"
+            type="com.depotato.jubjub_manager.view.add_equipment.AddEquipmentActivity" />
+        <variable
+            name="vm"
+            type="com.depotato.jubjub_manager.view.add_equipment.AddEquipmentViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        tools:context="com.depotato.view.add_equipment.AddEquipmentActivity">
+        tools:context=".view.add_equipment.AddEquipmentActivity">
 
         <TextView
             style="@style/TextView_pageTitle"
@@ -16,19 +25,24 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline15" />
 
-        <ImageView
-            android:id="@+id/imageView_addImage"
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imageView_equipmentImage"
             style="@style/AddImageButton"
+            android:src="@drawable/ic_add_image_transparent"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Dp"
+            android:onClick="@{() -> ac.openGallery()}"
             app:layout_constraintStart_toStartOf="@+id/guideline17"
             app:layout_constraintTop_toTopOf="@+id/guideline16" />
 
         <ImageView
             style="@style/DeleteImageButton"
             android:id="@+id/imageView_deleteImage"
-            app:layout_constraintBottom_toTopOf="@+id/imageView_addImage"
-            app:layout_constraintEnd_toEndOf="@+id/imageView_addImage"
-            app:layout_constraintStart_toEndOf="@+id/imageView_addImage"
-            app:layout_constraintTop_toTopOf="@+id/imageView_addImage" />
+            android:visibility="gone"
+            android:onClick="@{() -> ac.removeImage()}"
+            app:layout_constraintBottom_toTopOf="@+id/imageView_equipmentImage"
+            app:layout_constraintEnd_toEndOf="@+id/imageView_equipmentImage"
+            app:layout_constraintStart_toEndOf="@+id/imageView_equipmentImage"
+            app:layout_constraintTop_toTopOf="@+id/imageView_equipmentImage" />
 
         <TextView
             android:id="@+id/textView_name"
@@ -36,12 +50,13 @@
             android:layout_marginTop="35dp"
             android:text="제품명"
             app:layout_constraintStart_toStartOf="@+id/guideline17"
-            app:layout_constraintTop_toBottomOf="@+id/imageView_addImage" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView_equipmentImage" />
 
         <EditText
             android:id="@+id/editText_name"
             style="@style/EquipmentInfoContents"
             android:hint="제품명을 입력하세요."
+            android:text="@={vm.equipmentName}"
             app:layout_constraintEnd_toStartOf="@+id/guideline18"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="@+id/guideline17"
@@ -49,21 +64,40 @@
 
 
         <TextView
-            android:id="@+id/textView_amount"
+            android:id="@+id/textView_max_amount"
             style="@style/EquipmentInfoTitle"
-            android:text="수량"
+            android:text="전체 수량"
             app:layout_constraintStart_toStartOf="@+id/guideline17"
             app:layout_constraintTop_toBottomOf="@+id/editText_name" />
 
         <EditText
-            android:id="@+id/editText_amount"
+            android:id="@+id/editText_max_amount"
             style="@style/EquipmentInfoContents"
-            android:hint="수량을 입력하세요."
+            android:hint="기자재 전체 보유 수량을 입력하세요."
             android:inputType="number"
+            android:text="@={vm.equipmentMaxAmount}"
             app:layout_constraintEnd_toStartOf="@+id/guideline18"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="@+id/guideline17"
-            app:layout_constraintTop_toBottomOf="@+id/textView_amount" />
+            app:layout_constraintTop_toBottomOf="@+id/textView_max_amount" />
+
+        <TextView
+            android:id="@+id/textView_current_amount"
+            style="@style/EquipmentInfoTitle"
+            android:text="잔여 수량"
+            app:layout_constraintStart_toStartOf="@+id/guideline17"
+            app:layout_constraintTop_toBottomOf="@+id/editText_max_amount" />
+
+        <EditText
+            android:id="@+id/editText_current_amount"
+            style="@style/EquipmentInfoContents"
+            android:hint="대여 가능한 잔여 기자재 수량을 입력하세요."
+            android:inputType="number"
+            android:text="@={vm.equipmentCurrentAmount}"
+            app:layout_constraintEnd_toStartOf="@+id/guideline18"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="@+id/guideline17"
+            app:layout_constraintTop_toBottomOf="@+id/textView_current_amount" />
 
 
         <TextView
@@ -71,11 +105,12 @@
             style="@style/EquipmentInfoTitle"
             android:text="카테고리"
             app:layout_constraintStart_toStartOf="@+id/guideline17"
-            app:layout_constraintTop_toBottomOf="@+id/editText_amount" />
+            app:layout_constraintTop_toBottomOf="@+id/editText_current_amount" />
 
-        <Spinner
+        <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/spinner_category"
             style="@style/CategorySpinner"
+            android:onItemSelected="@{(parent, view, position, id) -> vm.onSpinnerItemSelected(parent, position)}"
             app:layout_constraintStart_toStartOf="@+id/guideline17"
             app:layout_constraintTop_toBottomOf="@+id/textView_category" />
 
@@ -98,6 +133,7 @@
             android:id="@+id/button_addEquipment"
             style="@style/AddEquipmentButton"
             android:text="추가"
+            android:onClick="@{() -> ac.addEquipment()}"
             app:layout_constraintBottom_toTopOf="@+id/guideline19"
             app:layout_constraintEnd_toStartOf="@+id/guideline18" />
 
