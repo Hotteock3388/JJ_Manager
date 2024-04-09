@@ -4,7 +4,6 @@
 
     <application
         android:allowBackup="true"
-        android:name=".di.app.MyApplication"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -14,19 +13,7 @@
         android:theme="@style/Theme.JubJub_Manager"
         tools:targetApi="31">
         <activity
-            android:name=".view.equipment_info.EquipmentInfoActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view.edit_equipment.EditEquipmentActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view.add_equipment.AddEquipmentActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view.main.MainActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view.sign_in.SignInActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
