@@ -4,25 +4,24 @@ package com.depotato.jubjub_manager.view.main
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.depotato.jubjub_manager.R
+import com.depotato.jubjub_manager.base.BaseActivity
 import com.depotato.jubjub_manager.databinding.ActivityMainBinding
 import com.depotato.jubjub_manager.view.equipment_list.EquipmentListFragment
 import com.depotato.jubjub_manager.view.my_page.MyPageFragment
+import org.koin.android.ext.android.inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity<ActivityMainBinding, MainActivityViewModel>(R.layout.activity_main, "MainActivity") {
 
-    lateinit var binding: ActivityMainBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override val viewModel: MainActivityViewModel by inject()
 
-        super.onCreate(savedInstanceState)
+    // 마지막으로 뒤로가기 누른 시각
+    private var backKeyPressedTime: Long = 0
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        binding.ac = this
-        binding.lifecycleOwner = this
-
-
+    override fun init() {
         binding.menuHome.isSelected = true
     }
 
@@ -46,6 +45,19 @@ class MainActivity : AppCompatActivity() {
             .beginTransaction()
             .replace(binding.fragmentContainerView.id, fr)
             .commit()
+    }
+
+    //뒤로가기 버튼 눌렀을 때
+    override fun onBackPressed() {
+        //1번 눌렀을 때
+        if (System.currentTimeMillis() > backKeyPressedTime + 2000) {
+            backKeyPressedTime = System.currentTimeMillis()
+            Toast.makeText(applicationContext, "\'뒤로\' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show()
+        }
+        //2초 안에 2번 눌렀을 때 종료
+        else if (System.currentTimeMillis() <= backKeyPressedTime + 2000) {
+            super.onBackPressed()
+        }
     }
 
 }

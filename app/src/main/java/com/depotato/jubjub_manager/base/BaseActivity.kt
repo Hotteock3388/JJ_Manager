@@ -16,9 +16,6 @@ abstract class BaseActivity <B: ViewDataBinding, VM: BaseViewModel>(
     private val className: String
 ): AppCompatActivity() {
 
-    // 마지막으로 뒤로가기 누른 시각
-    private var backKeyPressedTime: Long = 0
-
     lateinit var binding: B
 
     abstract val viewModel: VM
@@ -62,19 +59,6 @@ abstract class BaseActivity <B: ViewDataBinding, VM: BaseViewModel>(
     private fun observeToastMessage(){
         viewModel.toastMessage.observe(this){
             showToast(it)
-        }
-    }
-
-    //뒤로가기 버튼 눌렀을 때
-    override fun onBackPressed() {
-        //1번 눌렀을 때
-        if (System.currentTimeMillis() > backKeyPressedTime + 2000) {
-            backKeyPressedTime = System.currentTimeMillis()
-            Toast.makeText(applicationContext, "\'뒤로\' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show()
-        }
-        //2초 안에 2번 눌렀을 때 종료
-        else if (System.currentTimeMillis() <= backKeyPressedTime + 2000) {
-            super.onBackPressed()
         }
     }
 }

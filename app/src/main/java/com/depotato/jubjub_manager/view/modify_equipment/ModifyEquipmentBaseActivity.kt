@@ -12,7 +12,7 @@ import androidx.databinding.ViewDataBinding
 import com.depotato.jubjub_manager.R
 import com.depotato.jubjub_manager.base.BaseActivity
 import com.depotato.jubjub_manager.function_module.UriConverter
-import com.depotato.jubjub_manager.view.CategorySpinnerAdapter
+import com.depotato.jubjub_manager.view.modify_equipment.category.CategorySpinnerAdapter
 import com.depotato.jubjub_manager.view.modify_equipment.image.ImageAddState
 
 abstract class ModifyEquipmentBaseActivity<B : ViewDataBinding, VM : ModifyEquipmentViewModel>(
