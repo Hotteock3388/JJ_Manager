@@ -17,10 +17,10 @@
             android:name=".view.equipment_info.EquipmentInfoActivity"
             android:exported="false" />
         <activity
-            android:name=".view.edit_equipment.EditEquipmentActivity"
+            android:name=".view.modify_equipment.edit.EditEquipmentActivity"
             android:exported="false" />
         <activity
-            android:name=".view.add_equipment.AddEquipmentActivity"
+            android:name=".view.modify_equipment.add.AddEquipmentActivity"
             android:exported="false" />
         <activity
             android:name=".view.main.MainActivity"

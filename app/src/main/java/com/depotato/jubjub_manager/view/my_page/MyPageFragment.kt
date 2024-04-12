@@ -4,7 +4,7 @@ import android.content.Intent
 import com.depotato.jubjub_manager.R
 import com.depotato.jubjub_manager.base.BaseFragment
 import com.depotato.jubjub_manager.databinding.FragmentMyPageBinding
-import com.depotato.jubjub_manager.view.add_equipment.AddEquipmentActivity
+import com.depotato.jubjub_manager.view.modify_equipment.add.AddEquipmentActivity
 import com.depotato.jubjub_manager.view.sign_in.SignInActivity
 import org.koin.android.ext.android.inject
 
@@ -30,6 +30,5 @@ class MyPageFragment :
             Intent(requireContext(), AddEquipmentActivity::class.java)
         )
     }
-
 
 }
