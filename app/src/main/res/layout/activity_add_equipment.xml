@@ -6,17 +6,17 @@
     <data>
         <variable
             name="ac"
-            type="com.depotato.jubjub_manager.view.add_equipment.AddEquipmentActivity" />
+            type="com.depotato.jubjub_manager.view.modify_equipment.add.AddEquipmentActivity" />
         <variable
             name="vm"
-            type="com.depotato.jubjub_manager.view.add_equipment.AddEquipmentViewModel" />
+            type="com.depotato.jubjub_manager.view.modify_equipment.add.AddEquipmentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        tools:context=".view.add_equipment.AddEquipmentActivity">
+        tools:context=".view.modify_equipment.add.AddEquipmentActivity">
 
         <TextView
             style="@style/TextView_pageTitle"

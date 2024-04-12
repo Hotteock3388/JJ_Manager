@@ -6,17 +6,17 @@
     <data>
         <variable
             name="ac"
-            type="com.depotato.jubjub_manager.view.edit_equipment.EditEquipmentActivity" />
+            type="com.depotato.jubjub_manager.view.modify_equipment.edit.EditEquipmentActivity" />
         <variable
             name="vm"
-            type="com.depotato.jubjub_manager.view.edit_equipment.EditEquipmentViewModel" />
+            type="com.depotato.jubjub_manager.view.modify_equipment.edit.EditEquipmentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        tools:context=".view.edit_equipment.EditEquipmentActivity">
+        tools:context=".view.modify_equipment.edit.EditEquipmentActivity">
 
         <TextView
             style="@style/TextView_pageTitle"
@@ -63,8 +63,6 @@
             app:layout_constraintTop_toBottomOf="@+id/textView_name" />
 
 
-
-
         <TextView
             android:id="@+id/textView_max_amount"
             style="@style/EquipmentInfoTitle"
@@ -109,9 +107,10 @@
             app:layout_constraintStart_toStartOf="@+id/guideline17"
             app:layout_constraintTop_toBottomOf="@+id/editText_current_amount" />
 
-        <Spinner
+        <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/spinner_category"
             style="@style/CategorySpinner"
+            android:onItemSelected="@{(parent, view, position, id) -> vm.onSpinnerItemSelected(parent, position)}"
             app:layout_constraintStart_toStartOf="@+id/guideline17"
             app:layout_constraintTop_toBottomOf="@+id/textView_category" />
 

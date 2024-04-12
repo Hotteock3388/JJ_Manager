@@ -1,4 +1,4 @@
-package com.depotato.jubjub_manager.view.add_equipment
+package com.depotato.jubjub_manager.view.modify_equipment
 
 import java.io.File
 

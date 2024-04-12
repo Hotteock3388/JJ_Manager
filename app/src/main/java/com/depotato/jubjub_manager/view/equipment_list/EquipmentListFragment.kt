@@ -4,7 +4,7 @@ import android.content.Intent
 import com.depotato.jubjub_manager.R
 import com.depotato.jubjub_manager.base.BaseFragment
 import com.depotato.jubjub_manager.databinding.FragmentEquipmentListBinding
-import com.depotato.jubjub_manager.view.edit_equipment.EditEquipmentActivity
+import com.depotato.jubjub_manager.view.modify_equipment.edit.EditEquipmentActivity
 import com.depotato.jubjub_manager.view.equipment_list.adapter.Equipment
 import com.depotato.jubjub_manager.view.equipment_list.adapter.EquipmentItemEventListener
 import com.depotato.jubjub_manager.view.equipment_list.adapter.EquipmentListRVAdapter
