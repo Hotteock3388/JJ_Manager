@@ -1,23 +1,31 @@
-package com.depotato.jubjub_manager.view.edit_equipment
+package com.depotato.jubjub_manager.view.modify_equipment
 
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.provider.MediaStore
 import android.view.View
+import android.widget.ImageView
+import android.widget.Spinner
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.databinding.ViewDataBinding
 import com.depotato.jubjub_manager.R
 import com.depotato.jubjub_manager.base.BaseActivity
-import com.depotato.jubjub_manager.databinding.ActivityEditEquipmentBinding
 import com.depotato.jubjub_manager.function_module.UriConverter
-import com.depotato.jubjub_manager.view.CategorySpinnerAdapter
-import com.depotato.jubjub_manager.view.add_equipment.image.ImageAddState
-import com.depotato.jubjub_manager.view.equipment_list.adapter.Equipment
-import org.koin.android.ext.android.inject
+import com.depotato.jubjub_manager.view.modify_equipment.category.CategorySpinnerAdapter
+import com.depotato.jubjub_manager.view.modify_equipment.image.ImageAddState
 
-class EditEquipmentActivity : BaseActivity<ActivityEditEquipmentBinding, EditEquipmentViewModel>(R.layout.activity_edit_equipment, "EditEquipmentActivity") {
+abstract class ModifyEquipmentBaseActivity<B : ViewDataBinding, VM : ModifyEquipmentViewModel>(
+    resId: Int,
+    className: String
+) : BaseActivity<B, VM>(resId, className) {
 
-    override val viewModel: EditEquipmentViewModel by inject()
+    abstract override val viewModel: VM
+
+    private lateinit var imageViewEquipmentImage: ImageView
+    private lateinit var imageViewDeleteImage: ImageView
+    private lateinit var spinnerCategory: Spinner
+
 
     private val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
     private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
@@ -33,11 +41,18 @@ class EditEquipmentActivity : BaseActivity<ActivityEditEquipmentBinding, EditEqu
     }
 
     override fun init() {
+        initViews()
         initCategorySpinner()
-        initEquipmentInfo()
+    }
+
+    private fun initViews() {
+        imageViewEquipmentImage = binding.root.findViewById(R.id.imageView_equipmentImage)
+        imageViewDeleteImage = binding.root.findViewById(R.id.imageView_deleteImage)
+        spinnerCategory = binding.root.findViewById(R.id.spinner_category)
     }
 
     override fun initLiveData() {
+
         viewModel.imageUri.observe(this){
 
             try {
@@ -57,37 +72,15 @@ class EditEquipmentActivity : BaseActivity<ActivityEditEquipmentBinding, EditEqu
             }
 
         }
+
+        viewModel.equipmentMaxAmount.observe(this){
+            viewModel.equipmentCurrentAmount.value = it
+        }
+
         viewModel.addComplete.observe(this){
             finish()
         }
 
-    }
-
-    private fun initEquipmentInfo(){
-
-        try {
-            val equipmentInfo = intent.getSerializableExtra("equipment") as Equipment
-
-            with(viewModel){
-                equipmentName.value = equipmentInfo.name
-                equipmentMaxAmount.value = equipmentInfo.maxAmount.toString()
-                equipmentCategory = equipmentInfo.category
-
-                binding.spinnerCategory.setSelection(getCategoryIdx(equipmentInfo.category))
-            }
-
-        }catch (e: Exception){
-            e.printStackTrace()
-        }
-
-    }
-
-    private fun getCategoryIdx(category: String): Int {
-        return viewModel.categoryArray.indexOf(category)
-    }
-
-    private fun initCategorySpinner(){
-        binding.spinnerCategory.adapter = CategorySpinnerAdapter(this, viewModel.categoryArray)
     }
 
     fun openGallery(){
@@ -111,24 +104,24 @@ class EditEquipmentActivity : BaseActivity<ActivityEditEquipmentBinding, EditEqu
     }
 
     private fun resetEquipmentImage() {
-        binding.imageViewEquipmentImage.setImageResource(R.drawable.ic_add_image)
+        imageViewEquipmentImage.setImageResource(R.drawable.ic_add_image)
     }
     private fun setEquipmentImage(){
-        binding.imageViewEquipmentImage.setImageURI(viewModel.imageUri.value)
+        imageViewEquipmentImage.setImageURI(viewModel.imageUri.value)
     }
 
     private fun activateRemoveButton(){
-        binding.imageViewDeleteImage.visibility = View.VISIBLE
+        imageViewDeleteImage.visibility = View.VISIBLE
     }
     private fun deactivateRemoveButton(){
-        binding.imageViewDeleteImage.visibility = View.GONE
+        imageViewDeleteImage.visibility = View.GONE
     }
 
     private fun setEquipmentBGWhite(){
-        binding.imageViewEquipmentImage.setBackgroundResource(R.drawable.bg_equipment_image)
+        imageViewEquipmentImage.setBackgroundResource(R.drawable.bg_equipment_image)
     }
     private fun setEquipmentBGGray(){
-        binding.imageViewEquipmentImage.setBackgroundResource(R.drawable.bg_add_image)
+        imageViewEquipmentImage.setBackgroundResource(R.drawable.bg_add_image)
     }
 
 
@@ -137,12 +130,12 @@ class EditEquipmentActivity : BaseActivity<ActivityEditEquipmentBinding, EditEqu
         viewModel.imageUri.value = null
     }
 
-    fun editEquipment(){
-        //send EquipmentData
+    private fun initCategorySpinner(){
+        //스피너 초기화
+        spinnerCategory.adapter = CategorySpinnerAdapter(this, viewModel.categoryArray)
 
-        if(viewModel.isEquipmentDataValid()){
-            viewModel.addEquipment()
-        }
-
+//        EquipmentCategorySpinner().initCategorySpinner(this, binding.spinnerCategory, viewModel.categoryArray)
     }
+
+
 }
