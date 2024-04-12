@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -5,6 +8,13 @@ plugins {
 }
 
 android {
+
+
+    val keystorePropertiesFile = rootProject.file("keystore.properties")
+    val keystoreProperties = Properties()
+    keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+
+
     namespace = "com.depotato.jubjub_manager"
     compileSdk = 34
 
@@ -16,9 +26,13 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+
+        buildConfigField("String", "BASE_URL", keystoreProperties["BASE_URL"] as String)
     }
 
     buildTypes {
+
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -36,13 +50,15 @@ android {
     }
     buildFeatures {
         dataBinding = true
+        buildConfig = true
     }
 }
 
 dependencies {
     val OK_HTTP_VERSION = "4.9.0"
     val RETROFIT_VERSION = "2.9.0"
-    
+    val RXJAVA_VERSION = "3.1.0"
+
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -68,6 +84,11 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION")
     implementation("com.squareup.retrofit2:retrofit:$RETROFIT_VERSION")
     implementation("com.squareup.retrofit2:adapter-rxjava2:$RETROFIT_VERSION")
+
+    //RxJava
+    implementation("com.trello.rxlifecycle3:rxlifecycle:$RXJAVA_VERSION")
+    implementation("com.trello.rxlifecycle3:rxlifecycle-android:$RXJAVA_VERSION")
+    implementation("com.trello.rxlifecycle3:rxlifecycle-components:$RXJAVA_VERSION")
 
 
 }
