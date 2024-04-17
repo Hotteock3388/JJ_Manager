@@ -2,6 +2,7 @@ package com.depotato.jubjub_manager.data.remote.retrofit
 
 import com.depotato.jubjub_manager.BuildConfig
 import com.depotato.jubjub_manager.data.remote.api.AuthApi
+import com.depotato.jubjub_manager.data.remote.api.EquipmentApi
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -36,5 +37,9 @@ object NetRetrofit {
 
     fun getAuthApi(): AuthApi{
         return retrofit.create(AuthApi::class.java)
+    }
+
+    fun getEquipmentApi(): EquipmentApi{
+        return retrofit.create(EquipmentApi::class.java)
     }
 }

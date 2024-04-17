@@ -12,7 +12,7 @@ open class ModifyEquipmentViewModel(
 ) : BaseViewModel(className) {
 
     val categoryArray = arrayOf(
-        "카테고리를 선택하세요.", "패드 & 탭", "데스크탑", "노트북", "악세서리", "임베디드", "기타"
+        "카테고리를 선택하세요.", "패드 & 탭", "데스크탑", "노트북", "액세서리", "임베디드", "기타"
     )
 
     var imageUri = SingleEventLiveData<Uri>()
@@ -20,12 +20,10 @@ open class ModifyEquipmentViewModel(
     var equipmentImage = File("")
 
     val equipmentName = MutableLiveData<String>()
-//    val equipmentName = _equipmentName
 
     val equipmentMaxAmount = MutableLiveData<String>()
     val equipmentCurrentAmount = MutableLiveData<String>("")
 
-    //    val currentAmount = _currentAmount
     var equipmentCategory = ""
 
     val addComplete = SingleEventLiveData<Unit>()
@@ -46,7 +44,6 @@ open class ModifyEquipmentViewModel(
             equipmentCategory,
             equipmentMaxAmount.value!!.toInt(),
             equipmentMaxAmount.value!!.toInt(),
-            equipmentImage
         )
     }
 

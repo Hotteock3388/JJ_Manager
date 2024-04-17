@@ -90,5 +90,8 @@ dependencies {
     implementation("com.trello.rxlifecycle3:rxlifecycle-android:$RXJAVA_VERSION")
     implementation("com.trello.rxlifecycle3:rxlifecycle-components:$RXJAVA_VERSION")
 
+    // JSON Serialization
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+
 
 }

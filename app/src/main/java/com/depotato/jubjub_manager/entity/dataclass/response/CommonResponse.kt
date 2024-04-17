@@ -1,6 +1,6 @@
 package com.depotato.jubjub_manager.entity.dataclass.response
 
-data class SignInResponse(
+data class CommonResponse(
     val status: Int,
     val message: String
 )
