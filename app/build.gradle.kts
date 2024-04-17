@@ -93,5 +93,7 @@ dependencies {
     // JSON Serialization
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 
+    // Glide
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 
 }
