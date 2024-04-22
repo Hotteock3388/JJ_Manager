@@ -5,6 +5,7 @@ import android.widget.AdapterView
 import androidx.lifecycle.MutableLiveData
 import com.depotato.jubjub_manager.base.BaseViewModel
 import com.depotato.jubjub_manager.function_module.SingleEventLiveData
+import com.depotato.jubjub_manager.view.equipment_list.adapter.Equipment
 import java.io.File
 
 open class ModifyEquipmentViewModel(
@@ -15,7 +16,9 @@ open class ModifyEquipmentViewModel(
         "카테고리를 선택하세요.", "패드 & 탭", "데스크탑", "노트북", "액세서리", "임베디드", "기타"
     )
 
-    var imageUri = SingleEventLiveData<Uri>()
+    var equipmentId = 0
+    var equipmentImageUri = SingleEventLiveData<Uri>()
+    var equipmentImageUrl = SingleEventLiveData<String>()
 
     var equipmentImage = File("")
 
@@ -38,18 +41,20 @@ open class ModifyEquipmentViewModel(
         }
     }
 
-    protected fun createEquipmentObject(): UploadEquipment {
-        return UploadEquipment(
+    protected fun createEquipmentObject(): Equipment {
+        return Equipment(
+            equipmentId,
             equipmentName.value!!,
             equipmentCategory,
             equipmentMaxAmount.value!!.toInt(),
             equipmentMaxAmount.value!!.toInt(),
+            if(equipmentImageUrl.value != null) equipmentImageUrl.value!! else ""
         )
     }
 
     fun isEquipmentDataValid(): Boolean {
 
-        return if (imageUri.value == null) {
+        return if (equipmentImageUri.value == null && equipmentImageUrl.value!!.isBlank()) {
             invalidData("기자재 사진을 등록해주세요")
         } else if (equipmentName.value!!.isBlank()) {
             invalidData("기자재 이름을 입력해주세요.")

@@ -35,7 +35,7 @@ abstract class ModifyEquipmentBaseActivity<B : ViewDataBinding, VM : ModifyEquip
             val imageUri : Uri? = result.data?.data
 
             //예외처리 추가 예정
-            viewModel.imageUri.value = imageUri
+            viewModel.equipmentImageUri.value = imageUri
 
         }
     }
@@ -53,7 +53,7 @@ abstract class ModifyEquipmentBaseActivity<B : ViewDataBinding, VM : ModifyEquip
 
     override fun initLiveData() {
 
-        viewModel.imageUri.observe(this){
+        viewModel.equipmentImageUri.observe(this){
 
             try {
                 if(it == null){
@@ -107,7 +107,7 @@ abstract class ModifyEquipmentBaseActivity<B : ViewDataBinding, VM : ModifyEquip
         imageViewEquipmentImage.setImageResource(R.drawable.ic_add_image)
     }
     private fun setEquipmentImage(){
-        imageViewEquipmentImage.setImageURI(viewModel.imageUri.value)
+        imageViewEquipmentImage.setImageURI(viewModel.equipmentImageUri.value)
     }
 
     private fun activateRemoveButton(){
@@ -125,9 +125,9 @@ abstract class ModifyEquipmentBaseActivity<B : ViewDataBinding, VM : ModifyEquip
     }
 
 
-    fun removeImage(){
+    open fun removeImage(){
         // X 아이콘의 온클릭 이벤트 정의
-        viewModel.imageUri.value = null
+        viewModel.equipmentImageUri.value = null
     }
 
     private fun initCategorySpinner(){
