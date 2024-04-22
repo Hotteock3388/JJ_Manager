@@ -6,6 +6,7 @@ import android.widget.Filterable
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.depotato.jubjub_manager.R
 import com.depotato.jubjub_manager.databinding.LayoutEquipmentListItemBinding
 
@@ -36,6 +37,15 @@ class EquipmentListRVAdapter(private val _event: EquipmentItemEventListener) : R
                 equipment = _equipment
                 event = _event
             }
+
+
+            Glide
+                .with(binding.root)
+                .load(_equipment?.imageUrl)
+                .centerCrop()
+                .placeholder(R.drawable.ic_add_image)
+                .into(binding.imageViewImage)
+
         }
 
         interface EquipmentItemEvent{

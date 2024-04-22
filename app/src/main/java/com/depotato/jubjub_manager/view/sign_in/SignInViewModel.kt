@@ -3,8 +3,11 @@ package com.depotato.jubjub_manager.view.sign_in
 import androidx.lifecycle.MutableLiveData
 import com.depotato.jubjub_manager.base.BaseViewModel
 import com.depotato.jubjub_manager.data.local.SharedPref
+import com.depotato.jubjub_manager.data.remote.retrofit.NetRetrofit
 import com.depotato.jubjub_manager.entity.singleton.Constants
 import com.depotato.jubjub_manager.function_module.SingleEventLiveData
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 class SignInViewModel(private val sharedPref: SharedPref) : BaseViewModel("SignInViewModel") {
 
@@ -16,7 +19,26 @@ class SignInViewModel(private val sharedPref: SharedPref) : BaseViewModel("SignI
 
     fun signIn() {
         if (isInputValid()) {
-            checkUserAc()
+
+            addDisposable(
+                NetRetrofit.getAuthApi().signIn(
+                    userId.value.toString(),
+                    userPw.value.toString(),
+                )
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+
+                        if(it.status == 200){
+                            saveUserData()
+                        }else{
+                            _toastMessage.value = it.message
+                        }
+
+                    }, {
+                        it.printStackTrace()
+                    })
+            )
         }
     }
 
@@ -41,7 +63,7 @@ class SignInViewModel(private val sharedPref: SharedPref) : BaseViewModel("SignI
         }
     }
 
-    fun saveUserData(){
+    private fun saveUserData(){
         with(sharedPref){
             saveData(Constants.USER_ID, userId.value!!)
             saveData(Constants.USER_PW, userPw.value!!)
@@ -55,9 +77,8 @@ class SignInViewModel(private val sharedPref: SharedPref) : BaseViewModel("SignI
             if(isExist(Constants.USER_ID)){
                 userId.value = getDataString(Constants.USER_ID)
                 userPw.value = getDataString(Constants.USER_PW)
-
-                checkUserAc()
             }
+            signIn()
         }
 
     }

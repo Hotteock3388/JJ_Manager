@@ -1,11 +1,11 @@
 package com.depotato.jubjub_manager.view.modify_equipment
 
-import java.io.File
+import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.Serializable
 
 data class UploadEquipment(
-    var name: String,
-    var category: String,
-    var currentAmount: Int,
-    var maxAmount: Int,
-    var image: File
+    @SerializedName("name") var name: String,
+    @SerializedName("category") var category: String,
+    @SerializedName("current_amount") var currentAmount: Int,
+    @SerializedName("max_amount") var maxAmount: Int
 )
