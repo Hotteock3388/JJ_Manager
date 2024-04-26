@@ -1,7 +1,6 @@
 package com.depotato.jubjub_manager.view.sign_in
 
 import android.content.Intent
-import android.widget.Toast
 import com.depotato.jubjub_manager.R
 import com.depotato.jubjub_manager.base.BaseActivity
 import com.depotato.jubjub_manager.databinding.ActivitySignInBinding
@@ -20,7 +19,7 @@ class SignInActivity : BaseActivity<ActivitySignInBinding, SignInViewModel>(R.la
     }
 
     override fun initLiveData() {
-        viewModel.saveUserDataComplete.observe(this){
+        viewModel.signInComplete.observe(this){
             openMain()
         }
     }
@@ -38,7 +37,7 @@ class SignInActivity : BaseActivity<ActivitySignInBinding, SignInViewModel>(R.la
         //1번 눌렀을 때
         if (System.currentTimeMillis() > backKeyPressedTime + 2000) {
             backKeyPressedTime = System.currentTimeMillis()
-            Toast.makeText(applicationContext, "\'뒤로\' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show()
+            showToast("\'뒤로\' 버튼을 한번 더 누르시면 종료됩니다.")
         }
         //2초 안에 2번 눌렀을 때 종료
         else if (System.currentTimeMillis() <= backKeyPressedTime + 2000) {

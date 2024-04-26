@@ -2,39 +2,41 @@ package com.depotato.jubjub_manager.view.sign_in
 
 import androidx.lifecycle.MutableLiveData
 import com.depotato.jubjub_manager.base.BaseViewModel
-import com.depotato.jubjub_manager.data.local.SharedPref
-import com.depotato.jubjub_manager.data.remote.retrofit.NetRetrofit
-import com.depotato.jubjub_manager.entity.singleton.Constants
+import com.depotato.jubjub_manager.domain.auth.CheckLoginHistoryUseCase
+import com.depotato.jubjub_manager.domain.auth.SignInUseCase
+import com.depotato.jubjub_manager.entity.dataclass.response.SignInResult
 import com.depotato.jubjub_manager.function_module.SingleEventLiveData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class SignInViewModel(private val sharedPref: SharedPref) : BaseViewModel("SignInViewModel") {
+class SignInViewModel(
+    private val checkLoginHistoryUseCase: CheckLoginHistoryUseCase,
+    private val signInUseCase: SignInUseCase
+) : BaseViewModel("SignInViewModel") {
 
     val userId = MutableLiveData<String>("")
     val userPw = MutableLiveData<String>("")
 
-    val saveUserDataComplete = SingleEventLiveData<Unit>()
-
+    private val _signInComplete = SingleEventLiveData<Unit>()
+    val signInComplete: SingleEventLiveData<Unit> = _signInComplete
 
     fun signIn() {
         if (isInputValid()) {
-
             addDisposable(
-                NetRetrofit.getAuthApi().signIn(
+                signInUseCase(
                     userId.value.toString(),
-                    userPw.value.toString(),
-                )
-                    .subscribeOn(Schedulers.io())
+                    userPw.value.toString()
+                ).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-
-                        if(it.status == 200){
-                            saveUserData()
-                        }else{
-                            _toastMessage.value = it.message
+                        when(it){
+                            is SignInResult.Success -> {
+                                _signInComplete.value = Unit
+                            }
+                            is SignInResult.Failure -> {
+                                _toastMessage.value = it.errorMessage
+                            }
                         }
-
                     }, {
                         it.printStackTrace()
                     })
@@ -55,31 +57,13 @@ class SignInViewModel(private val sharedPref: SharedPref) : BaseViewModel("SignI
         return false
     }
 
-    private fun checkUserAc() {
-        if (userId.value.toString() == "1234" && userPw.value.toString() == "1234") {
-            saveUserData()
-        } else {
-            _toastMessage.value = "입력하신 계정 정보가 존재하지 않습니다."
-        }
-    }
-
-    private fun saveUserData(){
-        with(sharedPref){
-            saveData(Constants.USER_ID, userId.value!!)
-            saveData(Constants.USER_PW, userPw.value!!)
-        }
-
-        saveUserDataComplete.value = Unit
-    }
-
     fun checkLoginHistoryExist() {
-        with(sharedPref){
-            if(isExist(Constants.USER_ID)){
-                userId.value = getDataString(Constants.USER_ID)
-                userPw.value = getDataString(Constants.USER_PW)
+        with(checkLoginHistoryUseCase()){
+            if(isExist){
+                this@SignInViewModel.userId.value = userId
+                this@SignInViewModel.userPw.value = userPw
+                signIn()
             }
-            signIn()
         }
-
     }
 }
