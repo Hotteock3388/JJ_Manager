@@ -3,8 +3,8 @@ package com.depotato.jubjub_manager.view.equipment_list.adapter
 import androidx.recyclerview.widget.DiffUtil
 
 class EquipmentListDiffCallback(
-    private val oldList: Array<Equipment?>,
-    private val newList: Array<Equipment?>
+    private val oldList: List<Equipment?>,
+    private val newList: List<Equipment?>
 ) : DiffUtil.Callback() {
     override fun getOldListSize(): Int {
         // 기존 리스트의 크기 반환

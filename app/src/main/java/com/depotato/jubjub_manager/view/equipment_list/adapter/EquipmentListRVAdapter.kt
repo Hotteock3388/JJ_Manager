@@ -12,11 +12,11 @@ import com.depotato.jubjub_manager.databinding.LayoutEquipmentListItemBinding
 
 class EquipmentListRVAdapter(private val _event: EquipmentItemEventListener) : RecyclerView.Adapter<EquipmentListRVAdapter.ViewHolder>(), Filterable {
 
-    var equipmentArray: Array<Equipment?> = arrayOfNulls(0)
-    private var filteredArray = equipmentArray.copyOf()
+    var equipmentList: List<Equipment> = listOf()
+    private var filteredList = equipmentList.map { it.copy() }
 
     override fun getItemCount(): Int {
-        return filteredArray.size
+        return filteredList.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -25,7 +25,7 @@ class EquipmentListRVAdapter(private val _event: EquipmentItemEventListener) : R
     }
 
     override fun onBindViewHolder(holder: ViewHolder, itemPosition: Int) {
-        holder.bind(filteredArray[itemPosition])
+        holder.bind(filteredList[itemPosition])
     }
 
     class ViewHolder(
@@ -38,32 +38,29 @@ class EquipmentListRVAdapter(private val _event: EquipmentItemEventListener) : R
                 event = _event
             }
 
-
             Glide
                 .with(binding.root)
                 .load(_equipment?.imageUrl)
                 .centerCrop()
                 .placeholder(R.drawable.ic_add_image)
                 .into(binding.imageViewImage)
-
         }
 
         interface EquipmentItemEvent{
-            fun onItemClick(equipment: Equipment?)
+            fun onItemClick(equipment: Equipment)
         }
-
     }
 
-    fun updateItems(newEquipmentArray: Array<Equipment?>){
-        val diffCallback = EquipmentListDiffCallback(equipmentArray, newEquipmentArray)
+    fun updateItems(newEquipmentList: List<Equipment>){
+        val diffCallback = EquipmentListDiffCallback(equipmentList, newEquipmentList)
         val diffResult = DiffUtil.calculateDiff(diffCallback) // 계산
         diffResult.dispatchUpdatesTo(this) // 리사이클러뷰 갱신!
 
-        updateEquipmentList(newEquipmentArray)
+        updateEquipmentList(newEquipmentList)
     }
-    private fun updateEquipmentList(newEquipmentArray: Array<Equipment?>){
-        equipmentArray = newEquipmentArray
-        filteredArray = equipmentArray.copyOf()
+    private fun updateEquipmentList(newEquipmentList: List<Equipment>){
+        equipmentList = newEquipmentList
+        filteredList = equipmentList.map { it.copy() }
     }
 
     override fun getFilter(): Filter {
@@ -72,28 +69,29 @@ class EquipmentListRVAdapter(private val _event: EquipmentItemEventListener) : R
 
                 val searchText = constraint.toString().lowercase()
 
-                filteredArray = if (searchText.isEmpty()) {
-                    equipmentArray
+                filteredList = if (searchText.isEmpty()) {
+                    equipmentList
                 } else {
-                    ArrayList<Equipment>().apply {
-                        for (equipment in equipmentArray) {
-                            if (equipment!!.name.lowercase().contains(searchText)
+                    mutableListOf<Equipment>().apply {
+                        for (equipment in equipmentList) {
+                            if (equipment.name.lowercase().contains(searchText)
                                 || equipment.category.lowercase().contains(searchText)) {
                                 add(equipment)
                             }
                         }
-                    }.toTypedArray()
+                    }
                 }
 
                 return FilterResults().apply {
-                    values = filteredArray
+                    values = filteredList
                 }
 
             }
 
             override fun publishResults(constraint: CharSequence, results: FilterResults) {
-                filteredArray = results.values as Array<Equipment?>
-                notifyDataSetChanged()
+                filteredList = results.values as List<Equipment>
+                updateItems(filteredList)
+//                notifyDataSetChanged()
             }
         }
     }
