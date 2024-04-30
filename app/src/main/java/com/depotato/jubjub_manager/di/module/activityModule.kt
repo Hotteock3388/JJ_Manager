@@ -11,11 +11,11 @@ import org.koin.dsl.module
 
 val activityModule = module {
 
-    viewModel { AddEquipmentViewModel() }
+    viewModel { AddEquipmentViewModel(get(), get()) }
     viewModel { MyPageViewModel(get()) }
     viewModel { SignInViewModel(get(), get()) }
-    viewModel { EquipmentListViewModel() }
-    viewModel { EditEquipmentViewModel() }
+    viewModel { EquipmentListViewModel(get()) }
+    viewModel { EditEquipmentViewModel(get()) }
     viewModel { MainActivityViewModel() }
 
 }

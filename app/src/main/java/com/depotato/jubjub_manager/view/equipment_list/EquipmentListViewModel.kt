@@ -2,8 +2,8 @@ package com.depotato.jubjub_manager.view.equipment_list
 
 import androidx.lifecycle.MutableLiveData
 import com.depotato.jubjub_manager.base.BaseViewModel
-import com.depotato.jubjub_manager.domain.equipment.GetEquipmentsResult
-import com.depotato.jubjub_manager.domain.equipment.GetEquipmentsUseCase
+import com.depotato.jubjub_manager.domain.equipment.list.GetEquipmentsResult
+import com.depotato.jubjub_manager.domain.equipment.list.GetEquipmentsUseCase
 import com.depotato.jubjub_manager.function_module.SingleEventLiveData
 import com.depotato.jubjub_manager.view.equipment_list.adapter.Equipment
 import com.depotato.jubjub_manager.view.equipment_list.adapter.EquipmentItemEventListener

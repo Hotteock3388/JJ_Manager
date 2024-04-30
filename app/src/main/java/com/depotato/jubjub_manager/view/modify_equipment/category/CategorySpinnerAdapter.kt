@@ -26,36 +26,39 @@ class CategorySpinnerAdapter(private val con: Context, private val dataList: Arr
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val v = LayoutInflater.from(parent.context).inflate(R.layout.layout_spinner_top, parent, false)
-
-        setCategoryText(v, dataList[position])
-
-        return v
+        createView(convertView, parent).apply {
+            setCategoryText(this, dataList[position])
+            return this
+        }
     }
-
-    fun setCategoryText(view: View, category: String){
+    private fun setCategoryText(view: View, category: String){
         view.findViewById<TextView>(R.id.textView_category).text = category
     }
 
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val viewHolder : ViewHolder
-        val v : View
 
-        if(convertView == null){
-            v = inflater.inflate(R.layout.layout_spinner_item, parent, false).apply {
+        return createView(convertView, parent).apply {
+            with(this.tag as ViewHolder){
+                bind(dataList[position])
+            }
+        }
+    }
+
+    private fun createView(convertView: View?, parent: ViewGroup): View {
+        var view = convertView
+        val viewHolder : ViewHolder
+
+        if(view == null){
+            view = inflater.inflate(R.layout.layout_spinner_item, parent, false).apply {
                 viewHolder = ViewHolder(this)
                 tag = viewHolder
             }
         }else{
-            v = convertView
-            viewHolder = convertView.tag as ViewHolder
+            viewHolder = view.tag as ViewHolder
         }
 
-        viewHolder.bind(dataList[position])
-
-        return v
+        return view!!
     }
-
 
     class ViewHolder(private val view: View){
         fun bind(data: String){

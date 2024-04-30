@@ -110,7 +110,7 @@
         <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/spinner_category"
             style="@style/CategorySpinner"
-            android:onItemSelected="@{(parent, view, position, id) -> vm.onSpinnerItemSelected(parent, position)}"
+            android:onItemSelected="@{(parent, view, position, id) -> ac.onSpinnerItemSelected(parent, position)}"
             app:layout_constraintStart_toStartOf="@+id/guideline17"
             app:layout_constraintTop_toBottomOf="@+id/textView_category" />
 

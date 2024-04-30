@@ -1,6 +1,7 @@
 package com.depotato.jubjub_manager.data.remote.api
 
 import com.depotato.jubjub_manager.entity.dataclass.response.CommonResponse
+import com.depotato.jubjub_manager.entity.dataclass.response.GetCategoriesResponse
 import com.depotato.jubjub_manager.entity.dataclass.response.GetEquipmentsResponse
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -22,7 +23,7 @@ interface EquipmentApi {
     fun addEquipment(
         @Part file: MultipartBody.Part,
         @Part("equipment") equipment: RequestBody
-    ): Single<CommonResponse>
+    ): Observable<CommonResponse>
 
     @Multipart
     @PATCH("equipment/")
@@ -36,5 +37,9 @@ interface EquipmentApi {
         @Part file: MultipartBody.Part,
         @Part("equipment") equipment: RequestBody
     ): Single<CommonResponse>
+
+
+    @GET("equipment/category")
+    fun getCategories(): Observable<GetCategoriesResponse>
 
 }
