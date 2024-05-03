@@ -4,7 +4,6 @@ import com.depotato.jubjub_manager.entity.dataclass.response.CommonResponse
 import com.depotato.jubjub_manager.entity.dataclass.response.GetCategoriesResponse
 import com.depotato.jubjub_manager.entity.dataclass.response.GetEquipmentsResponse
 import io.reactivex.Observable
-import io.reactivex.Single
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.GET
@@ -29,14 +28,14 @@ interface EquipmentApi {
     @PATCH("equipment/")
     fun editEquipmentExcludeImage(
         @Part("equipment") equipment: RequestBody
-    ): Single<CommonResponse>
+    ): Observable<CommonResponse>
 
     @Multipart
     @PATCH("equipment/")
     fun editEquipmentIncludeImage(
         @Part file: MultipartBody.Part,
         @Part("equipment") equipment: RequestBody
-    ): Single<CommonResponse>
+    ): Observable<CommonResponse>
 
 
     @GET("equipment/category")

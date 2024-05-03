@@ -9,8 +9,8 @@ interface EquipmentRepository {
 
     fun getEquipments(): Observable<GetEquipmentsResult>
     fun addEquipment(imageFile: MultipartBody.Part, equipment: RequestBody): Observable<CommonResult>
-    fun editEquipmentIncludeImage(): CommonResult
-    fun editEquipmentExcludeImage(): CommonResult
+    fun editEquipmentIncludeImage(imageFile: MultipartBody.Part, equipment: RequestBody): Observable<CommonResult>
+    fun editEquipmentExcludeImage(equipment: RequestBody): Observable<CommonResult>
 
     fun getCategories(): Observable<GetCategoryResult>
 }
