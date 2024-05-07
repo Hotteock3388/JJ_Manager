@@ -1,4 +1,4 @@
-package com.depotato.jubjub_manager.domain.auth.sign_in
+package com.depotato.jubjub_manager.entity.dataclass.response
 
 sealed class SignInResult {
     data class Success(val responseMessage: String) : SignInResult()
