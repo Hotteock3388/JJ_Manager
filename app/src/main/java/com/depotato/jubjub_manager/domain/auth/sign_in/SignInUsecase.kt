@@ -1,6 +1,6 @@
-package com.depotato.jubjub_manager.domain.auth
+package com.depotato.jubjub_manager.domain.auth.sign_in
 
-import com.depotato.jubjub_manager.entity.dataclass.response.SignInResult
+import com.depotato.jubjub_manager.domain.auth.AuthRepository
 import io.reactivex.Observable
 
 class SignInUseCase(

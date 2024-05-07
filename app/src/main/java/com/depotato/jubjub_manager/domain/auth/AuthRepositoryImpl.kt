@@ -2,8 +2,8 @@ package com.depotato.jubjub_manager.domain.auth
 
 import com.depotato.jubjub_manager.data.local.SharedPref
 import com.depotato.jubjub_manager.data.remote.retrofit.NetRetrofit
-import com.depotato.jubjub_manager.entity.dataclass.response.CheckLoginHistoryResult
-import com.depotato.jubjub_manager.entity.dataclass.response.SignInResult
+import com.depotato.jubjub_manager.domain.auth.login_hisotry.CheckLoginHistoryResult
+import com.depotato.jubjub_manager.domain.auth.sign_in.SignInResult
 import com.depotato.jubjub_manager.entity.singleton.Constants
 import io.reactivex.Observable
 

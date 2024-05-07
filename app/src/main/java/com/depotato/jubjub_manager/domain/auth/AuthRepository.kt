@@ -1,7 +1,7 @@
 package com.depotato.jubjub_manager.domain.auth
 
-import com.depotato.jubjub_manager.entity.dataclass.response.CheckLoginHistoryResult
-import com.depotato.jubjub_manager.entity.dataclass.response.SignInResult
+import com.depotato.jubjub_manager.domain.auth.login_hisotry.CheckLoginHistoryResult
+import com.depotato.jubjub_manager.domain.auth.sign_in.SignInResult
 import io.reactivex.Observable
 
 interface AuthRepository {

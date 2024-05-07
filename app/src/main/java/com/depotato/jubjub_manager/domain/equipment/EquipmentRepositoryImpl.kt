@@ -1,8 +1,8 @@
 package com.depotato.jubjub_manager.domain.equipment
 
+import com.depotato.jubjub_manager.data.remote.api.CommonResponse
 import com.depotato.jubjub_manager.data.remote.retrofit.NetRetrofit
 import com.depotato.jubjub_manager.domain.equipment.list.GetEquipmentsResult
-import com.depotato.jubjub_manager.entity.dataclass.response.CommonResponse
 import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.RequestBody

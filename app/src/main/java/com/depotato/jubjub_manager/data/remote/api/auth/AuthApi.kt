@@ -1,6 +1,6 @@
-package com.depotato.jubjub_manager.data.remote.api
+package com.depotato.jubjub_manager.data.remote.api.auth
 
-import com.depotato.jubjub_manager.entity.dataclass.response.CommonResponse
+import com.depotato.jubjub_manager.data.remote.api.CommonResponse
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Query

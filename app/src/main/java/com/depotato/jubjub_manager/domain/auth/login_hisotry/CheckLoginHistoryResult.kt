@@ -1,4 +1,4 @@
-package com.depotato.jubjub_manager.entity.dataclass.response
+package com.depotato.jubjub_manager.domain.auth.login_hisotry
 
 data class CheckLoginHistoryResult(
     val isExist: Boolean,

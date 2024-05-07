@@ -50,10 +50,10 @@ abstract class ModifyEquipmentBaseActivity<B : ViewDataBinding, VM : ModifyEquip
 
         viewModel.equipmentImageUri.observe(this){
             if(it == null){
-                imageRemoved()
+                onImageRemoved()
             }else{
                 viewModel.equipmentImageFile = UriConverter().getFileFromUri(contentResolver, it)
-                imageAdded()
+                onImageAdded()
             }
         }
 
@@ -85,12 +85,12 @@ abstract class ModifyEquipmentBaseActivity<B : ViewDataBinding, VM : ModifyEquip
         resultLauncher.launch(gallery)
     }
 
-    private fun imageAdded(){
+    private fun onImageAdded(){
         setEquipmentImage()
         activateRemoveButton()
         setEquipmentBGWhite()
     }
-    private fun imageRemoved(){
+    private fun onImageRemoved(){
         resetEquipmentImage()
         deactivateRemoveButton()
         setEquipmentBGGray()
@@ -123,12 +123,10 @@ abstract class ModifyEquipmentBaseActivity<B : ViewDataBinding, VM : ModifyEquip
 
 
     open fun removeImage(){
-        // X 아이콘의 온클릭 이벤트 정의
         viewModel._equipmentImageUri.value = null
     }
 
     private fun initCategorySpinner(){
-        //스피너 초기화
         spinnerCategory.adapter = CategorySpinnerAdapter(this, viewModel.categoryArray)
     }
 

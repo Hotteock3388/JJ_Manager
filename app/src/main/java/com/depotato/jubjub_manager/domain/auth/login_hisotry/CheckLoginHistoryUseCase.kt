@@ -1,6 +1,6 @@
-package com.depotato.jubjub_manager.domain.auth
+package com.depotato.jubjub_manager.domain.auth.login_hisotry
 
-import com.depotato.jubjub_manager.entity.dataclass.response.CheckLoginHistoryResult
+import com.depotato.jubjub_manager.domain.auth.AuthRepository
 
 class CheckLoginHistoryUseCase(
     private val authRepository: AuthRepository

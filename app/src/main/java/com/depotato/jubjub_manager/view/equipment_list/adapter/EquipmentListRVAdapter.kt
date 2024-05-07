@@ -12,11 +12,11 @@ import com.depotato.jubjub_manager.databinding.LayoutEquipmentListItemBinding
 
 class EquipmentListRVAdapter(private val _event: EquipmentItemEventListener) : RecyclerView.Adapter<EquipmentListRVAdapter.ViewHolder>(), Filterable {
 
-    var equipmentList: List<Equipment> = listOf()
-    private var filteredList = equipmentList.map { it.copy() }
+    var equipmentArray: Array<Equipment> = arrayOf()
+    private var filteredArray = equipmentArray.copyOf()
 
     override fun getItemCount(): Int {
-        return filteredList.size
+        return filteredArray.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -25,7 +25,7 @@ class EquipmentListRVAdapter(private val _event: EquipmentItemEventListener) : R
     }
 
     override fun onBindViewHolder(holder: ViewHolder, itemPosition: Int) {
-        holder.bind(filteredList[itemPosition])
+        holder.bind(filteredArray[itemPosition])
     }
 
     class ViewHolder(
@@ -51,16 +51,16 @@ class EquipmentListRVAdapter(private val _event: EquipmentItemEventListener) : R
         }
     }
 
-    fun updateItems(newEquipmentList: List<Equipment>){
-        val diffCallback = EquipmentListDiffCallback(equipmentList, newEquipmentList)
+    fun updateItems(newEquipmentArray: Array<Equipment>){
+        val diffCallback = EquipmentArrayDiffCallback(equipmentArray, newEquipmentArray)
         val diffResult = DiffUtil.calculateDiff(diffCallback) // 계산
         diffResult.dispatchUpdatesTo(this) // 리사이클러뷰 갱신!
 
-        updateEquipmentList(newEquipmentList)
+        updateEquipmentArray(newEquipmentArray)
     }
-    private fun updateEquipmentList(newEquipmentList: List<Equipment>){
-        equipmentList = newEquipmentList
-        filteredList = equipmentList.map { it.copy() }
+    private fun updateEquipmentArray(newEquipmentArray: Array<Equipment>){
+        equipmentArray = newEquipmentArray
+        filteredArray = equipmentArray.copyOf()
     }
 
     override fun getFilter(): Filter {
@@ -69,28 +69,28 @@ class EquipmentListRVAdapter(private val _event: EquipmentItemEventListener) : R
 
                 val searchText = constraint.toString().lowercase()
 
-                filteredList = if (searchText.isEmpty()) {
-                    equipmentList
+                filteredArray = if (searchText.isEmpty()) {
+                    equipmentArray
                 } else {
-                    mutableListOf<Equipment>().apply {
-                        for (equipment in equipmentList) {
+                    arrayListOf<Equipment>().apply {
+                        for (equipment in equipmentArray) {
                             if (equipment.name.lowercase().contains(searchText)
                                 || equipment.category.lowercase().contains(searchText)) {
                                 add(equipment)
                             }
                         }
-                    }
+                    }.toTypedArray()
                 }
 
                 return FilterResults().apply {
-                    values = filteredList
+                    values = filteredArray
                 }
 
             }
 
             override fun publishResults(constraint: CharSequence, results: FilterResults) {
-                filteredList = results.values as List<Equipment>
-                updateItems(filteredList)
+                filteredArray = results.values as Array<Equipment>
+                updateItems(filteredArray)
 //                notifyDataSetChanged()
             }
         }

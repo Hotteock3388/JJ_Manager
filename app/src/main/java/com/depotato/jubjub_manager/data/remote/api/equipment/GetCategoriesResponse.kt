@@ -1,4 +1,4 @@
-package com.depotato.jubjub_manager.entity.dataclass.response
+package com.depotato.jubjub_manager.data.remote.api.equipment
 
 data class GetCategoriesResponse(
     val status: Int,

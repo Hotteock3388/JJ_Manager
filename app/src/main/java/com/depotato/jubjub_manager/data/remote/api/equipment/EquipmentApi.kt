@@ -1,8 +1,6 @@
-package com.depotato.jubjub_manager.data.remote.api
+package com.depotato.jubjub_manager.data.remote.api.equipment
 
-import com.depotato.jubjub_manager.entity.dataclass.response.CommonResponse
-import com.depotato.jubjub_manager.entity.dataclass.response.GetCategoriesResponse
-import com.depotato.jubjub_manager.entity.dataclass.response.GetEquipmentsResponse
+import com.depotato.jubjub_manager.data.remote.api.CommonResponse
 import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
