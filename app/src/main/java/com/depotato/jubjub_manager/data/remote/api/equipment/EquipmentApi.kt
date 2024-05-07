@@ -1,8 +1,7 @@
-package com.depotato.jubjub_manager.data.remote.api
+package com.depotato.jubjub_manager.data.remote.api.equipment
 
-import com.depotato.jubjub_manager.entity.dataclass.response.CommonResponse
-import com.depotato.jubjub_manager.entity.dataclass.response.GetEquipmentResponse
-import io.reactivex.Single
+import com.depotato.jubjub_manager.data.remote.api.CommonResponse
+import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.GET
@@ -14,26 +13,30 @@ import retrofit2.http.Part
 interface EquipmentApi {
 
     @GET("equipment/")
-    fun getEquipment(): Single<GetEquipmentResponse>
+    fun getEquipment(): Observable<GetEquipmentsResponse>
 
     @Multipart
     @POST("equipment/")
     fun addEquipment(
         @Part file: MultipartBody.Part,
         @Part("equipment") equipment: RequestBody
-    ): Single<CommonResponse>
+    ): Observable<CommonResponse>
 
     @Multipart
     @PATCH("equipment/")
     fun editEquipmentExcludeImage(
         @Part("equipment") equipment: RequestBody
-    ): Single<CommonResponse>
+    ): Observable<CommonResponse>
 
     @Multipart
     @PATCH("equipment/")
     fun editEquipmentIncludeImage(
         @Part file: MultipartBody.Part,
         @Part("equipment") equipment: RequestBody
-    ): Single<CommonResponse>
+    ): Observable<CommonResponse>
+
+
+    @GET("equipment/category")
+    fun getCategories(): Observable<GetCategoriesResponse>
 
 }

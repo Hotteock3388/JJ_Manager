@@ -38,3 +38,5 @@ class SingleEventLiveData<T>: MutableLiveData<T>() {
     }
 
 }
+
+

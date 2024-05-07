@@ -2,48 +2,58 @@ package com.depotato.jubjub_manager.view.equipment_list
 
 import androidx.lifecycle.MutableLiveData
 import com.depotato.jubjub_manager.base.BaseViewModel
-import com.depotato.jubjub_manager.data.remote.retrofit.NetRetrofit
+import com.depotato.jubjub_manager.domain.equipment.list.GetEquipmentsResult
+import com.depotato.jubjub_manager.domain.equipment.list.GetEquipmentsUseCase
 import com.depotato.jubjub_manager.function_module.SingleEventLiveData
 import com.depotato.jubjub_manager.view.equipment_list.adapter.Equipment
+import com.depotato.jubjub_manager.view.equipment_list.adapter.EquipmentItemEventListener
+import com.depotato.jubjub_manager.view.equipment_list.adapter.EquipmentListRVAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class EquipmentListViewModel: BaseViewModel("EquipmentListViewModel") {
+class EquipmentListViewModel(
+    private val getEquipmentsUseCase: GetEquipmentsUseCase
+): BaseViewModel("EquipmentListViewModel") {
 
-    var equipmentArray = arrayOfNulls<Equipment>(0)
+    var equipmentsList = arrayOf<Equipment>()
 
-    private val _updateEquipmentArrayCompete = SingleEventLiveData<Unit>()
-    val updateEquipmentArrayComplete = _updateEquipmentArrayCompete
+    private val _getEquipmentsCompete = SingleEventLiveData<Unit>()
+    val getEquipmentsComplete = _getEquipmentsCompete
 
     val searchText = MutableLiveData<String>("")
 
+    private val _onEquipmentItemClick = SingleEventLiveData<Equipment>()
+    val onEquipmentItemClick: SingleEventLiveData<Equipment> = _onEquipmentItemClick
 
-    fun getEquipmentArray(){
+    val event = object: EquipmentItemEventListener(){
+        override fun onItemClick(equipment: Equipment) {
+            _onEquipmentItemClick.value = equipment
+        }
+    }
+
+    val adapter = EquipmentListRVAdapter(event)
+
+    fun getEquipments(){
 
         addDisposable(
-            NetRetrofit.getEquipmentApi().getEquipment()
+            getEquipmentsUseCase()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    equipmentArray = it.data
-
-                    showLog("equipmentArray = $equipmentArray")
-                    _updateEquipmentArrayCompete.value = Unit
-                },{
-
+                   when (it) {
+                       is GetEquipmentsResult.Success -> {
+                           equipmentsList = it.equipments
+                           _getEquipmentsCompete.value = Unit
+                       }
+                       is GetEquipmentsResult.Failure -> {
+                           _toastMessage.value = it.errorMessage
+                       }
+                   }
+                }, {
                     it.printStackTrace()
                     _toastMessage.value = it.localizedMessage
                 })
         )
-
-
-
-//            equipmentArray = arrayOf(
-//                Equipment("애플 iPad Pro 11형", "패드 & 탭", 14, 20, ""),
-//                Equipment("Macbook 13인치", "노트북", 2, 10, ""),
-//                Equipment("Magic Mouse 2", "악세서리", 10, 10, "")
-//            )
-
 
     }
 

@@ -3,6 +3,7 @@ package com.depotato.jubjub_manager.di.app
 import android.app.Application
 import com.depotato.jubjub_manager.di.module.activityModule
 import com.depotato.jubjub_manager.di.module.repositoryModule
+import com.depotato.jubjub_manager.di.module.useCaseModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -14,7 +15,8 @@ class MyApplication: Application() {
             androidContext(this@MyApplication)
             modules(
                 activityModule,
-                repositoryModule
+                repositoryModule,
+                useCaseModule
             )
         }
     }

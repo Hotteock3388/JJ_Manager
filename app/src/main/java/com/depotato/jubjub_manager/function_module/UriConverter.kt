@@ -6,7 +6,6 @@ import android.provider.MediaStore
 import java.io.File
 
 class UriConverter {
-
     fun getFileFromUri(contentResolver: ContentResolver, uri: Uri): File {
         var fp: String
 

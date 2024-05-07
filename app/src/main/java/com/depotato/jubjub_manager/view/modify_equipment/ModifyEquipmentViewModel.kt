@@ -1,26 +1,33 @@
 package com.depotato.jubjub_manager.view.modify_equipment
 
 import android.net.Uri
-import android.widget.AdapterView
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.depotato.jubjub_manager.base.BaseViewModel
+import com.depotato.jubjub_manager.domain.equipment.GetCategoryResult
+import com.depotato.jubjub_manager.domain.equipment.category.GetCategoriesUseCase
 import com.depotato.jubjub_manager.function_module.SingleEventLiveData
 import com.depotato.jubjub_manager.view.equipment_list.adapter.Equipment
+import com.google.gson.Gson
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import java.io.File
 
 open class ModifyEquipmentViewModel(
+    private val getCategoriesUseCase: GetCategoriesUseCase,
     className: String
 ) : BaseViewModel(className) {
 
-    val categoryArray = arrayOf(
-        "카테고리를 선택하세요.", "패드 & 탭", "데스크탑", "노트북", "액세서리", "임베디드", "기타"
-    )
+    var categoryArray = arrayOf("")
 
     var equipmentId = 0
-    var equipmentImageUri = SingleEventLiveData<Uri>()
-    var equipmentImageUrl = SingleEventLiveData<String>()
 
-    var equipmentImage = File("")
+
+    var equipmentImageUrl = SingleEventLiveData<String>()
+    var equipmentImageFile = File("")
 
     val equipmentName = MutableLiveData<String>()
 
@@ -29,17 +36,55 @@ open class ModifyEquipmentViewModel(
 
     var equipmentCategory = ""
 
-    val addComplete = SingleEventLiveData<Unit>()
+    var _equipmentImageUri = SingleEventLiveData<Uri>()
+    var equipmentImageUri: LiveData<Uri> = _equipmentImageUri
 
-    fun onSpinnerItemSelected(parent: AdapterView<*>?, position: Int) {
-        if (parent != null) {
-            equipmentCategory = if(position == 0){
-                ""
-            }else{
-                categoryArray[position]
-            }
-        }
+    protected val _getCategoriesComplete = SingleEventLiveData<Unit>()
+    val getCategoriesComplete: LiveData<Unit> = _getCategoriesComplete
+
+    protected val _addComplete = SingleEventLiveData<Unit>()
+    val addComplete: LiveData<Unit> = _addComplete
+
+
+    fun getCategories(){
+        addDisposable(
+            getCategoriesUseCase()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    when(it){
+                        is GetCategoryResult.Success -> {
+                            categoryArray = arrayOf("카테고리를 선택하세요.").plus(it.categories)
+                            _getCategoriesComplete.value = Unit
+                        }
+                        is GetCategoryResult.Failure -> {
+                            _toastMessage.value = it.errorMessage
+                        }
+                    }
+                }, {
+                    it.printStackTrace()
+                    _toastMessage.value = it.localizedMessage
+                })
+        )
     }
+
+    fun getImageMultipartFile(): MultipartBody.Part {
+        return MultipartBody.Part.createFormData(
+            "image",
+            equipmentImageFile.name,
+            RequestBody.create(
+                "image/${equipmentImageFile.extension}".toMediaTypeOrNull(),
+                equipmentImageFile
+            )
+        )
+    }
+    fun getEquipmentRequestBody(): RequestBody {
+        return RequestBody.create(
+            "application/json; charset=utf-8".toMediaTypeOrNull(),
+            Gson().toJson(createEquipmentObject())
+        )
+    }
+
 
     protected fun createEquipmentObject(): Equipment {
         return Equipment(

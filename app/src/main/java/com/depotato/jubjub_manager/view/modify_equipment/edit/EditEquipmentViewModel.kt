@@ -1,79 +1,84 @@
 package com.depotato.jubjub_manager.view.modify_equipment.edit
 
-import com.depotato.jubjub_manager.data.remote.retrofit.NetRetrofit
+import com.depotato.jubjub_manager.domain.equipment.CommonResult
+import com.depotato.jubjub_manager.domain.equipment.category.GetCategoriesUseCase
+import com.depotato.jubjub_manager.domain.equipment.edit.EditEquipmentUseCase
+import com.depotato.jubjub_manager.view.equipment_list.adapter.Equipment
 import com.depotato.jubjub_manager.view.modify_equipment.ModifyEquipmentViewModel
-import com.google.gson.Gson
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
 
-class EditEquipmentViewModel: ModifyEquipmentViewModel("EditEquipmentViewModel") {
+class EditEquipmentViewModel(
+    getCategoriesUseCase: GetCategoriesUseCase,
+    private val editEquipmentUseCase: EditEquipmentUseCase
+) : ModifyEquipmentViewModel(
+    getCategoriesUseCase,
+    "EditEquipmentViewModel"
+) {
 
+    fun initEquipmentData(equipment: Equipment){
+        try {
+            equipmentId = equipment.id
+            equipmentImageUrl.value = equipment.imageUrl
+            equipmentName.value = equipment.name
+            equipmentMaxAmount.value = equipment.maxAmount.toString()
+            equipmentCurrentAmount.value = equipment.currentAmount.toString()
+            equipmentCategory = equipment.category
+        }catch (e: Exception){
+            e.printStackTrace()
+        }
+    }
+
+    fun getCategoryIdx(): Int {
+        return categoryArray.indexOf(equipmentCategory)
+    }
 
     fun editEquipment() {
-
-        val equipmentImageRequestBody: RequestBody = RequestBody.create(
-            "image/${equipmentImage.extension}".toMediaTypeOrNull(),
-            equipmentImage
-        )
-
-        val multipartFile = MultipartBody.Part.createFormData(
-            "image",
-            equipmentImage.name,
-            equipmentImageRequestBody
-        )
-
-        val requestBody2: RequestBody = RequestBody.create(
-            "application/json; charset=utf-8".toMediaTypeOrNull(),
-            Gson().toJson(createEquipmentObject())
-        )
-
         if(equipmentImageUri.value == null){
-            addDisposable(
-                NetRetrofit.getEquipmentApi().editEquipmentExcludeImage(requestBody2)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
-
-                        _toastMessage.value = it.message
-
-                        if(it.status == 200){
-                            addComplete.value = Unit
-                        }
-
-                    },{
-
-                        _toastMessage.value = it.localizedMessage
-                        it.printStackTrace()
-
-                    })
+            setHandler(
+                editEquipmentUseCase.excludeImage(
+                    getEquipmentRequestBody()
+                )
             )
         } else {
-            addDisposable(
-                NetRetrofit.getEquipmentApi().editEquipmentIncludeImage(multipartFile, requestBody2)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
-
-                        _toastMessage.value = it.message
-
-                        if(it.status == 200){
-                            addComplete.value = Unit
-                        }
-
-                    },{
-
-                        _toastMessage.value = it.localizedMessage
-                        it.printStackTrace()
-
-                    })
+            setHandler(
+                editEquipmentUseCase.includeImage(
+                    getImageMultipartFile(),
+                    getEquipmentRequestBody()
+                )
             )
         }
+    }
 
+    private fun setHandler(observable: Observable<CommonResult>){
+        addDisposable(
+            observable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    handleEditEquipmentResult(it)
+                },{
+                    handleEditEquipmentError(it)
+                })
+        )
+    }
 
+    private fun handleEditEquipmentResult(result: CommonResult){
+        when(result){
+            is CommonResult.Success -> {
+                _addComplete.value = Unit
+                _toastMessage.value = result.responseMessage
+            }
+            is CommonResult.Failure -> {
+                _toastMessage.value = result.errorMessage
+            }
+        }
+    }
 
+    private fun handleEditEquipmentError(error: Throwable){
+        _toastMessage.value = error.localizedMessage
+        error.printStackTrace()
     }
 
 }

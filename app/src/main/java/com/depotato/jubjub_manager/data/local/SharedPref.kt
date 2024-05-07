@@ -18,7 +18,7 @@ class SharedPref(private val context: Context) {
     }
 
     fun getDataString(key: String): String {
-        return getPref().getString(key, "0")!!
+        return getPref().getString(key, "")!!
     }
 
     fun removeData(key: String){

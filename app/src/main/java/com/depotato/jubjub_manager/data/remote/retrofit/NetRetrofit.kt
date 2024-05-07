@@ -1,8 +1,8 @@
 package com.depotato.jubjub_manager.data.remote.retrofit
 
 import com.depotato.jubjub_manager.BuildConfig
-import com.depotato.jubjub_manager.data.remote.api.AuthApi
-import com.depotato.jubjub_manager.data.remote.api.EquipmentApi
+import com.depotato.jubjub_manager.data.remote.api.auth.AuthApi
+import com.depotato.jubjub_manager.data.remote.api.equipment.EquipmentApi
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -35,11 +35,11 @@ object NetRetrofit {
 
     private val retrofit = createRetrofitInstance()
 
-    fun getAuthApi(): AuthApi{
+    fun getAuthApi(): AuthApi {
         return retrofit.create(AuthApi::class.java)
     }
 
-    fun getEquipmentApi(): EquipmentApi{
+    fun getEquipmentApi(): EquipmentApi {
         return retrofit.create(EquipmentApi::class.java)
     }
 }

@@ -1,6 +1,5 @@
 package com.depotato.jubjub_manager.view.modify_equipment.edit
 
-import androidx.core.net.toUri
 import com.bumptech.glide.Glide
 import com.depotato.jubjub_manager.R
 import com.depotato.jubjub_manager.databinding.ActivityEditEquipmentBinding
@@ -15,33 +14,28 @@ class EditEquipmentActivity : ModifyEquipmentBaseActivity<ActivityEditEquipmentB
     override fun init() {
         super.init()
         initEquipmentInfo()
+        binding.spinnerCategory.setSelection(viewModel.getCategoryIdx())
+    }
+
+    override fun initLiveData() {
+        super.initLiveData()
+        viewModel.equipmentImageUrl.observe(this){
+            setEquipmentImage(it)
+        }
+    }
+
+    private fun setEquipmentImage(imageUrl: String?) {
+        Glide.with(binding.root)
+            .load(imageUrl)
+            .centerCrop()
+            .placeholder(R.drawable.ic_add_image)
+            .into(binding.imageViewEquipmentImage)
     }
 
     private fun initEquipmentInfo(){
-
         try {
             val equipment = intent.getSerializableExtra("equipment") as Equipment
-
-            with(viewModel){
-                equipmentId = equipment.id
-                equipmentImageUrl.value = equipment.imageUrl
-                equipmentName.value = equipment.name
-                equipmentMaxAmount.value = equipment.maxAmount.toString()
-                equipmentCurrentAmount.value = equipment.currentAmount.toString()
-                equipmentCategory = equipment.category
-
-                binding.spinnerCategory.setSelection(getCategoryIdx(equipment.category))
-
-                Glide
-                    .with(binding.root)
-                    .load(equipment.imageUrl)
-                    .centerCrop()
-                    .placeholder(R.drawable.ic_add_image)
-                    .into(binding.imageViewEquipmentImage)
-
-                equipment.imageUrl.toUri()
-            }
-
+            viewModel.initEquipmentData(equipment)
         }catch (e: Exception){
             e.printStackTrace()
         }
@@ -52,17 +46,10 @@ class EditEquipmentActivity : ModifyEquipmentBaseActivity<ActivityEditEquipmentB
         viewModel.equipmentImageUrl.value = ""
     }
 
-    private fun getCategoryIdx(category: String): Int {
-        return viewModel.categoryArray.indexOf(category)
-    }
-
     fun editEquipment(){
-        //send EquipmentData
-
         if(viewModel.isEquipmentDataValid()){
-
             viewModel.editEquipment()
         }
-
     }
+
 }

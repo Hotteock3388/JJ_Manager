@@ -2,9 +2,9 @@ package com.depotato.jubjub_manager.view.modify_equipment
 
 import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import android.provider.MediaStore
 import android.view.View
+import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.Spinner
 import androidx.activity.result.contract.ActivityResultContracts
@@ -28,21 +28,16 @@ abstract class ModifyEquipmentBaseActivity<B : ViewDataBinding, VM : ModifyEquip
 
 
     private val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+
     private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
         if(result.resultCode == Activity.RESULT_OK){
-
-            //이미지가 Uri 형태로 제공
-            val imageUri : Uri? = result.data?.data
-
-            //예외처리 추가 예정
-            viewModel.equipmentImageUri.value = imageUri
-
+            viewModel._equipmentImageUri.value = result.data?.data
         }
     }
 
     override fun init() {
         initViews()
-        initCategorySpinner()
+        viewModel.getCategories()
     }
 
     private fun initViews() {
@@ -54,23 +49,16 @@ abstract class ModifyEquipmentBaseActivity<B : ViewDataBinding, VM : ModifyEquip
     override fun initLiveData() {
 
         viewModel.equipmentImageUri.observe(this){
-
-            try {
-                if(it == null){
-                    showToast("Image deleted")
-                }else{
-                    viewModel.equipmentImage = UriConverter().getFileFromUri(contentResolver, it!!)
-                }
-
-                setEquipmentImageViewStatus(
-                    if(it == null) ImageAddState.DELETED else ImageAddState.ADDED
-                )
-
-            }catch (e: Exception){
-                showToast(e.message.toString())
-                //오류 대응 코드 추가
+            if(it == null){
+                onImageRemoved()
+            }else{
+                viewModel.equipmentImageFile = UriConverter().getFileFromUri(contentResolver, it)
+                onImageAdded()
             }
+        }
 
+        viewModel.getCategoriesComplete.observe(this){
+            initCategorySpinner()
         }
 
         viewModel.equipmentMaxAmount.observe(this){
@@ -83,13 +71,34 @@ abstract class ModifyEquipmentBaseActivity<B : ViewDataBinding, VM : ModifyEquip
 
     }
 
+    fun onSpinnerItemSelected(parent: AdapterView<*>?, position: Int) {
+        with(viewModel){
+            equipmentCategory = if(position == 0){
+                ""
+            }else{
+                categoryArray[position]
+            }
+        }
+    }
+
     fun openGallery(){
         resultLauncher.launch(gallery)
     }
 
+    private fun onImageAdded(){
+        setEquipmentImage()
+        activateRemoveButton()
+        setEquipmentBGWhite()
+    }
+    private fun onImageRemoved(){
+        resetEquipmentImage()
+        deactivateRemoveButton()
+        setEquipmentBGGray()
+    }
+
     private fun setEquipmentImageViewStatus(currentState: ImageAddState){
         when(currentState){
-            ImageAddState.DELETED -> {
+            ImageAddState.REMOVED -> {
                 resetEquipmentImage()
                 deactivateRemoveButton()
                 setEquipmentBGGray()
@@ -103,39 +112,22 @@ abstract class ModifyEquipmentBaseActivity<B : ViewDataBinding, VM : ModifyEquip
         }
     }
 
-    private fun resetEquipmentImage() {
-        imageViewEquipmentImage.setImageResource(R.drawable.ic_add_image)
-    }
-    private fun setEquipmentImage(){
-        imageViewEquipmentImage.setImageURI(viewModel.equipmentImageUri.value)
-    }
+    private fun resetEquipmentImage() = imageViewEquipmentImage.setImageResource(R.drawable.ic_add_image)
+    private fun setEquipmentImage() = imageViewEquipmentImage.setImageURI(viewModel.equipmentImageUri.value)
 
-    private fun activateRemoveButton(){
-        imageViewDeleteImage.visibility = View.VISIBLE
-    }
-    private fun deactivateRemoveButton(){
-        imageViewDeleteImage.visibility = View.GONE
-    }
+    private fun activateRemoveButton() = imageViewDeleteImage.setVisibility(View.VISIBLE)
+    private fun deactivateRemoveButton() = imageViewDeleteImage.setVisibility(View.GONE)
 
-    private fun setEquipmentBGWhite(){
-        imageViewEquipmentImage.setBackgroundResource(R.drawable.bg_equipment_image)
-    }
-    private fun setEquipmentBGGray(){
-        imageViewEquipmentImage.setBackgroundResource(R.drawable.bg_add_image)
-    }
+    private fun setEquipmentBGWhite() = imageViewEquipmentImage.setBackgroundResource(R.drawable.bg_equipment_image)
+    private fun setEquipmentBGGray() = imageViewEquipmentImage.setBackgroundResource(R.drawable.bg_add_image)
 
 
     open fun removeImage(){
-        // X 아이콘의 온클릭 이벤트 정의
-        viewModel.equipmentImageUri.value = null
+        viewModel._equipmentImageUri.value = null
     }
 
     private fun initCategorySpinner(){
-        //스피너 초기화
         spinnerCategory.adapter = CategorySpinnerAdapter(this, viewModel.categoryArray)
-
-//        EquipmentCategorySpinner().initCategorySpinner(this, binding.spinnerCategory, viewModel.categoryArray)
     }
-
 
 }

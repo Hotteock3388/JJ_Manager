@@ -12,7 +12,7 @@ import com.depotato.jubjub_manager.databinding.LayoutEquipmentListItemBinding
 
 class EquipmentListRVAdapter(private val _event: EquipmentItemEventListener) : RecyclerView.Adapter<EquipmentListRVAdapter.ViewHolder>(), Filterable {
 
-    var equipmentArray: Array<Equipment?> = arrayOfNulls(0)
+    var equipmentArray: Array<Equipment> = arrayOf()
     private var filteredArray = equipmentArray.copyOf()
 
     override fun getItemCount(): Int {
@@ -38,30 +38,27 @@ class EquipmentListRVAdapter(private val _event: EquipmentItemEventListener) : R
                 event = _event
             }
 
-
             Glide
                 .with(binding.root)
                 .load(_equipment?.imageUrl)
                 .centerCrop()
                 .placeholder(R.drawable.ic_add_image)
                 .into(binding.imageViewImage)
-
         }
 
         interface EquipmentItemEvent{
-            fun onItemClick(equipment: Equipment?)
+            fun onItemClick(equipment: Equipment)
         }
-
     }
 
-    fun updateItems(newEquipmentArray: Array<Equipment?>){
-        val diffCallback = EquipmentListDiffCallback(equipmentArray, newEquipmentArray)
+    fun updateItems(newEquipmentArray: Array<Equipment>){
+        val diffCallback = EquipmentArrayDiffCallback(equipmentArray, newEquipmentArray)
         val diffResult = DiffUtil.calculateDiff(diffCallback) // 계산
         diffResult.dispatchUpdatesTo(this) // 리사이클러뷰 갱신!
 
-        updateEquipmentList(newEquipmentArray)
+        updateEquipmentArray(newEquipmentArray)
     }
-    private fun updateEquipmentList(newEquipmentArray: Array<Equipment?>){
+    private fun updateEquipmentArray(newEquipmentArray: Array<Equipment>){
         equipmentArray = newEquipmentArray
         filteredArray = equipmentArray.copyOf()
     }
@@ -75,9 +72,9 @@ class EquipmentListRVAdapter(private val _event: EquipmentItemEventListener) : R
                 filteredArray = if (searchText.isEmpty()) {
                     equipmentArray
                 } else {
-                    ArrayList<Equipment>().apply {
+                    arrayListOf<Equipment>().apply {
                         for (equipment in equipmentArray) {
-                            if (equipment!!.name.lowercase().contains(searchText)
+                            if (equipment.name.lowercase().contains(searchText)
                                 || equipment.category.lowercase().contains(searchText)) {
                                 add(equipment)
                             }
@@ -92,8 +89,9 @@ class EquipmentListRVAdapter(private val _event: EquipmentItemEventListener) : R
             }
 
             override fun publishResults(constraint: CharSequence, results: FilterResults) {
-                filteredArray = results.values as Array<Equipment?>
-                notifyDataSetChanged()
+                filteredArray = results.values as Array<Equipment>
+                updateItems(filteredArray)
+//                notifyDataSetChanged()
             }
         }
     }
