@@ -14,7 +14,6 @@ class EditEquipmentActivity : ModifyEquipmentBaseActivity<ActivityEditEquipmentB
     override fun init() {
         super.init()
         initEquipmentInfo()
-        binding.spinnerCategory.setSelection(viewModel.getCategoryIdx())
     }
 
     override fun initLiveData() {

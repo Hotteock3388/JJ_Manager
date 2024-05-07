@@ -47,7 +47,6 @@ abstract class ModifyEquipmentBaseActivity<B : ViewDataBinding, VM : ModifyEquip
     }
 
     override fun initLiveData() {
-
         viewModel.equipmentImageUri.observe(this){
             if(it == null){
                 onImageRemoved()
@@ -59,6 +58,10 @@ abstract class ModifyEquipmentBaseActivity<B : ViewDataBinding, VM : ModifyEquip
 
         viewModel.getCategoriesComplete.observe(this){
             initCategorySpinner()
+
+            if(viewModel.equipmentCategory.isNotBlank()){
+                spinnerCategory.setSelection(viewModel.getCategoryIdx())
+            }
         }
 
         viewModel.equipmentMaxAmount.observe(this){

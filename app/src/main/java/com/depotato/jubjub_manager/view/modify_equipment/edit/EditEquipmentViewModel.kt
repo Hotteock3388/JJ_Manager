@@ -30,10 +30,6 @@ class EditEquipmentViewModel(
         }
     }
 
-    fun getCategoryIdx(): Int {
-        return categoryArray.indexOf(equipmentCategory)
-    }
-
     fun editEquipment() {
         if(equipmentImageUri.value == null){
             setHandler(

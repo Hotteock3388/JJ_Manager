@@ -44,4 +44,8 @@ class EquipmentListFragment : BaseFragment<FragmentEquipmentListBinding, Equipme
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getEquipments()
+    }
 }

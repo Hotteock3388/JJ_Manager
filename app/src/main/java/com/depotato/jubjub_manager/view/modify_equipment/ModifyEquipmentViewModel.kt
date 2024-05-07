@@ -68,6 +68,10 @@ open class ModifyEquipmentViewModel(
         )
     }
 
+    fun getCategoryIdx(): Int {
+        return categoryArray.indexOf(equipmentCategory)
+    }
+
     fun getImageMultipartFile(): MultipartBody.Part {
         return MultipartBody.Part.createFormData(
             "image",
