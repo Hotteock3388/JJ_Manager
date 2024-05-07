@@ -15,7 +15,7 @@ val activityModule = module {
     viewModel { MyPageViewModel(get()) }
     viewModel { SignInViewModel(get(), get()) }
     viewModel { EquipmentListViewModel(get()) }
-    viewModel { EditEquipmentViewModel(get()) }
+    viewModel { EditEquipmentViewModel(get(), get()) }
     viewModel { MainActivityViewModel() }
 
 }
