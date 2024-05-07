@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="ac"
+            type="com.depotato.jubjub_manager.view.sign_in.SignInActivity" />
+        <variable
+            name="vm"
+            type="com.depotato.jubjub_manager.view.sign_in.SignInViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".view.sign_in.SignInActivity">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_login_title"
+            app:layout_constraintBottom_toTopOf="@+id/guideline4"
+            app:layout_constraintEnd_toEndOf="@id/guideline3"
+            app:layout_constraintStart_toStartOf="@id/guideline2"
+            app:layout_constraintTop_toTopOf="@+id/guideline1" />
+
+        <TextView style="@style/SignInText"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="@+id/guideline5" />
+
+        <TextView style="@style/EditTextTitle"
+            android:id="@+id/textView_id"
+            android:text="ID"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="@+id/guideline6" />
+
+
+        <EditText style="@style/EditText_SignIn"
+            android:id="@+id/editText_id"
+            android:hint="아이디를 입력하세요."
+            android:text="@={vm.userId}"
+            app:layout_constraintEnd_toStartOf="@+id/guideline9"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/textView_id" />
+
+        <View style="@style/HorizontalLine_Blue"
+            app:layout_constraintEnd_toEndOf="@+id/editText_id"
+            app:layout_constraintStart_toStartOf="@+id/editText_id"
+            app:layout_constraintTop_toBottomOf="@+id/editText_id" />
+
+
+        <TextView style="@style/EditTextTitle"
+            android:id="@+id/textView_pw"
+            android:text="Password"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="@+id/guideline7" />
+
+
+        <EditText style="@style/EditText_SignIn"
+            android:id="@+id/editText_pw"
+            android:hint="비밀번호를 입력하세요."
+            android:inputType="textPassword"
+            android:text="@={vm.userPw}"
+            app:layout_constraintEnd_toStartOf="@+id/guideline9"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/textView_pw" />
+
+        <View style="@style/HorizontalLine_Blue"
+            app:layout_constraintEnd_toEndOf="@+id/editText_pw"
+            app:layout_constraintStart_toStartOf="@+id/editText_pw"
+            app:layout_constraintTop_toBottomOf="@+id/editText_pw" />
+
+        <TextView style="@style/TextView_Black"
+            android:text="비밀번호를 잊으신 경우, 관리자에게 문의해주세요."
+            android:textSize="10dp"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="@+id/guideline8" />
+
+
+        <androidx.appcompat.widget.AppCompatButton style="@style/Button_SignIn"
+            android:text="로그인"
+            android:onClick="@{() -> vm.signIn()}"
+            app:layout_constraintEnd_toStartOf="@+id/guideline9"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="@+id/guideline10" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline1"
+            style="@style/GuideLine_Horizontal"
+            app:layout_constraintGuide_percent="0.069" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            style="@style/GuideLine_Vertical"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.349" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            style="@style/GuideLine_Vertical"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.651" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            style="@style/GuideLine_Vertical"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.168" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline9"
+            style="@style/GuideLine_Vertical"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.835" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline4"
+            style="@style/GuideLine_Horizontal"
+            app:layout_constraintGuide_percent="0.117" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline5"
+            style="@style/GuideLine_Horizontal"
+            app:layout_constraintGuide_percent="0.241" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline6"
+            style="@style/GuideLine_Horizontal"
+            app:layout_constraintGuide_percent="0.324" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline7"
+            style="@style/GuideLine_Horizontal"
+            app:layout_constraintGuide_percent="0.418" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline8"
+            style="@style/GuideLine_Horizontal"
+            app:layout_constraintGuide_percent="0.493" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline10"
+            style="@style/GuideLine_Horizontal"
+            app:layout_constraintGuide_percent="0.785" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

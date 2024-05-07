@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clickable="false"
+    style="@style/CategorySpinner">
+
+    <TextView
+        style="@style/CategorySpinnerItem"
+        android:id="@+id/textView_category"
+        />
+
+</LinearLayout>
