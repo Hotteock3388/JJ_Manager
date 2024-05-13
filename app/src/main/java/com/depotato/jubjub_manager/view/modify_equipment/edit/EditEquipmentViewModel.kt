@@ -1,13 +1,13 @@
 package com.depotato.jubjub_manager.view.modify_equipment.edit
 
+import androidx.lifecycle.viewModelScope
 import com.depotato.jubjub_manager.domain.equipment.CommonResult
 import com.depotato.jubjub_manager.domain.equipment.category.GetCategoriesUseCase
 import com.depotato.jubjub_manager.domain.equipment.edit.EditEquipmentUseCase
 import com.depotato.jubjub_manager.view.equipment_list.adapter.Equipment
 import com.depotato.jubjub_manager.view.modify_equipment.ModifyEquipmentViewModel
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 
 class EditEquipmentViewModel(
     getCategoriesUseCase: GetCategoriesUseCase,
@@ -47,17 +47,12 @@ class EditEquipmentViewModel(
         }
     }
 
-    private fun setHandler(observable: Observable<CommonResult>){
-        addDisposable(
-            observable
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    handleEditEquipmentResult(it)
-                },{
-                    handleEditEquipmentError(it)
-                })
-        )
+    private fun setHandler(observable: Flow<CommonResult>){
+        viewModelScope.launch{
+            observable.collect{
+                handleEditEquipmentResult(it)
+            }
+        }
     }
 
     private fun handleEditEquipmentResult(result: CommonResult){

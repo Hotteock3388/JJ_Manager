@@ -3,11 +3,11 @@ package com.depotato.jubjub_manager.data.remote.retrofit
 import com.depotato.jubjub_manager.BuildConfig
 import com.depotato.jubjub_manager.data.remote.api.auth.AuthApi
 import com.depotato.jubjub_manager.data.remote.api.equipment.EquipmentApi
+import com.depotato.jubjub_manager.data.remote.retrofit.adapter.ResultCallAdapterFactory
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
@@ -28,7 +28,7 @@ object NetRetrofit {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL) // 서버 Base URL 설정
             .client(client)
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addCallAdapterFactory(ResultCallAdapterFactory())
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
             .build()
     }

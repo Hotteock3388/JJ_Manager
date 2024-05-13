@@ -25,7 +25,7 @@ class EquipmentListFragment : BaseFragment<FragmentEquipmentListBinding, Equipme
     override fun initLiveData() {
 
         viewModel.getEquipmentsComplete.observe(this){
-            viewModel.adapter.updateItems(viewModel.equipmentsList)
+            viewModel.adapter.updateItems(viewModel.equipmentsArray)
         }
 
         viewModel.searchText.observe(this){

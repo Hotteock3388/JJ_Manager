@@ -3,14 +3,14 @@ package com.depotato.jubjub_manager.view.modify_equipment
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.depotato.jubjub_manager.base.BaseViewModel
 import com.depotato.jubjub_manager.domain.equipment.GetCategoryResult
 import com.depotato.jubjub_manager.domain.equipment.category.GetCategoriesUseCase
 import com.depotato.jubjub_manager.function_module.SingleEventLiveData
 import com.depotato.jubjub_manager.view.equipment_list.adapter.Equipment
 import com.google.gson.Gson
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -47,25 +47,19 @@ open class ModifyEquipmentViewModel(
 
 
     fun getCategories(){
-        addDisposable(
-            getCategoriesUseCase()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    when(it){
-                        is GetCategoryResult.Success -> {
-                            categoryArray = arrayOf("카테고리를 선택하세요.").plus(it.categories)
-                            _getCategoriesComplete.value = Unit
-                        }
-                        is GetCategoryResult.Failure -> {
-                            _toastMessage.value = it.errorMessage
-                        }
+        viewModelScope.launch {
+            getCategoriesUseCase().collect{
+                when(it){
+                    is GetCategoryResult.Success -> {
+                        categoryArray = arrayOf("카테고리를 선택하세요.").plus(it.categories)
+                        _getCategoriesComplete.value = Unit
                     }
-                }, {
-                    it.printStackTrace()
-                    _toastMessage.value = it.localizedMessage
-                })
-        )
+                    is GetCategoryResult.Failure -> {
+                        _toastMessage.value = it.errorMessage
+                    }
+                }
+            }
+        }
     }
 
     fun getCategoryIdx(): Int {
@@ -92,17 +86,17 @@ open class ModifyEquipmentViewModel(
 
     protected fun createEquipmentObject(): Equipment {
         return Equipment(
-            equipmentId,
-            equipmentName.value!!,
-            equipmentCategory,
-            equipmentMaxAmount.value!!.toInt(),
-            equipmentMaxAmount.value!!.toInt(),
-            if(equipmentImageUrl.value != null) equipmentImageUrl.value!! else ""
+            id = equipmentId,
+            name = equipmentName.value!!,
+            category = equipmentCategory,
+            currentAmount = equipmentCurrentAmount.value!!.toInt(),
+            maxAmount = equipmentMaxAmount.value!!.toInt(),
+//            imageUrl = if(equipmentImageUrl.value != null) equipmentImageUrl.value!! else ""
+            imageUrl = "" + "${equipmentImageUrl.value}"
         )
     }
 
     fun isEquipmentDataValid(): Boolean {
-
         return if (equipmentImageUri.value == null && equipmentImageUrl.value!!.isBlank()) {
             invalidData("기자재 사진을 등록해주세요")
         } else if (equipmentName.value!!.isBlank()) {
@@ -118,7 +112,6 @@ open class ModifyEquipmentViewModel(
         } else {
             true
         }
-
     }
 
     private fun invalidData(msg: String): Boolean {

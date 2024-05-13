@@ -65,7 +65,9 @@ abstract class ModifyEquipmentBaseActivity<B : ViewDataBinding, VM : ModifyEquip
         }
 
         viewModel.equipmentMaxAmount.observe(this){
-            viewModel.equipmentCurrentAmount.value = it
+            if(it.toInt() < viewModel.equipmentCurrentAmount.value!!.toInt()){
+                viewModel.equipmentCurrentAmount.value = it
+            }
         }
 
         viewModel.addComplete.observe(this){

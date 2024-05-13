@@ -19,7 +19,9 @@ class EditEquipmentActivity : ModifyEquipmentBaseActivity<ActivityEditEquipmentB
     override fun initLiveData() {
         super.initLiveData()
         viewModel.equipmentImageUrl.observe(this){
-            setEquipmentImage(it)
+            if(!it.isNullOrBlank()){
+                setEquipmentImage(it)
+            }
         }
     }
 
