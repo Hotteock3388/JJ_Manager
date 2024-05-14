@@ -25,18 +25,6 @@ class AuthRepositoryImpl(
             emit(SignInResult.Failure(it.message ?: UNKNOWN_ERROR_OCCURRED))
         }
 
-//        val r = NetRetrofit.getAuthApi().signIn(
-//            userId,
-//            userPw
-//        ).runCatching {
-//            when (status) {
-//                200 -> {
-//                    saveLoginData(userId, userPw)
-//                    SignInResult.Success(message)
-//                }
-//                else -> SignInResult.Failure(message)
-//            }
-//        }
     }
 
     override fun checkLoginHistoryExist(): CheckLoginHistoryResult {
