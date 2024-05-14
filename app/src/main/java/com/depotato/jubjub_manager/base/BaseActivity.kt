@@ -7,7 +7,11 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.depotato.jubjub_manager.BR
+import kotlinx.coroutines.launch
 
 
 abstract class BaseActivity <B: ViewDataBinding, VM: BaseViewModel>(
@@ -35,14 +39,19 @@ abstract class BaseActivity <B: ViewDataBinding, VM: BaseViewModel>(
             lifecycleOwner = this@BaseActivity
         }
 
-        initLiveData()
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                initFlowCollector()
+            }
+        }
         initListener()
         init()
         observeToastMessage()
     }
 
     open fun init(){}
-    open fun initLiveData(){}
+    open suspend fun initFlowCollector(){}
     open fun initListener(){}
 
     // 토스트 메시지 띄우기

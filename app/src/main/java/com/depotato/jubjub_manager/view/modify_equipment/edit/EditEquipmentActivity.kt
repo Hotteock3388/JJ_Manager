@@ -16,8 +16,8 @@ class EditEquipmentActivity : ModifyEquipmentBaseActivity<ActivityEditEquipmentB
         initEquipmentInfo()
     }
 
-    override fun initLiveData() {
-        super.initLiveData()
+    override suspend fun initFlowCollector() {
+        super.initFlowCollector()
         viewModel.equipmentImageUrl.observe(this){
             if(!it.isNullOrBlank()){
                 setEquipmentImage(it)

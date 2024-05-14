@@ -46,7 +46,7 @@ abstract class ModifyEquipmentBaseActivity<B : ViewDataBinding, VM : ModifyEquip
         spinnerCategory = binding.root.findViewById(R.id.spinner_category)
     }
 
-    override fun initLiveData() {
+    override suspend fun initFlowCollector() {
         viewModel.equipmentImageUri.observe(this){
             if(it == null){
                 onImageRemoved()

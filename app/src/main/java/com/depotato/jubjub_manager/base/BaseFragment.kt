@@ -10,7 +10,11 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.depotato.jubjub_manager.BR
+import kotlinx.coroutines.launch
 
 abstract class BaseFragment<B : ViewDataBinding, VM: BaseViewModel>(
     @LayoutRes
@@ -41,12 +45,18 @@ abstract class BaseFragment<B : ViewDataBinding, VM: BaseViewModel>(
         }
 
         init()
-        initLiveData()
         initListener()
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                initFlowCollector()
+            }
+        }
+
     }
 
     open fun init() {}
-    open fun initLiveData() {}
+    open suspend fun initFlowCollector() {}
     open fun initListener() {}
 
     fun showToast(msg: String) = Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()

@@ -22,7 +22,7 @@ class EquipmentListFragment : BaseFragment<FragmentEquipmentListBinding, Equipme
         binding.recyclerViewEquipmentList.adapter = viewModel.adapter
     }
 
-    override fun initLiveData() {
+    override suspend fun initFlowCollector() {
 
         viewModel.getEquipmentsComplete.observe(this){
             viewModel.adapter.updateItems(viewModel.equipmentsArray)
