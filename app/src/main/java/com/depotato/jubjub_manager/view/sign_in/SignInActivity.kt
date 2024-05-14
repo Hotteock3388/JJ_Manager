@@ -5,6 +5,9 @@ import com.depotato.jubjub_manager.R
 import com.depotato.jubjub_manager.base.BaseActivity
 import com.depotato.jubjub_manager.databinding.ActivitySignInBinding
 import com.depotato.jubjub_manager.view.main.MainActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
 class SignInActivity : BaseActivity<ActivitySignInBinding, SignInViewModel>(R.layout.activity_sign_in, "SignInActivity") {
@@ -19,8 +22,10 @@ class SignInActivity : BaseActivity<ActivitySignInBinding, SignInViewModel>(R.la
     }
 
     override fun initLiveData() {
-        viewModel.signInComplete.observe(this){
-            openMain()
+        CoroutineScope(Main).launch {
+            viewModel.signInComplete.collect {
+                openMain()
+            }
         }
     }
 
