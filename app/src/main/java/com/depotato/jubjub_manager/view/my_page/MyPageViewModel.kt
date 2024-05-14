@@ -1,15 +1,17 @@
 package com.depotato.jubjub_manager.view.my_page
 
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
 import com.depotato.jubjub_manager.base.BaseViewModel
 import com.depotato.jubjub_manager.data.local.SharedPref
 import com.depotato.jubjub_manager.entity.singleton.Constants
-import com.depotato.jubjub_manager.function_module.SingleEventLiveData
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.launch
 
 class MyPageViewModel(private val sharedPref: SharedPref): BaseViewModel("MyPageViewModel") {
     
-    private val _logOutComplete = SingleEventLiveData<Unit>()
-    val logOutComplete = _logOutComplete
+    private val _logOutComplete = MutableSharedFlow<Unit>()
+    val logOutComplete = _logOutComplete.asSharedFlow()
 
     fun logOut(){
         with(sharedPref){
@@ -17,7 +19,9 @@ class MyPageViewModel(private val sharedPref: SharedPref): BaseViewModel("MyPage
             removeData(Constants.USER_PW)
         }
         _toastMessage.value = "로그아웃 완료"
-        _logOutComplete.value = Unit
+        viewModelScope.launch {
+            _logOutComplete.emit(Unit)
+        }
     }
 
 }
