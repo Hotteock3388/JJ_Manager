@@ -4,6 +4,7 @@ import com.depotato.jubjub_manager.domain.auth.login_hisotry.CheckLoginHistoryUs
 import com.depotato.jubjub_manager.domain.auth.sign_in.SignInUseCase
 import com.depotato.jubjub_manager.domain.equipment.add.AddEquipmentUseCase
 import com.depotato.jubjub_manager.domain.equipment.category.GetCategoriesUseCase
+import com.depotato.jubjub_manager.domain.equipment.edit.EditEquipmentUseCase
 import com.depotato.jubjub_manager.domain.equipment.list.GetEquipmentsUseCase
 import org.koin.dsl.module
 
@@ -14,10 +15,13 @@ val useCaseModule = module {
     factory { SignInUseCase(get()) }
     factory { CheckLoginHistoryUseCase(get()) }
 
+    // Equipment
     factory { GetEquipmentsUseCase(get()) }
     factory { AddEquipmentUseCase(get()) }
-    factory { GetCategoriesUseCase(get()) }
+    factory { EditEquipmentUseCase(get()) }
 
+    // Category
+    factory { GetCategoriesUseCase(get()) }
 
 
 }

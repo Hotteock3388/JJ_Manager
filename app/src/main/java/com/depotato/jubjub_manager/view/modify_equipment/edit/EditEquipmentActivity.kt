@@ -14,13 +14,14 @@ class EditEquipmentActivity : ModifyEquipmentBaseActivity<ActivityEditEquipmentB
     override fun init() {
         super.init()
         initEquipmentInfo()
-        binding.spinnerCategory.setSelection(viewModel.getCategoryIdx())
     }
 
     override fun initLiveData() {
         super.initLiveData()
         viewModel.equipmentImageUrl.observe(this){
-            setEquipmentImage(it)
+            if(!it.isNullOrBlank()){
+                setEquipmentImage(it)
+            }
         }
     }
 

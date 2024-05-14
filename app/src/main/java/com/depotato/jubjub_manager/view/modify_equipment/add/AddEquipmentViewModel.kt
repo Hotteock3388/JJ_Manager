@@ -1,39 +1,33 @@
 package com.depotato.jubjub_manager.view.modify_equipment.add
 
+import androidx.lifecycle.viewModelScope
 import com.depotato.jubjub_manager.domain.equipment.CommonResult
 import com.depotato.jubjub_manager.domain.equipment.add.AddEquipmentUseCase
 import com.depotato.jubjub_manager.domain.equipment.category.GetCategoriesUseCase
 import com.depotato.jubjub_manager.view.modify_equipment.ModifyEquipmentViewModel
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.launch
 
 class AddEquipmentViewModel(
     private val addEquipmentUseCase: AddEquipmentUseCase,
     getCategoriesUseCase: GetCategoriesUseCase
-): ModifyEquipmentViewModel(getCategoriesUseCase, "AddEquipmentViewModel") {
+) : ModifyEquipmentViewModel(getCategoriesUseCase, "AddEquipmentViewModel") {
 
     fun addEquipment() {
-        addDisposable(
+        viewModelScope.launch {
             addEquipmentUseCase(getImageMultipartFile(), getEquipmentRequestBody())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                  when(it){
-                      is CommonResult.Success -> {
-                          _addComplete.value = Unit
-                          _toastMessage.value = it.responseMessage
-                      }
-                      is CommonResult.Failure -> {
-                          _toastMessage.value = it.errorMessage
-                      }
-                  }
-                }, {
-                    it.printStackTrace()
-                    _toastMessage.value = it.localizedMessage
-                })
-        )
+                .collect {
+                    when (it) {
+                        is CommonResult.Success -> {
+                            _addComplete.value = Unit
+                            _toastMessage.value = it.responseMessage
+                        }
 
+                        is CommonResult.Failure -> {
+                            _toastMessage.value = it.errorMessage
+                        }
+                    }
+                }
+        }
     }
-
 
 }

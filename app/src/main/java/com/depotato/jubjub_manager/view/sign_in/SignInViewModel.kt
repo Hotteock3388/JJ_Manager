@@ -1,13 +1,13 @@
 package com.depotato.jubjub_manager.view.sign_in
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.depotato.jubjub_manager.base.BaseViewModel
 import com.depotato.jubjub_manager.domain.auth.login_hisotry.CheckLoginHistoryUseCase
-import com.depotato.jubjub_manager.domain.auth.sign_in.SignInUseCase
 import com.depotato.jubjub_manager.domain.auth.sign_in.SignInResult
+import com.depotato.jubjub_manager.domain.auth.sign_in.SignInUseCase
 import com.depotato.jubjub_manager.function_module.SingleEventLiveData
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.launch
 
 class SignInViewModel(
     private val checkLoginHistoryUseCase: CheckLoginHistoryUseCase,
@@ -21,14 +21,13 @@ class SignInViewModel(
     val signInComplete: SingleEventLiveData<Unit> = _signInComplete
 
     fun signIn() {
-        if (isInputValid()) {
-            addDisposable(
-                signInUseCase(
-                    userId.value.toString(),
-                    userPw.value.toString()
-                ).subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
+        if(isInputValid()){
+            viewModelScope.launch {
+                try {
+                    signInUseCase.invoke(
+                        userId.value.toString(),
+                        userPw.value.toString()
+                    ).collect {
                         when(it){
                             is SignInResult.Success -> {
                                 _signInComplete.value = Unit
@@ -37,10 +36,12 @@ class SignInViewModel(
                                 _toastMessage.value = it.errorMessage
                             }
                         }
-                    }, {
-                        it.printStackTrace()
-                    })
-            )
+                    }
+                }catch (e: Exception){
+                    e.printStackTrace()
+                    _toastMessage.value = e.message
+                }
+            }
         }
     }
 

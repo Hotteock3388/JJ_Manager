@@ -52,12 +52,16 @@ class EquipmentListRVAdapter(private val _event: EquipmentItemEventListener) : R
     }
 
     fun updateItems(newEquipmentArray: Array<Equipment>){
+        checkDataDiff(newEquipmentArray)
+        updateEquipmentArray(newEquipmentArray)
+    }
+
+    private fun checkDataDiff(newEquipmentArray: Array<Equipment>){
         val diffCallback = EquipmentArrayDiffCallback(equipmentArray, newEquipmentArray)
         val diffResult = DiffUtil.calculateDiff(diffCallback) // 계산
         diffResult.dispatchUpdatesTo(this) // 리사이클러뷰 갱신!
-
-        updateEquipmentArray(newEquipmentArray)
     }
+
     private fun updateEquipmentArray(newEquipmentArray: Array<Equipment>){
         equipmentArray = newEquipmentArray
         filteredArray = equipmentArray.copyOf()
@@ -90,7 +94,7 @@ class EquipmentListRVAdapter(private val _event: EquipmentItemEventListener) : R
 
             override fun publishResults(constraint: CharSequence, results: FilterResults) {
                 filteredArray = results.values as Array<Equipment>
-                updateItems(filteredArray)
+                checkDataDiff(filteredArray)
 //                notifyDataSetChanged()
             }
         }

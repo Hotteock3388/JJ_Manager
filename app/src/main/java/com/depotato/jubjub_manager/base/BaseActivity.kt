@@ -35,18 +35,14 @@ abstract class BaseActivity <B: ViewDataBinding, VM: BaseViewModel>(
             lifecycleOwner = this@BaseActivity
         }
 
-        init()
         initLiveData()
         initListener()
+        init()
         observeToastMessage()
     }
 
     open fun init(){}
-    open fun initLiveData(){
-        viewModel.toastMessage.observe(this){
-            showToast(it)
-        }
-    }
+    open fun initLiveData(){}
     open fun initListener(){}
 
     // 토스트 메시지 띄우기
