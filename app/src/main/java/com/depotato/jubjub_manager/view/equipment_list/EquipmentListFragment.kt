@@ -22,11 +22,15 @@ class EquipmentListFragment : BaseFragment<FragmentEquipmentListBinding, Equipme
         binding.recyclerViewEquipmentList.adapter = viewModel.adapter
     }
 
-    override suspend fun initFlowCollector() {
+    override fun initFlowCollector() {
 
-        viewModel.getEquipmentsComplete.observe(this){
-            viewModel.adapter.updateItems(viewModel.equipmentsArray)
+        collectWhenStarted(viewModel.equipmentsArray){
+            viewModel.adapter.updateItems(it)
         }
+
+//        viewModel.getEquipmentsComplete.observe(this){
+//            viewModel.adapter.updateItems(viewModel.equipmentsArray)
+//        }
 
         viewModel.searchText.observe(this){
             viewModel.adapter.filter.filter(it)

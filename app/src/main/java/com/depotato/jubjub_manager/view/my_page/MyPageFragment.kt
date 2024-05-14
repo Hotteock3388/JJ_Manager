@@ -13,8 +13,8 @@ class MyPageFragment :
 
     override val viewModel: MyPageViewModel by inject()
 
-    override suspend fun initFlowCollector() {
-        viewModel.logOutComplete.collect() {
+    override fun initFlowCollector() {
+        collectWhenStarted(viewModel.logOutComplete){
             logOut()
         }
     }

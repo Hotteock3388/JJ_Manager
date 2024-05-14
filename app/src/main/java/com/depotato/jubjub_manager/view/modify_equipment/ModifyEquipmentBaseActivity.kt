@@ -26,7 +26,6 @@ abstract class ModifyEquipmentBaseActivity<B : ViewDataBinding, VM : ModifyEquip
     private lateinit var imageViewDeleteImage: ImageView
     private lateinit var spinnerCategory: Spinner
 
-
     private val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
 
     private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
@@ -46,7 +45,7 @@ abstract class ModifyEquipmentBaseActivity<B : ViewDataBinding, VM : ModifyEquip
         spinnerCategory = binding.root.findViewById(R.id.spinner_category)
     }
 
-    override suspend fun initFlowCollector() {
+    override fun initFlowCollector() {
         viewModel.equipmentImageUri.observe(this){
             if(it == null){
                 onImageRemoved()
