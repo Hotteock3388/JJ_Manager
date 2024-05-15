@@ -1,26 +1,20 @@
 package com.depotato.jubjub_manager.base
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.depotato.jubjub_manager.function_module.SingleEventLiveData
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.launch
 
 open class BaseViewModel(private val className: String): ViewModel() {
 
-    private val compositeDisposable = CompositeDisposable()
+    private val _toastMessage = MutableSharedFlow<String>()
+    val toastMessage = _toastMessage.asSharedFlow()
 
-    protected val _toastMessage = SingleEventLiveData<String>()
-    val toastMessage: LiveData<String> = _toastMessage
-
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposable.clear()
+    fun emitToastMessage(msg: String) = viewModelScope.launch {
+        _toastMessage.emit(msg)
     }
 
-    fun addDisposable(disposable: Disposable) = compositeDisposable.add(disposable)
-
     fun showLog(msg: String) = Log.d("TestLog_$className", msg)
-
 }

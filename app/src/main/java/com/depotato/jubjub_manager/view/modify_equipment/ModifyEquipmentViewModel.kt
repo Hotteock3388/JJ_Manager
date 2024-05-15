@@ -55,7 +55,7 @@ open class ModifyEquipmentViewModel(
                         _getCategoriesComplete.value = Unit
                     }
                     is GetCategoryResult.Failure -> {
-                        _toastMessage.value = it.errorMessage
+                        emitToastMessage(it.errorMessage)
                     }
                 }
             }
@@ -115,7 +115,7 @@ open class ModifyEquipmentViewModel(
     }
 
     private fun invalidData(msg: String): Boolean {
-        _toastMessage.value = msg
+        emitToastMessage(msg)
         return false
     }
 

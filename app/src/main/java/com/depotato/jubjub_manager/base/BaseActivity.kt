@@ -71,7 +71,7 @@ abstract class BaseActivity <B: ViewDataBinding, VM: BaseViewModel>(
 
     // viewModel의 toastMessage를 관찰
     private fun observeToastMessage(){
-        viewModel.toastMessage.observe(this){
+        collectWhenStarted(viewModel.toastMessage){
             showToast(it)
         }
     }

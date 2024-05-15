@@ -40,13 +40,13 @@ class SignInViewModel(
                                 _signInComplete.emit(Unit)
                             }
                             is SignInResult.Failure -> {
-                                _toastMessage.value = it.errorMessage
+                                emitToastMessage(it.errorMessage)
                             }
                         }
                     }
                 }catch (e: Exception){
                     e.printStackTrace()
-                    _toastMessage.value = e.message
+                    emitToastMessage(e.localizedMessage)
                 }
             }
         }
@@ -61,7 +61,7 @@ class SignInViewModel(
     }
 
     private fun invalidInput(msg: String): Boolean {
-        _toastMessage.value = msg
+        emitToastMessage(msg)
         return false
     }
 

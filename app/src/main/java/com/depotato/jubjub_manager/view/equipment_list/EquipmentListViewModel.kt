@@ -45,7 +45,7 @@ class EquipmentListViewModel(
                             _equipmentsArray.value = it.equipments
                         }
                         is GetEquipmentsResult.Failure -> {
-                            _toastMessage.value = it.errorMessage
+                            emitToastMessage(it.errorMessage)
                         }
                     }
                 }
