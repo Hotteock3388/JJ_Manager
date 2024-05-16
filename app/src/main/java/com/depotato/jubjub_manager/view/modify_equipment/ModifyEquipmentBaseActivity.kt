@@ -2,6 +2,7 @@ package com.depotato.jubjub_manager.view.modify_equipment
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.provider.MediaStore
 import android.view.View
 import android.widget.AdapterView
@@ -30,7 +31,11 @@ abstract class ModifyEquipmentBaseActivity<B : ViewDataBinding, VM : ModifyEquip
 
     private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
         if(result.resultCode == Activity.RESULT_OK){
-            viewModel._equipmentImageUri.value = result.data?.data
+            try {
+                viewModel._equipmentImageUri.value = result.data?.data!!
+            }catch (e: Exception){
+                e.printStackTrace()
+            }
         }
     }
 
@@ -46,33 +51,32 @@ abstract class ModifyEquipmentBaseActivity<B : ViewDataBinding, VM : ModifyEquip
     }
 
     override fun initFlowCollector() {
-        viewModel.equipmentImageUri.observe(this){
-            if(it == null){
-                onImageRemoved()
-            }else{
-                viewModel.equipmentImageFile = UriConverter().getFileFromUri(contentResolver, it)
-                onImageAdded()
+        with(viewModel){
+            collectWhenStarted(equipmentImageUri){
+                if(it == Uri.EMPTY){
+                    onImageRemoved()
+                }else{
+                    viewModel.equipmentImageFile = UriConverter().getFileFromUri(contentResolver, it)
+                    onImageAdded()
+                }
             }
-        }
 
-        viewModel.getCategoriesComplete.observe(this){
-            initCategorySpinner()
-
-            if(viewModel.equipmentCategory.isNotBlank()){
-                spinnerCategory.setSelection(viewModel.getCategoryIdx())
+            collectWhenStarted(equipmentMaxAmount){
+                viewModel._equipmentCurrentAmount.value = it
             }
-        }
 
-        viewModel.equipmentMaxAmount.observe(this){
-            if(it.toInt() < viewModel.equipmentCurrentAmount.value!!.toInt()){
-                viewModel.equipmentCurrentAmount.value = it
+            collectWhenStarted(categories){
+                initCategorySpinner()
+                if(viewModel.equipmentCategory.isNotBlank()){
+                    spinnerCategory.setSelection(viewModel.getCategoryIdx())
+                }
             }
-        }
 
-        viewModel.addComplete.observe(this){
-            finish()
-        }
+            collectWhenStarted(addComplete){
+                finish()
+            }
 
+        }
     }
 
     fun onSpinnerItemSelected(parent: AdapterView<*>?, position: Int) {
@@ -80,7 +84,7 @@ abstract class ModifyEquipmentBaseActivity<B : ViewDataBinding, VM : ModifyEquip
             equipmentCategory = if(position == 0){
                 ""
             }else{
-                categoryArray[position]
+                categories.value[position]
             }
         }
     }
@@ -127,11 +131,11 @@ abstract class ModifyEquipmentBaseActivity<B : ViewDataBinding, VM : ModifyEquip
 
 
     open fun removeImage(){
-        viewModel._equipmentImageUri.value = null
+        viewModel._equipmentImageUri.value = Uri.EMPTY
     }
 
     private fun initCategorySpinner(){
-        spinnerCategory.adapter = CategorySpinnerAdapter(this, viewModel.categoryArray)
+        spinnerCategory.adapter = CategorySpinnerAdapter(this, viewModel.categories.value)
     }
 
 }

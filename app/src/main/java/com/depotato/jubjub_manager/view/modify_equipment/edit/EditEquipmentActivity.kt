@@ -18,8 +18,9 @@ class EditEquipmentActivity : ModifyEquipmentBaseActivity<ActivityEditEquipmentB
 
     override fun initFlowCollector() {
         super.initFlowCollector()
-        viewModel.equipmentImageUrl.observe(this){
-            if(!it.isNullOrBlank()){
+
+        collectWhenStarted(viewModel.equipmentImageUrl){
+            if(it.isNotBlank()){
                 setEquipmentImage(it)
             }
         }
@@ -44,7 +45,7 @@ class EditEquipmentActivity : ModifyEquipmentBaseActivity<ActivityEditEquipmentB
 
     override fun removeImage(){
         super.removeImage()
-        viewModel.equipmentImageUrl.value = ""
+        viewModel._equipmentImageUrl.value = ""
     }
 
     fun editEquipment(){

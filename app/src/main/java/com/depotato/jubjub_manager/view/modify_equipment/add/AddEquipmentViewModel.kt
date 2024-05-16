@@ -18,7 +18,7 @@ class AddEquipmentViewModel(
                 .collect {
                     when (it) {
                         is CommonResult.Success -> {
-                            _addComplete.value = Unit
+                            _addComplete.emit(Unit)
                             emitToastMessage(it.responseMessage)
                         }
 
