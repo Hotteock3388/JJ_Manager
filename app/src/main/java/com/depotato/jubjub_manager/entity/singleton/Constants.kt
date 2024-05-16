@@ -2,7 +2,7 @@ package com.depotato.jubjub_manager.entity.singleton
 
 object Constants {
 
-    val LOGOUT_COMPLETE = "로그아웃 완료"
+    const val LOGOUT_COMPLETE = "로그아웃 완료"
 
     //    Intent
     const val GALLERY_REQUEST_CODE = 148237

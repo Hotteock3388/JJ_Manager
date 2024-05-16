@@ -49,6 +49,7 @@ abstract class BaseFragment<B : ViewDataBinding, VM: BaseViewModel>(
         init()
         initListener()
         initFlowCollector()
+        observeToastMessage()
     }
 
     inline fun <reified T> LifecycleOwner.collectWhenStarted(
@@ -69,4 +70,10 @@ abstract class BaseFragment<B : ViewDataBinding, VM: BaseViewModel>(
     fun showToast(msg: String) = Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
     fun showLog(msg: String) = Log.d("TestLog_$className", msg)
 
+    // viewModel의 toastMessage를 관찰
+    private fun observeToastMessage(){
+        collectWhenStarted(viewModel.toastMessage){
+            showToast(it)
+        }
+    }
 }
