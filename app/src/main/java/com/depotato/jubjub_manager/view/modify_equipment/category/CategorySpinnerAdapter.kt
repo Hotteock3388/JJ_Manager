@@ -9,7 +9,7 @@ import android.widget.Filterable
 import android.widget.TextView
 import com.depotato.jubjub_manager.R
 
-class CategorySpinnerAdapter(private val con: Context, private val dataList: Array<String>) : ArrayAdapter<String>(con, R.layout.layout_spinner_item, dataList),
+class CategorySpinnerAdapter(private val con: Context, private val dataList: List<String>) : ArrayAdapter<String>(con, R.layout.layout_spinner_item, dataList),
     Filterable {
     private var inflater: LayoutInflater = LayoutInflater.from(con)
 
