@@ -12,11 +12,11 @@ import com.depotato.jubjub_manager.databinding.LayoutEquipmentListItemBinding
 
 class EquipmentListRVAdapter(private val _event: EquipmentItemEventListener) : RecyclerView.Adapter<EquipmentListRVAdapter.ViewHolder>(), Filterable {
 
-    var equipmentArray: Array<Equipment> = arrayOf()
-    private var filteredArray = equipmentArray.copyOf()
+    var equipments: List<Equipment> = listOf()
+    private var filteredEquipments = equipments.map { it.copy() }
 
     override fun getItemCount(): Int {
-        return filteredArray.size
+        return filteredEquipments.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -25,7 +25,7 @@ class EquipmentListRVAdapter(private val _event: EquipmentItemEventListener) : R
     }
 
     override fun onBindViewHolder(holder: ViewHolder, itemPosition: Int) {
-        holder.bind(filteredArray[itemPosition])
+        holder.bind(filteredEquipments[itemPosition])
     }
 
     class ViewHolder(
@@ -51,20 +51,20 @@ class EquipmentListRVAdapter(private val _event: EquipmentItemEventListener) : R
         }
     }
 
-    fun updateItems(newEquipmentArray: Array<Equipment>){
-        checkDataDiff(newEquipmentArray)
-        updateEquipmentArray(newEquipmentArray)
+    fun updateItems(newEquipments: List<Equipment>){
+        checkDataDiff(newEquipments)
+        updateEquipments(newEquipments)
     }
 
-    private fun checkDataDiff(newEquipmentArray: Array<Equipment>){
-        val diffCallback = EquipmentArrayDiffCallback(equipmentArray, newEquipmentArray)
+    private fun checkDataDiff(newEquipments: List<Equipment>){
+        val diffCallback = EquipmentsDiffCallback(equipments, newEquipments)
         val diffResult = DiffUtil.calculateDiff(diffCallback) // 계산
         diffResult.dispatchUpdatesTo(this) // 리사이클러뷰 갱신!
     }
 
-    private fun updateEquipmentArray(newEquipmentArray: Array<Equipment>){
-        equipmentArray = newEquipmentArray
-        filteredArray = equipmentArray.copyOf()
+    private fun updateEquipments(newEquipments: List<Equipment>){
+        equipments = newEquipments
+        filteredEquipments = equipments.map{ it.copy() }
     }
 
     override fun getFilter(): Filter {
@@ -73,28 +73,28 @@ class EquipmentListRVAdapter(private val _event: EquipmentItemEventListener) : R
 
                 val searchText = constraint.toString().lowercase()
 
-                filteredArray = if (searchText.isEmpty()) {
-                    equipmentArray
+                filteredEquipments = if (searchText.isEmpty()) {
+                    equipments
                 } else {
                     arrayListOf<Equipment>().apply {
-                        for (equipment in equipmentArray) {
+                        for (equipment in equipments) {
                             if (equipment.name.lowercase().contains(searchText)
                                 || equipment.category.lowercase().contains(searchText)) {
                                 add(equipment)
                             }
                         }
-                    }.toTypedArray()
+                    }.toList()
                 }
 
                 return FilterResults().apply {
-                    values = filteredArray
+                    values = filteredEquipments
                 }
 
             }
 
             override fun publishResults(constraint: CharSequence, results: FilterResults) {
-                filteredArray = results.values as Array<Equipment>
-                checkDataDiff(filteredArray)
+                filteredEquipments = results.values as List<Equipment>
+                checkDataDiff(filteredEquipments)
 //                notifyDataSetChanged()
             }
         }

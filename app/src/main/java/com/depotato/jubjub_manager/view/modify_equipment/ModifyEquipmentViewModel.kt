@@ -25,7 +25,7 @@ open class ModifyEquipmentViewModel(
 ) : BaseViewModel(className) {
 
 
-    private val _categories = MutableStateFlow<Array<String>>(arrayOf())
+    private val _categories = MutableStateFlow<List<String>>(listOf())
     val categories = _categories.asStateFlow()
 
     var equipmentId = 0
@@ -57,7 +57,7 @@ open class ModifyEquipmentViewModel(
             getCategoriesUseCase().collect{
                 when(it){
                     is GetCategoryResult.Success -> {
-                        _categories.value = arrayOf("카테고리를 선택하세요.").plus(it.categories)
+                        _categories.value = listOf("카테고리를 선택하세요.").plus(it.categories)
                     }
                     is GetCategoryResult.Failure -> {
                         emitToastMessage(it.errorMessage)

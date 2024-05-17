@@ -17,8 +17,8 @@ class EquipmentListViewModel(
     private val getEquipmentsUseCase: GetEquipmentsUseCase
 ): BaseViewModel("EquipmentListViewModel") {
 
-    private val _equipmentsArray = MutableStateFlow<Array<Equipment>>(arrayOf())
-    val equipmentsArray = _equipmentsArray.asStateFlow()
+    private val _equipments = MutableStateFlow<List<Equipment>>(listOf())
+    val equipments = _equipments.asStateFlow()
 
     val _searchText = MutableStateFlow<String>("")
     val searchText = _searchText.asStateFlow()
@@ -42,7 +42,7 @@ class EquipmentListViewModel(
                 .collect{
                     when (it) {
                         is GetEquipmentsResult.Success -> {
-                            _equipmentsArray.value = it.equipments
+                            _equipments.value = it.equipments
                         }
                         is GetEquipmentsResult.Failure -> {
                             emitToastMessage(it.errorMessage)

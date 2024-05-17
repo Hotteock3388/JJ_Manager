@@ -24,7 +24,7 @@ class EquipmentListFragment : BaseFragment<FragmentEquipmentListBinding, Equipme
 
     override fun initFlowCollector() {
         with(viewModel) {
-            collectWhenStarted(equipmentsArray) {
+            collectWhenStarted(equipments) {
                 adapter.updateItems(it)
             }
 

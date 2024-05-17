@@ -21,6 +21,6 @@ sealed class CommonResult{
 }
 
 sealed class GetCategoryResult{
-    data class Success(val categories: Array<String>) : GetCategoryResult()
+    data class Success(val categories: List<String>) : GetCategoryResult()
     data class Failure(val errorMessage: String) : GetCategoryResult()
 }
