@@ -1,19 +1,22 @@
 package com.depotato.jubjub_manager.view.modify_equipment
 
 import android.net.Uri
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.depotato.jubjub_manager.base.BaseViewModel
 import com.depotato.jubjub_manager.domain.equipment.GetCategoryResult
 import com.depotato.jubjub_manager.domain.equipment.category.GetCategoriesUseCase
-import com.depotato.jubjub_manager.function_module.SingleEventLiveData
 import com.depotato.jubjub_manager.view.equipment_list.adapter.Equipment
 import com.google.gson.Gson
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 
 open class ModifyEquipmentViewModel(
@@ -21,41 +24,43 @@ open class ModifyEquipmentViewModel(
     className: String
 ) : BaseViewModel(className) {
 
-    var categoryArray = arrayOf("")
+
+    private val _categories = MutableStateFlow<Array<String>>(arrayOf())
+    val categories = _categories.asStateFlow()
 
     var equipmentId = 0
 
+    val _equipmentImageUri = MutableStateFlow<Uri>(Uri.EMPTY)
+    val equipmentImageUri = _equipmentImageUri.asStateFlow()
 
-    var equipmentImageUrl = SingleEventLiveData<String>()
     var equipmentImageFile = File("")
 
-    val equipmentName = MutableLiveData<String>()
+    val _equipmentImageUrl = MutableStateFlow<String>("")
+    val equipmentImageUrl = _equipmentImageUrl.asStateFlow()
 
-    val equipmentMaxAmount = MutableLiveData<String>()
-    val equipmentCurrentAmount = MutableLiveData<String>("")
+    val _equipmentName = MutableStateFlow<String>("")
+    val equipmentName = _equipmentName.asStateFlow()
+
+    val _equipmentMaxAmount = MutableStateFlow<String>("")
+    val equipmentMaxAmount = _equipmentMaxAmount.asStateFlow()
+
+    val _equipmentCurrentAmount = MutableStateFlow<String>("")
+    val equipmentCurrentAmount = _equipmentCurrentAmount.asStateFlow()
 
     var equipmentCategory = ""
 
-    var _equipmentImageUri = SingleEventLiveData<Uri>()
-    var equipmentImageUri: LiveData<Uri> = _equipmentImageUri
-
-    protected val _getCategoriesComplete = SingleEventLiveData<Unit>()
-    val getCategoriesComplete: LiveData<Unit> = _getCategoriesComplete
-
-    protected val _addComplete = SingleEventLiveData<Unit>()
-    val addComplete: LiveData<Unit> = _addComplete
-
+    protected val _addComplete = MutableSharedFlow<Unit>()
+    val addComplete = _addComplete.asSharedFlow()
 
     fun getCategories(){
         viewModelScope.launch {
             getCategoriesUseCase().collect{
                 when(it){
                     is GetCategoryResult.Success -> {
-                        categoryArray = arrayOf("카테고리를 선택하세요.").plus(it.categories)
-                        _getCategoriesComplete.value = Unit
+                        _categories.value = arrayOf("카테고리를 선택하세요.").plus(it.categories)
                     }
                     is GetCategoryResult.Failure -> {
-                        _toastMessage.value = it.errorMessage
+                        emitToastMessage(it.errorMessage)
                     }
                 }
             }
@@ -63,51 +68,47 @@ open class ModifyEquipmentViewModel(
     }
 
     fun getCategoryIdx(): Int {
-        return categoryArray.indexOf(equipmentCategory)
+        return categories.value.indexOf(equipmentCategory)
     }
 
     fun getImageMultipartFile(): MultipartBody.Part {
         return MultipartBody.Part.createFormData(
             "image",
             equipmentImageFile.name,
-            RequestBody.create(
-                "image/${equipmentImageFile.extension}".toMediaTypeOrNull(),
-                equipmentImageFile
+            equipmentImageFile.asRequestBody(
+                "image/${equipmentImageFile.extension}".toMediaTypeOrNull()
             )
         )
     }
     fun getEquipmentRequestBody(): RequestBody {
-        return RequestBody.create(
-            "application/json; charset=utf-8".toMediaTypeOrNull(),
-            Gson().toJson(createEquipmentObject())
-        )
+        return Gson().toJson(createEquipmentObject())
+            .toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
     }
 
-
-    protected fun createEquipmentObject(): Equipment {
+    private fun createEquipmentObject(): Equipment {
         return Equipment(
             id = equipmentId,
-            name = equipmentName.value!!,
+            name = _equipmentName.value,
             category = equipmentCategory,
-            currentAmount = equipmentCurrentAmount.value!!.toInt(),
-            maxAmount = equipmentMaxAmount.value!!.toInt(),
-//            imageUrl = if(equipmentImageUrl.value != null) equipmentImageUrl.value!! else ""
-            imageUrl = "" + "${equipmentImageUrl.value}"
+            currentAmount = equipmentCurrentAmount.value.toInt(),
+            maxAmount = equipmentMaxAmount.value.toInt(),
+            imageUrl = "" + equipmentImageUrl.value
         )
     }
 
     fun isEquipmentDataValid(): Boolean {
-        return if (equipmentImageUri.value == null && equipmentImageUrl.value!!.isBlank()) {
+        return if (equipmentImageUri.value == Uri.EMPTY
+            && equipmentImageUrl.value.isBlank()) {
             invalidData("기자재 사진을 등록해주세요")
-        } else if (equipmentName.value!!.isBlank()) {
+        } else if (equipmentName.value.isBlank()) {
             invalidData("기자재 이름을 입력해주세요.")
-        } else if (equipmentMaxAmount.value!!.isBlank()) {
+        } else if (equipmentMaxAmount.value.isBlank()) {
             invalidData("기자재 전체 수량을 입력해주세요.")
-        } else if (equipmentCurrentAmount.value!!.isBlank()) {
+        } else if (equipmentCurrentAmount.value.isBlank()) {
             invalidData("기자재 잔여 수량을 입력해주세요.")
         } else if (equipmentCategory.isBlank()) {
             invalidData("기자재 카테고리를 선택해주세요.")
-        } else if (equipmentMaxAmount.value!!.toInt() < equipmentCurrentAmount.value!!.toInt()) {
+        } else if (equipmentMaxAmount.value.toInt() < equipmentCurrentAmount.value.toInt()) {
             invalidData("전체 수량이 잔여 수량보다 많아야 합니다.")
         } else {
             true
@@ -115,7 +116,7 @@ open class ModifyEquipmentViewModel(
     }
 
     private fun invalidData(msg: String): Boolean {
-        _toastMessage.value = msg
+        emitToastMessage(msg)
         return false
     }
 

@@ -1,5 +1,6 @@
 package com.depotato.jubjub_manager.view.modify_equipment.edit
 
+import android.net.Uri
 import androidx.lifecycle.viewModelScope
 import com.depotato.jubjub_manager.domain.equipment.CommonResult
 import com.depotato.jubjub_manager.domain.equipment.category.GetCategoriesUseCase
@@ -20,10 +21,10 @@ class EditEquipmentViewModel(
     fun initEquipmentData(equipment: Equipment){
         try {
             equipmentId = equipment.id
-            equipmentImageUrl.value = equipment.imageUrl
-            equipmentName.value = equipment.name
-            equipmentMaxAmount.value = equipment.maxAmount.toString()
-            equipmentCurrentAmount.value = equipment.currentAmount.toString()
+            _equipmentImageUrl.value = equipment.imageUrl
+            _equipmentName.value = equipment.name
+            _equipmentMaxAmount.value = equipment.maxAmount.toString()
+            _equipmentCurrentAmount.value = equipment.currentAmount.toString()
             equipmentCategory = equipment.category
         }catch (e: Exception){
             e.printStackTrace()
@@ -31,7 +32,7 @@ class EditEquipmentViewModel(
     }
 
     fun editEquipment() {
-        if(equipmentImageUri.value == null){
+        if(equipmentImageUri.value == Uri.EMPTY){
             setHandler(
                 editEquipmentUseCase.excludeImage(
                     getEquipmentRequestBody()
@@ -58,17 +59,19 @@ class EditEquipmentViewModel(
     private fun handleEditEquipmentResult(result: CommonResult){
         when(result){
             is CommonResult.Success -> {
-                _addComplete.value = Unit
-                _toastMessage.value = result.responseMessage
+                viewModelScope.launch {
+                    _addComplete.emit(Unit)
+                }
+                emitToastMessage(result.responseMessage)
             }
             is CommonResult.Failure -> {
-                _toastMessage.value = result.errorMessage
+                emitToastMessage(result.errorMessage)
             }
         }
     }
 
     private fun handleEditEquipmentError(error: Throwable){
-        _toastMessage.value = error.localizedMessage
+        emitToastMessage(error.localizedMessage)
         error.printStackTrace()
     }
 

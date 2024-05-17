@@ -18,8 +18,8 @@ class SignInActivity : BaseActivity<ActivitySignInBinding, SignInViewModel>(R.la
         viewModel.checkLoginHistoryExist()
     }
 
-    override fun initLiveData() {
-        viewModel.signInComplete.observe(this){
+    override fun initFlowCollector() {
+        collectWhenStarted(viewModel.signInComplete){
             openMain()
         }
     }

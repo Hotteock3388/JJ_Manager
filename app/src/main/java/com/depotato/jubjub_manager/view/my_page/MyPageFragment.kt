@@ -13,15 +13,16 @@ class MyPageFragment :
 
     override val viewModel: MyPageViewModel by inject()
 
-    override fun initLiveData() {
+    override fun initFlowCollector() {
+        collectWhenStarted(viewModel.logOutComplete){
+            logOut()
+        }
+    }
 
-        viewModel.logOutComplete.observe(this){
-            with(requireActivity()){
-                startActivity(Intent(
-                    requireContext(), SignInActivity::class.java)
-                )
-                requireActivity().finish()
-            }
+    private fun logOut(){
+        with(requireActivity()){
+            startActivity(Intent(this, SignInActivity::class.java))
+            finish()
         }
     }
 
