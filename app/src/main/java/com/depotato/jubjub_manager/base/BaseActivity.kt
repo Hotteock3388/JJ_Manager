@@ -40,8 +40,7 @@ abstract class BaseActivity <B: ViewDataBinding, VM: BaseViewModel>(
             }
             lifecycleOwner = this@BaseActivity
         }
-
-
+        
         initFlowCollector()
         initListener()
         init()
