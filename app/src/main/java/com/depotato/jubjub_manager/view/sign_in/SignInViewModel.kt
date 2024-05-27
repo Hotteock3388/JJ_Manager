@@ -16,14 +16,26 @@ class SignInViewModel(
     private val signInUseCase: SignInUseCase
 ) : BaseViewModel("SignInViewModel") {
 
+
+//    var _userId by mutableStateOf("")
+//        private set
+////    val userId = _userId.asStateFlow()
+
     val _userId = MutableStateFlow<String>("")
-    private val userId = _userId.asStateFlow()
+    val userId = _userId.asStateFlow()
 
     val _userPw = MutableStateFlow<String>("")
-    private val userPw = _userPw.asStateFlow()
+    val userPw = _userPw.asStateFlow()
 
     private var _signInComplete = MutableSharedFlow<Unit>()
     val signInComplete = _signInComplete.asSharedFlow()
+
+    fun updateUserId(value: String){
+        _userId.value = value
+    }
+    fun updateUserPw(value: String){
+        _userPw.value = value
+    }
 
     fun signIn() {
 
