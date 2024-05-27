@@ -29,6 +29,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -133,6 +135,7 @@ fun SignInScreen(
                     SignInInputBox(
                         label = stringResource(id = R.string.pw_label), placeHolder = stringResource(id = R.string.enter_password),
                         value = viewModel.userPw,
+                        valueVisible = false,
                         onValueChanged = { value -> viewModel.updateUserPw(value) }
                     )
                     Spacer(modifier = Modifier.padding(top = 9.dp))
@@ -212,15 +215,17 @@ fun SignInButton(
 @Composable
 fun SignInInputBox(
     modifier: Modifier = Modifier,
+    value: StateFlow<String>,
+    valueVisible: Boolean = true,
     label: String,
     placeHolder: String,
-    value: StateFlow<String>,
     onValueChanged: (String) -> Unit,
 ) {
 
     MyInputBox(
         modifier = modifier.padding(top = 6.dp, start = 2.dp, bottom = 9.dp),
         value = value,
+        valueVisible = valueVisible,
         onValueChanged = onValueChanged,
         labelParams = TextParams(
             text = label,
@@ -251,12 +256,14 @@ fun MyInputBox(
     onValueChanged: (String) -> Unit,
     labelParams: TextParams,
     placeHolderParams: TextParams,
-    textFieldParams: TextParams
+    textFieldParams: TextParams,
+    valueVisible: Boolean = true,
 ) {
     val state = value.collectAsState(initial = "")
 
     BasicTextField(
         value = state.value,
+        visualTransformation = if(valueVisible) VisualTransformation.None else PasswordVisualTransformation(),
         textStyle = LocalTextStyle.current.merge(
             TextStyle(
                 color = textFieldParams.textColor,
