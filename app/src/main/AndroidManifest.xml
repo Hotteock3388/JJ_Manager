@@ -17,10 +17,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.main.MainComposeActivity"
+            android:exported="false"
+            android:label="@string/title_activity_main_compose"
+            android:theme="@style/Theme.JubJub_Manager" />
+        <activity
             android:name=".ui.sign_in.SignInComposeActivity"
             android:exported="true"
             android:label="@string/title_activity_sign_in_compose"
-            android:theme="@style/Theme.JubJub_Manager" >
+            android:theme="@style/Theme.JubJub_Manager">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,8 +46,7 @@
             android:exported="false" />
         <activity
             android:name=".view.sign_in.SignInActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"/>
     </application>
 
 </manifest>

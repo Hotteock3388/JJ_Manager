@@ -4,7 +4,7 @@
     <string name="title_activity_sign_in_compose">SignInComposeActivity</string>
 
 
-<!--    SignIn Activity-->
+    <!--    SignIn Activity-->
     <string name="sign_in">Sign in</string>
 
     <string name="id_label">ID</string>
@@ -14,6 +14,7 @@
     <string name="enter_password">비밀번호를 입력하세요.</string>
 
     <string name="password_miss_notice">비밀번호를 잊으신 경우, 관리자에게 문의해주세요.</string>
-<!--    SignIn Activity-->
+    <string name="title_activity_main_compose">MainComposeActivity</string>
+    <!--    SignIn Activity-->
 
 </resources>

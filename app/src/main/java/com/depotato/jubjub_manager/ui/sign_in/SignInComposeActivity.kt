@@ -39,6 +39,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.depotato.jubjub_manager.R
+import com.depotato.jubjub_manager.ui.main.MainComposeActivity
 import com.depotato.jubjub_manager.ui.text.ExcludeFontPaddingText
 import com.depotato.jubjub_manager.ui.text.TextParams
 import com.depotato.jubjub_manager.ui.text.notoSansFamily
@@ -47,7 +48,6 @@ import com.depotato.jubjub_manager.ui.theme.HintGray
 import com.depotato.jubjub_manager.ui.theme.JubJub_ManagerTheme
 import com.depotato.jubjub_manager.ui.theme.NoticeGray
 import com.depotato.jubjub_manager.ui.theme.White
-import com.depotato.jubjub_manager.view.main.MainActivity
 import com.depotato.jubjub_manager.view.sign_in.SignInViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
@@ -81,7 +81,7 @@ class SignInComposeActivity : ComponentActivity() {
 
     private fun openMain() {
         startActivity(
-            Intent(this, MainActivity::class.java)
+            Intent(this, MainComposeActivity::class.java)
         )
         finish()
     }
