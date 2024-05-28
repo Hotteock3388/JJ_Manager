@@ -69,7 +69,6 @@ class SignInComposeActivity : ComponentActivity() {
         initFlowCollector()
     }
 
-
     private fun initFlowCollector() {
         collectWhenStarted(viewModel.signInComplete) {
             openMain()
@@ -257,7 +256,7 @@ fun MyInputBox(
     labelParams: TextParams,
     placeHolderParams: TextParams,
     textFieldParams: TextParams,
-    valueVisible: Boolean = true,
+    valueVisible: Boolean = true
 ) {
     val state = value.collectAsState(initial = "")
 

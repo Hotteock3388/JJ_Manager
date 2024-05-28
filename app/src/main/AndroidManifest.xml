@@ -17,12 +17,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.main.MainComposeActivity"
+            android:name=".ui.sign_in.SignInComposeActivity"
             android:exported="false"
             android:label="@string/title_activity_main_compose"
             android:theme="@style/Theme.JubJub_Manager" />
         <activity
-            android:name=".ui.sign_in.SignInComposeActivity"
+            android:name=".ui.main.MainComposeActivity"
             android:exported="true"
             android:label="@string/title_activity_sign_in_compose"
             android:theme="@style/Theme.JubJub_Manager">
