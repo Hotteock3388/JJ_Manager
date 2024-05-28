@@ -60,6 +60,7 @@ class SignInComposeActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             SignInScreen(
                 onSignInButtonClick = { viewModel.signIn() },
@@ -67,6 +68,7 @@ class SignInComposeActivity : ComponentActivity() {
             )
         }
         initFlowCollector()
+        viewModel.checkLoginHistoryExist()
     }
 
     private fun initFlowCollector() {
