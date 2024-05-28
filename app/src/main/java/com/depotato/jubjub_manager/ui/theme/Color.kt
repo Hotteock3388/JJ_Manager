@@ -18,3 +18,4 @@ val HintGray = Color(0xFFB6B6B6)
 val NoticeGray = Color(0xFF505050)
 
 val SearchBar = Color(0xFFF5F5F5)
+val LogOut = Color(0xFFDA7272)

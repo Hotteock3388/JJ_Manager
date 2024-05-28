@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -34,10 +33,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.depotato.jubjub_manager.R
 import com.depotato.jubjub_manager.ui.main.equipment_list.EquipmentListScreen
+import com.depotato.jubjub_manager.ui.main.my_page.MyPageScreen
 import com.depotato.jubjub_manager.ui.theme.JubJub_ManagerTheme
 import com.depotato.jubjub_manager.ui.theme.White
 import com.depotato.jubjub_manager.view.equipment_list.EquipmentListViewModel
 import com.depotato.jubjub_manager.view.modify_equipment.edit.EditEquipmentActivity
+import com.depotato.jubjub_manager.view.my_page.MyPageViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -52,6 +53,7 @@ class MainComposeActivity : ComponentActivity() {
     private var backKeyPressedTime: Long = 0
 
     private val equipmentListViewModel : EquipmentListViewModel by viewModel()
+    private val myPageViewModel: MyPageViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,8 +68,15 @@ class MainComposeActivity : ComponentActivity() {
                 startActivity(this)
             }
         }
-    }
 
+        collectWhenStarted(myPageViewModel.logOutComplete){
+            logOut()
+        }
+    }
+    private fun logOut(){
+        startActivity(Intent(this, com.depotato.jubjub_manager.ui.sign_in.SignInComposeActivity::class.java))
+        finish()
+    }
     inline fun <reified T> LifecycleOwner.collectWhenStarted(
         flow: Flow<T>, // 제네릭 타입으로 변경
         noinline collect: suspend (T) -> Unit // 타입 변경
@@ -184,15 +193,5 @@ fun BottomNavigation(
                 }
             }
         }
-    }
-}
-
-
-@Composable
-fun MyPageScreen() {
-    Box(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        Text(text = "MyPageScreen")
     }
 }

@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.depotato.jubjub_manager.R
+import com.depotato.jubjub_manager.ui.components.JJLogo
 import com.depotato.jubjub_manager.ui.text.ExcludeFontPaddingText
 import com.depotato.jubjub_manager.ui.text.notoSansFamily
 import com.depotato.jubjub_manager.ui.theme.Blue
@@ -108,20 +109,6 @@ fun EquipmentListScreen(viewModel: EquipmentListViewModel = koinViewModel()) {
     }
 }
 
-@Composable
-private fun JJLogo() {
-    Surface(
-        modifier = Modifier
-            .width(66.dp)
-            .padding(top = 30.dp)
-            .fillMaxWidth()
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.ic_main_logo),
-            contentDescription = "Login Title Logo"
-        )
-    }
-}
 
 @Composable
 private fun _SearchBar(
