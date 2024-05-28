@@ -66,6 +66,10 @@ android {
 }
 
 dependencies {
+    val OK_HTTP_VERSION = "4.9.0"
+    val RETROFIT_VERSION = "2.9.0"
+    val KOIN_VERSION = "3.2.0"
+
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.0")
     implementation("androidx.activity:activity-compose:1.9.0")
     implementation(platform("androidx.compose:compose-bom:2023.03.00"))
@@ -76,8 +80,6 @@ dependencies {
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
-    val OK_HTTP_VERSION = "4.9.0"
-    val RETROFIT_VERSION = "2.9.0"
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -88,7 +90,9 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     // koin
-    implementation("io.insert-koin:koin-android:3.2.0")
+    implementation("io.insert-koin:koin-android:$KOIN_VERSION")
+    // koin - compose
+    implementation("io.insert-koin:koin-androidx-compose:$KOIN_VERSION")
 
     // ViewModel
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
@@ -127,5 +131,7 @@ dependencies {
     // Compose ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0")
 
+    // Compose Image
+    implementation("io.coil-kt:coil-compose:2.6.0")
 
 }

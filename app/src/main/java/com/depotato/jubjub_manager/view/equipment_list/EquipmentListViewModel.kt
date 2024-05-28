@@ -13,6 +13,10 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
+//class FakeEquipmentListViewModel(
+//
+//): EquipmentListViewModel
+
 class EquipmentListViewModel(
     private val getEquipmentsUseCase: GetEquipmentsUseCase
 ): BaseViewModel("EquipmentListViewModel") {
@@ -31,6 +35,19 @@ class EquipmentListViewModel(
             viewModelScope.launch {
                 _clickedEquipment.emit(equipment)
             }
+        }
+    }
+    init { getEquipments() }
+
+    fun emitSearchText(text: String){
+        viewModelScope.launch {
+            _searchText.emit(text)
+        }
+    }
+
+    fun emitClickedEquipment(equipment: Equipment){
+        viewModelScope.launch {
+            _clickedEquipment.emit(equipment)
         }
     }
 

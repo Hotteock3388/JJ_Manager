@@ -17,4 +17,8 @@
     <string name="title_activity_main_compose">MainComposeActivity</string>
     <!--    SignIn Activity-->
 
+    <!--    Equipment List Activity-->
+    <string name="search">검색</string>
+    <string name="equipment_image_description">기자재 이미지</string>
+
 </resources>
