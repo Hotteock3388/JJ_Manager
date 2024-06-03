@@ -131,7 +131,8 @@ abstract class ModifyEquipmentBaseActivity<B : ViewDataBinding, VM : ModifyEquip
 
 
     open fun removeImage(){
-        viewModel._equipmentImageUri.value = Uri.EMPTY
+//        viewModel._equipmentImageUri.value = Uri.EMPTY
+        viewModel.deleteImage()
     }
 
     private fun initCategorySpinner(){

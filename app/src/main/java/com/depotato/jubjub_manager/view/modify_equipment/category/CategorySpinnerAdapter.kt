@@ -36,7 +36,6 @@ class CategorySpinnerAdapter(private val con: Context, private val dataList: Lis
     }
 
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
-
         return createView(convertView, parent).apply {
             with(this.tag as ViewHolder){
                 bind(dataList[position])

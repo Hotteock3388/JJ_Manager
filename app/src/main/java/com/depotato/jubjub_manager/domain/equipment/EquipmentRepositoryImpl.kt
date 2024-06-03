@@ -70,6 +70,7 @@ class EquipmentRepositoryImpl : EquipmentRepository {
         return try {
             CommonResult.Success(response.getOrThrow().message)
         } catch (e: Exception) {
+            e.printStackTrace()
             CommonResult.Failure(e.message ?: UNKNOWN_ERROR_OCCURRED)
         }
     }

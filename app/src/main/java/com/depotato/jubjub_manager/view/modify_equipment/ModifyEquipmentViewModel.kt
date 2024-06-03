@@ -24,33 +24,64 @@ open class ModifyEquipmentViewModel(
     className: String
 ) : BaseViewModel(className) {
 
-
-    private val _categories = MutableStateFlow<List<String>>(listOf())
+    private val _categories = MutableStateFlow<List<String>>(listOf("카테고리를 선택해주세요."))
     val categories = _categories.asStateFlow()
 
     var equipmentId = 0
 
     val _equipmentImageUri = MutableStateFlow<Uri>(Uri.EMPTY)
     val equipmentImageUri = _equipmentImageUri.asStateFlow()
+    fun updateImageUri(value: Uri) {
+        viewModelScope.launch { _equipmentImageUri.emit(value) }
+    }
+
 
     var equipmentImageFile = File("")
 
     val _equipmentImageUrl = MutableStateFlow<String>("")
     val equipmentImageUrl = _equipmentImageUrl.asStateFlow()
+    fun updateImageUrl(value: String) {
+        viewModelScope.launch { _equipmentImageUrl.emit(value) }
+    }
+
 
     val _equipmentName = MutableStateFlow<String>("")
     val equipmentName = _equipmentName.asStateFlow()
+    fun updateName(value: String) {
+        viewModelScope.launch { _equipmentName.emit(value) }
+    }
+
 
     val _equipmentMaxAmount = MutableStateFlow<String>("")
     val equipmentMaxAmount = _equipmentMaxAmount.asStateFlow()
+    fun updateMaxAmount(value: String){
+        viewModelScope.launch { _equipmentMaxAmount.emit(value) }
+    }
+
 
     val _equipmentCurrentAmount = MutableStateFlow<String>("")
     val equipmentCurrentAmount = _equipmentCurrentAmount.asStateFlow()
+    fun updateCurrentAmount(value: String){
+        viewModelScope.launch { _equipmentCurrentAmount.emit(value) }
+    }
 
     var equipmentCategory = ""
 
     protected val _addComplete = MutableSharedFlow<Unit>()
     val addComplete = _addComplete.asSharedFlow()
+
+    fun deleteImage(){
+        if(_equipmentImageUri.value == Uri.EMPTY){
+            _equipmentImageUrl.value = ""
+        }else{
+            _equipmentImageUri.value = Uri.EMPTY
+        }
+
+    }
+
+    init {
+        getCategories()
+    }
 
     fun getCategories(){
         viewModelScope.launch {
