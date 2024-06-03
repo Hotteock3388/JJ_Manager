@@ -8,10 +8,10 @@ import com.depotato.jubjub_manager.ui.theme.Black
 import com.depotato.jubjub_manager.ui.theme.White
 
 data class TextParams(
-    val text: String = "",
-    val textColor: Color = Black,
-    val backgroundColor: Color = White,
-    val size: TextUnit,
-    val fontFamily: FontFamily,
-    val fontWeight: FontWeight,
+    var text: String = "",
+    var textColor: Color = Black,
+    var backgroundColor: Color = White,
+    var size: TextUnit,
+    var fontFamily: FontFamily,
+    var fontWeight: FontWeight,
 )

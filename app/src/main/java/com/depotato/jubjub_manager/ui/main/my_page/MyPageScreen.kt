@@ -25,10 +25,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.depotato.jubjub_manager.R
 import com.depotato.jubjub_manager.ui.components.JJLogo
+import com.depotato.jubjub_manager.ui.modify_equipment.add_equipment.AddEq
 import com.depotato.jubjub_manager.ui.text.notoSansFamily
 import com.depotato.jubjub_manager.ui.theme.Black
 import com.depotato.jubjub_manager.ui.theme.LogOut
-import com.depotato.jubjub_manager.view.modify_equipment.add.AddEquipmentActivity
 import com.depotato.jubjub_manager.view.my_page.MyPageViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -67,7 +67,7 @@ fun MyPageScreenPreview(
 }
 
 fun openAddEquipmentActivity(context: Context) {
-    context.startActivity(Intent(context, AddEquipmentActivity::class.java))
+    context.startActivity(Intent(context, AddEq::class.java))
 }
 
 @Composable

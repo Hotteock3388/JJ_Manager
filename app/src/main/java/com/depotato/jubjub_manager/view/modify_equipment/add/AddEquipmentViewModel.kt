@@ -13,20 +13,22 @@ class AddEquipmentViewModel(
 ) : ModifyEquipmentViewModel(getCategoriesUseCase, "AddEquipmentViewModel") {
 
     fun addEquipment() {
-        viewModelScope.launch {
-            addEquipmentUseCase(getImageMultipartFile(), getEquipmentRequestBody())
-                .collect {
-                    when (it) {
-                        is CommonResult.Success -> {
-                            _addComplete.emit(Unit)
-                            emitToastMessage(it.responseMessage)
-                        }
+        if(isEquipmentDataValid()){
+            viewModelScope.launch {
+                addEquipmentUseCase(getImageMultipartFile(), getEquipmentRequestBody())
+                    .collect {
+                        when (it) {
+                            is CommonResult.Success -> {
+                                _addComplete.emit(Unit)
+                                emitToastMessage(it.responseMessage)
+                            }
 
-                        is CommonResult.Failure -> {
-                            emitToastMessage(it.errorMessage)
+                            is CommonResult.Failure -> {
+                                emitToastMessage(it.errorMessage)
+                            }
                         }
                     }
-                }
+            }
         }
     }
 

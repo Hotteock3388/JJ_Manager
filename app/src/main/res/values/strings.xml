@@ -21,5 +21,6 @@
     <string name="search">검색</string>
     <string name="equipment_image_description">기자재 이미지</string>
     <string name="my_page">마이페이지</string>
+    <string name="title_activity_add_equipment_compose">AddEquipmentComposeActivity</string>
 
 </resources>
