@@ -67,22 +67,22 @@ import com.depotato.jubjub_manager.ui.theme.JubJub_ManagerTheme
 import com.depotato.jubjub_manager.ui.theme.SpinnerBG
 import com.depotato.jubjub_manager.ui.theme.SpinnerStroke
 import com.depotato.jubjub_manager.ui.theme.White
-import com.depotato.jubjub_manager.view.modify_equipment.add.AddEquipmentViewModel
+import com.depotato.jubjub_manager.view.modify_equipment.ModifyEquipmentViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import org.koin.androidx.compose.koinViewModel
 
-class ModifyEquipmentScreenT {
+class ModifyEqScreen {
 
-    val equipmentInfoLabelParams = TextParams(
+    private val equipmentInfoLabelParams = TextParams(
         textColor = Blue,
         size = 16.sp,
         fontFamily = notoSansFamily,
         fontWeight = FontWeight.Bold,
     )
 
-    val equipmentInfoTextFieldParams = TextParams(
+    private val equipmentInfoTextFieldParams = TextParams(
         size = 13.sp,
         fontFamily = notoSansFamily,
         fontWeight = FontWeight.Medium,
@@ -118,7 +118,7 @@ class ModifyEquipmentScreenT {
 
     @Composable
     fun ModifyEquipmentScreen(
-        viewModel: AddEquipmentViewModel = koinViewModel(),
+        viewModel: ModifyEquipmentViewModel = koinViewModel(),
         openGallery: () -> Unit = {},
         buttonOnClick: () -> Unit = {}
     ){
@@ -137,6 +137,7 @@ class ModifyEquipmentScreenT {
                         ModifyEqScreenTitle()
                         EquipmentImagePicker(
                             imageUri = viewModel.equipmentImageUri,
+                            imageURL = viewModel.equipmentImageUrl,
                             openGallery = openGallery,
                             deleteImage = { viewModel.deleteImage() }
                         )
@@ -156,10 +157,12 @@ class ModifyEquipmentScreenT {
                                 if (value.isDigitsOnly()) viewModel.updateCurrentAmount(value)
                             }
                         )
+
                         CategoryDropdownMenu(
                             categories = viewModel.categories,
+                            selectedOptionText = viewModel.equipmentCategory,
                             onCategorySelected = { selectedItem ->
-                                viewModel.equipmentCategory = selectedItem
+                                viewModel.updateEquipmentCategory(selectedItem)
                             }
                         )
                     }
@@ -187,7 +190,6 @@ class ModifyEquipmentScreenT {
                 color = White
             )
         }
-
     }
 
     @Composable
@@ -254,13 +256,45 @@ class ModifyEquipmentScreenT {
     fun EquipmentImagePicker(
         modifier: Modifier = Modifier,
         imageUri: StateFlow<Uri> = MutableStateFlow(Uri.EMPTY),
+        imageURL: StateFlow<String> = MutableStateFlow(""),
         openGallery: () -> Unit = {},
         deleteImage: () -> Unit = {}
     ) {
-        val imageSource = imageUri.collectAsState()
-        Box(modifier = modifier.padding(top = 18.dp)) {
+        val _imageUri = imageUri.collectAsState()
+        val _imageURL = imageURL.collectAsState()
 
-            if (imageSource.value != Uri.EMPTY ) {
+        Box(modifier = modifier.padding(top = 18.dp)) {
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(
+                        if (_imageUri.value == Uri.EMPTY && _imageURL.value == "")
+                            R.drawable.ic_add_image
+                        else if (_imageUri.value != Uri.EMPTY){
+                            _imageUri.value
+                        }
+                        else if (_imageURL.value != ""){
+                            _imageURL.value
+                        } else {
+                            R.drawable.ic_add_image
+                        }
+                    )
+                    .crossfade(true)
+                    .build(),
+                placeholder = painterResource(R.drawable.ic_add_image),
+                contentDescription = stringResource(R.string.equipment_image_description),
+                contentScale = ContentScale.Crop,
+                modifier = modifier
+                    .padding(top = 20.dp)
+                    .width(86.dp)
+                    .height(86.dp)
+                    .clip(RoundedCornerShape(10.dp))
+                    .clickable {
+                        if(_imageUri.value == Uri.EMPTY && _imageURL.value == ""){
+                            openGallery()
+                        }
+                    }
+            )
+            if (_imageUri.value != Uri.EMPTY || _imageURL.value != "") {
                 Box(
                     modifier = modifier
                         .padding(start = 66.dp)
@@ -283,24 +317,6 @@ class ModifyEquipmentScreenT {
                             .padding(10.dp)
                     )
                 }
-            }else{
-                AsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(if (imageSource.value == Uri.EMPTY) R.drawable.ic_add_image else imageSource.value)
-                        .crossfade(true)
-                        .build(),
-                    placeholder = painterResource(R.drawable.ic_add_image),
-                    contentDescription = stringResource(R.string.equipment_image_description),
-                    contentScale = ContentScale.Crop,
-                    modifier = modifier
-                        .padding(top = 20.dp)
-                        .width(86.dp)
-                        .height(86.dp)
-                        .clip(RoundedCornerShape(10.dp))
-                        .clickable {
-                            openGallery()
-                        }
-                )
             }
 
         }
@@ -381,6 +397,7 @@ class ModifyEquipmentScreenT {
     @Composable
     fun CategoryDropdownMenu(
         categories: StateFlow<List<String>> = MutableStateFlow(listOf("카테고리를 선택하세요.")).asStateFlow(),
+        selectedOptionText: StateFlow<String> = MutableStateFlow(categories.value[0]),
         onCategorySelected: (String) -> Unit = { },
         labelParams: TextParams = TextParams(
             text = "카테고리",
@@ -391,7 +408,9 @@ class ModifyEquipmentScreenT {
         ),
     ) {
         var expanded by remember { mutableStateOf(false) }
-        var selectedOptionText by remember { mutableStateOf(categories.value[0]) }
+        var selectedOptionText by remember {
+            mutableStateOf(selectedOptionText.value)
+        }
 
         Column(
             modifier = Modifier.padding(top = 26.dp)

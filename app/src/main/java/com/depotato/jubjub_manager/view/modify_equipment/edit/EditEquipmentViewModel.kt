@@ -25,7 +25,8 @@ class EditEquipmentViewModel(
             _equipmentName.value = equipment.name
             _equipmentMaxAmount.value = equipment.maxAmount.toString()
             _equipmentCurrentAmount.value = equipment.currentAmount.toString()
-            equipmentCategory = equipment.category
+//            __equipmentCategory =
+            updateEquipmentCategory(equipment.category)
         }catch (e: Exception){
             e.printStackTrace()
         }

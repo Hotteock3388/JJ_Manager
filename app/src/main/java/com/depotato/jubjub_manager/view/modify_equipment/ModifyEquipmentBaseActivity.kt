@@ -67,7 +67,7 @@ abstract class ModifyEquipmentBaseActivity<B : ViewDataBinding, VM : ModifyEquip
 
             collectWhenStarted(categories){
                 initCategorySpinner()
-                if(viewModel.equipmentCategory.isNotBlank()){
+                if(viewModel.__equipmentCategory.isNotBlank()){
                     spinnerCategory.setSelection(viewModel.getCategoryIdx())
                 }
             }
@@ -81,7 +81,7 @@ abstract class ModifyEquipmentBaseActivity<B : ViewDataBinding, VM : ModifyEquip
 
     fun onSpinnerItemSelected(parent: AdapterView<*>?, position: Int) {
         with(viewModel){
-            equipmentCategory = if(position == 0){
+            __equipmentCategory = if(position == 0){
                 ""
             }else{
                 categories.value[position]

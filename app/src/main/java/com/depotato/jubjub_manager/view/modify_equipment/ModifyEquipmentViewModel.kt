@@ -65,7 +65,17 @@ open class ModifyEquipmentViewModel(
         viewModelScope.launch { _equipmentCurrentAmount.emit(value) }
     }
 
-    var equipmentCategory = ""
+
+    var __equipmentCategory = ""
+
+    var _equipmentCategory = MutableStateFlow<String>("카테고리를 선택하세요.")
+    val equipmentCategory = _equipmentCategory.asStateFlow()
+    fun updateEquipmentCategory(value: String){
+        viewModelScope.launch {
+            _equipmentCategory.emit(value)
+            __equipmentCategory = value
+        }
+    }
 
     protected val _addComplete = MutableSharedFlow<Unit>()
     val addComplete = _addComplete.asSharedFlow()
@@ -76,7 +86,6 @@ open class ModifyEquipmentViewModel(
         }else{
             _equipmentImageUri.value = Uri.EMPTY
         }
-
     }
 
     init {
@@ -99,7 +108,7 @@ open class ModifyEquipmentViewModel(
     }
 
     fun getCategoryIdx(): Int {
-        return categories.value.indexOf(equipmentCategory)
+        return categories.value.indexOf(__equipmentCategory)
     }
 
     fun getImageMultipartFile(): MultipartBody.Part {
@@ -120,7 +129,7 @@ open class ModifyEquipmentViewModel(
         return Equipment(
             id = equipmentId,
             name = _equipmentName.value,
-            category = equipmentCategory,
+            category = __equipmentCategory,
             currentAmount = equipmentCurrentAmount.value.toInt(),
             maxAmount = equipmentMaxAmount.value.toInt(),
             imageUrl = "" + equipmentImageUrl.value
@@ -137,7 +146,7 @@ open class ModifyEquipmentViewModel(
             invalidData("기자재 전체 수량을 입력해주세요.")
         } else if (equipmentCurrentAmount.value.isBlank()) {
             invalidData("기자재 잔여 수량을 입력해주세요.")
-        } else if (equipmentCategory.isBlank()) {
+        } else if (__equipmentCategory.isBlank() && equipmentCategory.value.isBlank() || equipmentCategory.value == "카테고리를 선택하세요.") {
             invalidData("기자재 카테고리를 선택해주세요.")
         } else if (equipmentMaxAmount.value.toInt() < equipmentCurrentAmount.value.toInt()) {
             invalidData("전체 수량이 잔여 수량보다 많아야 합니다.")
