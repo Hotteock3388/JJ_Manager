@@ -66,6 +66,8 @@ android {
 }
 
 dependencies {
+    implementation(platform("androidx.compose:compose-bom:2023.03.00"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
     val OK_HTTP_VERSION = "4.9.0"
     val RETROFIT_VERSION = "2.9.0"
     val KOIN_VERSION = "3.2.0"

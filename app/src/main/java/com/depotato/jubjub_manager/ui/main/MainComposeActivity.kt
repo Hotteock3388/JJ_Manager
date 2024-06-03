@@ -34,10 +34,10 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.depotato.jubjub_manager.R
 import com.depotato.jubjub_manager.ui.main.equipment_list.EquipmentListScreen
 import com.depotato.jubjub_manager.ui.main.my_page.MyPageScreen
+import com.depotato.jubjub_manager.ui.modify_equipment.edit_equipment.EditEquipmentComposeActivity
 import com.depotato.jubjub_manager.ui.theme.JubJub_ManagerTheme
 import com.depotato.jubjub_manager.ui.theme.White
 import com.depotato.jubjub_manager.view.equipment_list.EquipmentListViewModel
-import com.depotato.jubjub_manager.view.modify_equipment.edit.EditEquipmentActivity
 import com.depotato.jubjub_manager.view.my_page.MyPageViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -63,7 +63,7 @@ class MainComposeActivity : ComponentActivity() {
         }
 
         collectWhenStarted(equipmentListViewModel.clickedEquipment){
-            Intent(this, EditEquipmentActivity::class.java).apply {
+            Intent(this, EditEquipmentComposeActivity::class.java).apply {
                 putExtra("equipment", it)
                 startActivity(this)
             }

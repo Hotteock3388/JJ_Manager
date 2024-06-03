@@ -43,10 +43,10 @@ class EditEquipmentActivity : ModifyEquipmentBaseActivity<ActivityEditEquipmentB
         }
     }
 
-    override fun removeImage(){
-        super.removeImage()
-        viewModel._equipmentImageUrl.value = ""
-    }
+//    override fun removeImage(){
+//        super.removeImage()
+//        viewModel._equipmentImageUrl.value = ""
+//    }
 
     fun editEquipment(){
         if(viewModel.isEquipmentDataValid()){

@@ -19,3 +19,8 @@ val NoticeGray = Color(0xFF505050)
 
 val SearchBar = Color(0xFFF5F5F5)
 val LogOut = Color(0xFFDA7272)
+
+val SpinnerBG = Color(0xFFF4F4F4)
+val SpinnerStroke = Color(0xFFDEDEDE)
+
+val DeleteImageBG = Color(0xFFEDEDED)
