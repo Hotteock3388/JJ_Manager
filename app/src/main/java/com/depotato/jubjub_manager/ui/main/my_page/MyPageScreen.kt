@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.depotato.jubjub_manager.R
 import com.depotato.jubjub_manager.ui.components.JJLogo
-import com.depotato.jubjub_manager.ui.modify_equipment.add_equipment.AddEquipmentComposeActivity
+import com.depotato.jubjub_manager.ui.modify_equipment.add_equipment.AddEq
 import com.depotato.jubjub_manager.ui.text.notoSansFamily
 import com.depotato.jubjub_manager.ui.theme.Black
 import com.depotato.jubjub_manager.ui.theme.LogOut
@@ -67,7 +67,7 @@ fun MyPageScreenPreview(
 }
 
 fun openAddEquipmentActivity(context: Context) {
-    context.startActivity(Intent(context, AddEquipmentComposeActivity::class.java))
+    context.startActivity(Intent(context, AddEq::class.java))
 }
 
 @Composable

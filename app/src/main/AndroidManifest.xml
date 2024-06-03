@@ -17,7 +17,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.modify_equipment.add_equipment.AddEquipmentComposeActivity"
+            android:name=".ui.modify_equipment.add_equipment.AddEq"
             android:exported="false"
             android:label="@string/title_activity_add_equipment_compose"
             android:theme="@style/Theme.JubJub_Manager" />
