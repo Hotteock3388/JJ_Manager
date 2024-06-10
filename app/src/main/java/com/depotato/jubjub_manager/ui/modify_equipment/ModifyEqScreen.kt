@@ -67,7 +67,6 @@ import com.depotato.jubjub_manager.ui.theme.JubJub_ManagerTheme
 import com.depotato.jubjub_manager.ui.theme.SpinnerBG
 import com.depotato.jubjub_manager.ui.theme.SpinnerStroke
 import com.depotato.jubjub_manager.ui.theme.White
-import com.depotato.jubjub_manager.view.modify_equipment.ModifyEquipmentViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

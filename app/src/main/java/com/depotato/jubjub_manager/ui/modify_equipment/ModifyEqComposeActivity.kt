@@ -13,7 +13,6 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.depotato.jubjub_manager.function_module.UriConverter
-import com.depotato.jubjub_manager.view.modify_equipment.ModifyEquipmentViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 

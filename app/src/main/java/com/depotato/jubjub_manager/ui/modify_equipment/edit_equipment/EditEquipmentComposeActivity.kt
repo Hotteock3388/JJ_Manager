@@ -4,8 +4,7 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import com.depotato.jubjub_manager.ui.modify_equipment.ModifyEqComposeActivity
 import com.depotato.jubjub_manager.ui.modify_equipment.ModifyEqScreen
-import com.depotato.jubjub_manager.view.equipment_list.Equipment
-import com.depotato.jubjub_manager.view.modify_equipment.edit.EditEquipmentViewModel
+import com.depotato.jubjub_manager.ui.main.equipment_list.Equipment
 import org.koin.android.ext.android.inject
 
 class EditEquipmentComposeActivity : ModifyEqComposeActivity<EditEquipmentViewModel>() {

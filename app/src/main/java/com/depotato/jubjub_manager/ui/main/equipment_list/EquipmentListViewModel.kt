@@ -1,4 +1,4 @@
-package com.depotato.jubjub_manager.view.equipment_list
+package com.depotato.jubjub_manager.ui.main.equipment_list
 
 import androidx.lifecycle.viewModelScope
 import com.depotato.jubjub_manager.base.BaseViewModel
@@ -21,7 +21,7 @@ class EquipmentListViewModel(
     private val _equipments = MutableStateFlow<List<Equipment>>(listOf())
     val equipments = _equipments.asStateFlow()
 
-    val _searchText = MutableStateFlow<String>("")
+    private val _searchText = MutableStateFlow<String>("")
     val searchText = _searchText.asStateFlow()
 
     private val _clickedEquipment = MutableSharedFlow<Equipment>()

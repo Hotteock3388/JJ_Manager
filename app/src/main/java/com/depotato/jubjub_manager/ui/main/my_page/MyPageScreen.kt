@@ -29,7 +29,6 @@ import com.depotato.jubjub_manager.ui.modify_equipment.add_equipment.AddEquipmen
 import com.depotato.jubjub_manager.ui.text.notoSansFamily
 import com.depotato.jubjub_manager.ui.theme.Black
 import com.depotato.jubjub_manager.ui.theme.LogOut
-import com.depotato.jubjub_manager.view.my_page.MyPageViewModel
 import org.koin.androidx.compose.koinViewModel
 
 

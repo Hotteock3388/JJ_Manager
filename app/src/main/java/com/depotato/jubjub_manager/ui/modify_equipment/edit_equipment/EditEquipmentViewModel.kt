@@ -1,12 +1,12 @@
-package com.depotato.jubjub_manager.view.modify_equipment.edit
+package com.depotato.jubjub_manager.ui.modify_equipment.edit_equipment
 
 import android.net.Uri
 import androidx.lifecycle.viewModelScope
 import com.depotato.jubjub_manager.domain.equipment.CommonResult
 import com.depotato.jubjub_manager.domain.equipment.category.GetCategoriesUseCase
 import com.depotato.jubjub_manager.domain.equipment.edit.EditEquipmentUseCase
-import com.depotato.jubjub_manager.view.equipment_list.Equipment
-import com.depotato.jubjub_manager.view.modify_equipment.ModifyEquipmentViewModel
+import com.depotato.jubjub_manager.ui.main.equipment_list.Equipment
+import com.depotato.jubjub_manager.ui.modify_equipment.ModifyEquipmentViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 

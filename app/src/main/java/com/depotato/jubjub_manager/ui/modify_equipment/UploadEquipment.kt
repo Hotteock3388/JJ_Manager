@@ -1,4 +1,4 @@
-package com.depotato.jubjub_manager.view.modify_equipment
+package com.depotato.jubjub_manager.ui.modify_equipment
 
 import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.Serializable
