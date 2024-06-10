@@ -87,6 +87,12 @@ class MainComposeActivity : ComponentActivity() {
             }
         }
     }
+
+    override fun onResume() {
+        super.onResume()    
+        equipmentListViewModel.getEquipments()
+    }
+
     //뒤로가기 버튼 눌렀을 때
     override fun onBackPressed() {
         //1번 눌렀을 때
@@ -110,6 +116,7 @@ fun MainActivityPreView() {
 
 @Composable
 fun MainScreen() {
+
     var CURRENT_PAGE by rememberSaveable() {
         mutableStateOf(CurrentNavigationItem.HOME)
     }
