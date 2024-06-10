@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.depotato.jubjub_manager.base.BaseViewModel
 import com.depotato.jubjub_manager.domain.equipment.GetCategoryResult
 import com.depotato.jubjub_manager.domain.equipment.category.GetCategoriesUseCase
-import com.depotato.jubjub_manager.view.equipment_list.adapter.Equipment
+import com.depotato.jubjub_manager.view.equipment_list.Equipment
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow

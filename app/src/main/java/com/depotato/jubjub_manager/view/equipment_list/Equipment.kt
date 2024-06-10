@@ -1,4 +1,4 @@
-package com.depotato.jubjub_manager.view.equipment_list.adapter
+package com.depotato.jubjub_manager.view.equipment_list
 
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable

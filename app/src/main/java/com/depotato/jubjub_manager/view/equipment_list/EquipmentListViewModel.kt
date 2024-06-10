@@ -4,9 +4,6 @@ import androidx.lifecycle.viewModelScope
 import com.depotato.jubjub_manager.base.BaseViewModel
 import com.depotato.jubjub_manager.domain.equipment.list.GetEquipmentsResult
 import com.depotato.jubjub_manager.domain.equipment.list.GetEquipmentsUseCase
-import com.depotato.jubjub_manager.view.equipment_list.adapter.Equipment
-import com.depotato.jubjub_manager.view.equipment_list.adapter.EquipmentItemEventListener
-import com.depotato.jubjub_manager.view.equipment_list.adapter.EquipmentListRVAdapter
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -30,13 +27,6 @@ class EquipmentListViewModel(
     private val _clickedEquipment = MutableSharedFlow<Equipment>()
     val clickedEquipment = _clickedEquipment.asSharedFlow()
 
-    val event = object: EquipmentItemEventListener(){
-        override fun onItemClick(equipment: Equipment) {
-            viewModelScope.launch {
-                _clickedEquipment.emit(equipment)
-            }
-        }
-    }
     init { getEquipments() }
 
     fun emitSearchText(text: String){
@@ -51,7 +41,6 @@ class EquipmentListViewModel(
         }
     }
 
-    val adapter = EquipmentListRVAdapter(event)
 
     fun getEquipments(){
         viewModelScope.launch {

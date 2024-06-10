@@ -47,8 +47,8 @@ import com.depotato.jubjub_manager.ui.text.notoSansFamily
 import com.depotato.jubjub_manager.ui.theme.Blue
 import com.depotato.jubjub_manager.ui.theme.HintGray
 import com.depotato.jubjub_manager.ui.theme.SearchBar
+import com.depotato.jubjub_manager.view.equipment_list.Equipment
 import com.depotato.jubjub_manager.view.equipment_list.EquipmentListViewModel
-import com.depotato.jubjub_manager.view.equipment_list.adapter.Equipment
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

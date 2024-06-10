@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.depotato.jubjub_manager.domain.equipment.CommonResult
 import com.depotato.jubjub_manager.domain.equipment.category.GetCategoriesUseCase
 import com.depotato.jubjub_manager.domain.equipment.edit.EditEquipmentUseCase
-import com.depotato.jubjub_manager.view.equipment_list.adapter.Equipment
+import com.depotato.jubjub_manager.view.equipment_list.Equipment
 import com.depotato.jubjub_manager.view.modify_equipment.ModifyEquipmentViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
