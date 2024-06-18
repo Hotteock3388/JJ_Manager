@@ -36,7 +36,7 @@
             android:theme="@style/Theme.JubJub_Manager" />
 
         <activity
-            android:name=".ui.sign_in.SignInComposeActivity"
+            android:name=".ui.sign_in.SignInActivity"
             android:exported="true"
             android:label="@string/title_activity_sign_in_compose"
             android:theme="@style/Theme.JubJub_Manager">

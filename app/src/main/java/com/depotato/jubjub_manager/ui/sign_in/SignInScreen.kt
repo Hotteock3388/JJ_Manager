@@ -17,8 +17,10 @@ import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.PlatformTextStyle
@@ -42,20 +44,19 @@ import com.depotato.jubjub_manager.ui.theme.White
 import org.koin.androidx.compose.koinViewModel
 
 
-@Preview
-@Composable
-fun SignInScreenPreview() {
-    SignInScreen({})
-}
-
 @Composable
 fun SignInScreen(
     onSignInButtonClick: () -> Unit,
     viewModel: SignInViewModel = koinViewModel()
 ){
     val signInUiState by viewModel.signInUiState.collectAsStateWithLifecycle(
-        lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+        lifecycleOwner = LocalLifecycleOwner.current
     )
+
+    LaunchedEffect(viewModel) {
+        viewModel.checkLoginHistoryExist()
+    }
+
     SignInScreen(
         onSignInButtonClick = onSignInButtonClick,
         signInUiState,
@@ -64,12 +65,13 @@ fun SignInScreen(
     )
 }
 
+@Preview
 @Composable
 fun SignInScreen(
-    onSignInButtonClick: () -> Unit,
-    signInUiState : SignInUiState,
-    onUserIdInputBoxChanged: (String) -> Unit,
-    onUserPwInputBoxChanged: (String) -> Unit,
+    onSignInButtonClick: () -> Unit = {},
+    signInUiState : SignInUiState = SignInUiState(),
+    onUserIdInputBoxChanged: (String) -> Unit = {},
+    onUserPwInputBoxChanged: (String) -> Unit = {},
 ) {
     JubJub_ManagerTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
@@ -77,15 +79,10 @@ fun SignInScreen(
                 SignInJubJubLogo(modifier = Modifier.padding(top = 53.dp))
 
                 Column(
-                    modifier = Modifier.padding(
-                        top = 95.dp,
-                        start = 62.5.dp,
-                        end = 62.5.dp
-                    )
+                    modifier = Modifier.padding(top = 95.dp, start = 62.5.dp, end = 62.5.dp)
                 ) {
                     SignInTitle()
                     Spacer(modifier = Modifier.padding(top = 32.dp))
-
                     SignInInputBox(
                         label = stringResource(id = R.string.id_label), placeHolder = stringResource(id = R.string.enter_id),
                         value = signInUiState.userId,
