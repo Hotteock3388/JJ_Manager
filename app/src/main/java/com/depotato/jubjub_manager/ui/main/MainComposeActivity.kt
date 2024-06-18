@@ -37,6 +37,7 @@ import com.depotato.jubjub_manager.ui.main.equipment_list.EquipmentListViewModel
 import com.depotato.jubjub_manager.ui.main.my_page.MyPageScreen
 import com.depotato.jubjub_manager.ui.main.my_page.MyPageViewModel
 import com.depotato.jubjub_manager.ui.modify_equipment.edit_equipment.EditEquipmentComposeActivity
+import com.depotato.jubjub_manager.ui.sign_in.SignInActivity
 import com.depotato.jubjub_manager.ui.theme.JubJub_ManagerTheme
 import com.depotato.jubjub_manager.ui.theme.White
 import kotlinx.coroutines.flow.Flow
@@ -75,7 +76,7 @@ class MainComposeActivity : ComponentActivity() {
 
     }
     private fun logOut(){
-        startActivity(Intent(this, com.depotato.jubjub_manager.ui.sign_in.SignInComposeActivity::class.java))
+        startActivity(Intent(this, SignInActivity::class.java))
         finish()
     }
     inline fun <reified T> LifecycleOwner.collectWhenStarted(
