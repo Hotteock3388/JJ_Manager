@@ -47,7 +47,8 @@ import org.koin.androidx.compose.koinViewModel
 
 @Preview
 @Composable
-fun SignInScreenPreView(){ SignInScreen({}, SignInUiState(), {}, {})
+fun SignInScreenPreView(){
+    SignInScreen({}, SignInUiState(), {}, {})
 }
 
 @Composable
