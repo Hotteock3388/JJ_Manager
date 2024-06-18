@@ -8,30 +8,37 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-//class FakeEquipmentListViewModel(
-//
-//): EquipmentListViewModel
+
+data class EquipmentListUiState(
+    var equipments: List<Equipment> = listOf(),
+    var searchText: String = ""
+)
 
 class EquipmentListViewModel(
     private val getEquipmentsUseCase: GetEquipmentsUseCase
 ): BaseViewModel("EquipmentListViewModel") {
 
-    private val _equipments = MutableStateFlow<List<Equipment>>(listOf())
-    val equipments = _equipments.asStateFlow()
-
-    private val _searchText = MutableStateFlow<String>("")
-    val searchText = _searchText.asStateFlow()
+    private val _equipmentListUiState = MutableStateFlow(EquipmentListUiState())
+    val equipmentListUiState = _equipmentListUiState.asStateFlow()
 
     private val _clickedEquipment = MutableSharedFlow<Equipment>()
     val clickedEquipment = _clickedEquipment.asSharedFlow()
 
-    init { getEquipments() }
-
     fun emitSearchText(text: String){
         viewModelScope.launch {
-            _searchText.emit(text)
+            _equipmentListUiState.update{
+                it.copy(searchText = text)
+            }
+        }
+    }
+    private fun emitEquipments(equipments: List<Equipment>){
+        viewModelScope.launch {
+            _equipmentListUiState.update {
+                it.copy(equipments = equipments)
+            }
         }
     }
 
@@ -41,14 +48,13 @@ class EquipmentListViewModel(
         }
     }
 
-
     fun getEquipments(){
         viewModelScope.launch {
             getEquipmentsUseCase()
                 .collect{
                     when (it) {
                         is GetEquipmentsResult.Success -> {
-                            _equipments.value = it.equipments
+                            emitEquipments(it.equipments)
                         }
                         is GetEquipmentsResult.Failure -> {
                             emitToastMessage(it.errorMessage)
