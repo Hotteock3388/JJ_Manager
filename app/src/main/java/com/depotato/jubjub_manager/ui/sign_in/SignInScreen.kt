@@ -44,9 +44,14 @@ import com.depotato.jubjub_manager.ui.theme.White
 import org.koin.androidx.compose.koinViewModel
 
 
+
+@Preview
+@Composable
+fun SignInScreenPreView(){ SignInScreen({}, SignInUiState(), {}, {})
+}
+
 @Composable
 fun SignInScreen(
-    onSignInButtonClick: () -> Unit,
     viewModel: SignInViewModel = koinViewModel()
 ){
     val signInUiState by viewModel.signInUiState.collectAsStateWithLifecycle(
@@ -58,14 +63,13 @@ fun SignInScreen(
     }
 
     SignInScreen(
-        onSignInButtonClick = onSignInButtonClick,
+        onSignInButtonClick = { viewModel.signIn() },
         signInUiState,
         onUserIdInputBoxChanged = { value -> viewModel.updateUserId(value) },
         onUserPwInputBoxChanged = { value -> viewModel.updateUserPw(value) },
     )
 }
 
-@Preview
 @Composable
 fun SignInScreen(
     onSignInButtonClick: () -> Unit = {},

@@ -18,7 +18,6 @@ class SignInActivity : BaseActivity<SignInViewModel>("SignInActivity") {
 
         setContent {
             SignInScreen(
-                onSignInButtonClick = { viewModel.signIn() },
                 viewModel = viewModel
             )
         }
@@ -41,8 +40,6 @@ class SignInActivity : BaseActivity<SignInViewModel>("SignInActivity") {
     @Preview
     @Composable
     fun SignInScreenPreview() {
-        SignInScreen(
-            {}, viewModel
-        )
+        SignInScreen(viewModel)
     }
 }
