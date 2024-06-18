@@ -22,5 +22,10 @@
     <string name="equipment_image_description">기자재 이미지</string>
     <string name="my_page">마이페이지</string>
     <string name="title_activity_add_equipment_compose">AddEquipmentComposeActivity</string>
+    <!--    Equipment List Activity-->
+
+    <!--    My Page Activity-->
+    <string name="menu_add_equipment">기자재 추가</string>
+    <string name="menu_log_out">로그아웃</string>
 
 </resources>

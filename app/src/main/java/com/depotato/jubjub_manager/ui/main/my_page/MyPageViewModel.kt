@@ -13,7 +13,6 @@ class MyPageViewModel(private val sharedPref: SharedPref): BaseViewModel("MyPage
     private val _logOutComplete = MutableSharedFlow<Unit>()
     val logOutComplete = _logOutComplete.asSharedFlow()
 
-
     fun logOut(){
         with(sharedPref){
             removeData(Constants.USER_ID)
