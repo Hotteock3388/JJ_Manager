@@ -30,7 +30,6 @@ import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,6 +39,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.PlatformTextStyle
@@ -53,6 +53,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.text.isDigitsOnly
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.depotato.jubjub_manager.R
@@ -67,9 +68,6 @@ import com.depotato.jubjub_manager.ui.theme.JubJub_ManagerTheme
 import com.depotato.jubjub_manager.ui.theme.SpinnerBG
 import com.depotato.jubjub_manager.ui.theme.SpinnerStroke
 import com.depotato.jubjub_manager.ui.theme.White
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import org.koin.androidx.compose.koinViewModel
 
 class ModifyEqScreen {
@@ -89,7 +87,7 @@ class ModifyEqScreen {
 
     @Preview(showBackground = true)
     @Composable
-    fun AddEquipmentScreenPreview() {
+    fun ModifyEquipmentScreenPreview() {
         JubJub_ManagerTheme {
             // A surface container using the 'background' color from the theme
             Surface(
@@ -121,6 +119,34 @@ class ModifyEqScreen {
         openGallery: () -> Unit = {},
         buttonOnClick: () -> Unit = {}
     ){
+
+        val modifyEquipmentUiState by viewModel.modifyEquipmentUiState.collectAsStateWithLifecycle(
+            lifecycleOwner = LocalLifecycleOwner.current
+        )
+
+        ModifyEquipmentScreen(
+            modifyEquipmentUiState = modifyEquipmentUiState,
+            deleteImage = {viewModel.deleteImage()} ,
+            openGallery = openGallery,
+            buttonOnClick = buttonOnClick,
+            onNameChanged = { value -> viewModel.updateName(value) },
+            onMaxAmountChanged = { value -> if (value.isDigitsOnly()) viewModel.updateMaxAmount(value) },
+            onCurrentAmountChanged = { value -> if (value.isDigitsOnly()) viewModel.updateCurrentAmount(value) },
+            onCategorySelected = { selectedItem -> viewModel.updateCategory(selectedItem) }
+        )
+    }
+
+    @Composable
+    fun ModifyEquipmentScreen(
+        modifyEquipmentUiState: ModifyEquipmentUiState,
+        deleteImage: () -> Unit = {},
+        openGallery: () -> Unit = {},
+        buttonOnClick: () -> Unit = {},
+        onNameChanged: (String) -> Unit = {},
+        onMaxAmountChanged: (String) -> Unit = {},
+        onCurrentAmountChanged: (String) -> Unit = {},
+        onCategorySelected: (String) -> Unit = {}
+    ){
         JubJub_ManagerTheme {
             // A surface container using the 'background' color from the theme
             Surface(
@@ -135,34 +161,28 @@ class ModifyEqScreen {
                     Column(modifier = Modifier.padding(start = 37.dp)) {
                         ModifyEqScreenTitle()
                         EquipmentImagePicker(
-                            imageUri = viewModel.equipmentImageUri,
-                            imageURL = viewModel.equipmentImageUrl,
+                            imageUri = modifyEquipmentUiState.imageUri,
+                            imageURL = modifyEquipmentUiState.imageURL,
                             openGallery = openGallery,
-                            deleteImage = { viewModel.deleteImage() }
+                            deleteImage = deleteImage
                         )
                         EquipmentName(
-                            value = viewModel.equipmentName,
-                            onValueChanged = { value -> viewModel.updateName(value) }
+                            value = modifyEquipmentUiState.name,
+                            onValueChanged = onNameChanged
                         )
                         EquipmentMaxAmount(
-                            value = viewModel.equipmentMaxAmount,
-                            onValueChanged = { value ->
-                                if (value.isDigitsOnly()) viewModel.updateMaxAmount(value)
-                            }
+                            value = modifyEquipmentUiState.maxAmount,
+                            onValueChanged = onMaxAmountChanged
                         )
                         EquipmentCurrentAmount(
-                            value = viewModel.equipmentCurrentAmount,
-                            onValueChanged = { value ->
-                                if (value.isDigitsOnly()) viewModel.updateCurrentAmount(value)
-                            }
+                            value = modifyEquipmentUiState.currentAmount,
+                            onValueChanged = onCurrentAmountChanged
                         )
 
                         CategoryDropdownMenu(
-                            categories = viewModel.categories,
-                            selectedOptionText = viewModel.equipmentCategory,
-                            onCategorySelected = { selectedItem ->
-                                viewModel.updateEquipmentCategory(selectedItem)
-                            }
+                            categories = modifyEquipmentUiState.categories,
+                            selectedOptionText = modifyEquipmentUiState.category,
+                            onCategorySelected = onCategorySelected
                         )
                     }
                     UploadButton(onClick = buttonOnClick)
@@ -193,7 +213,7 @@ class ModifyEqScreen {
 
     @Composable
     fun EquipmentName(
-        value: StateFlow<String> = MutableStateFlow(""),
+        value: String = "",
         onValueChanged: (String) -> Unit = {}
     ) {
         EquipmentInfoTextField(
@@ -208,7 +228,7 @@ class ModifyEqScreen {
 
     @Composable
     fun EquipmentMaxAmount(
-        value: StateFlow<String> = MutableStateFlow(""),
+        value: String = "",
         onValueChanged: (String) -> Unit = {}
     ) {
         EquipmentInfoTextField(
@@ -222,7 +242,7 @@ class ModifyEqScreen {
 
     @Composable
     fun EquipmentCurrentAmount(
-        value: StateFlow<String> = MutableStateFlow(""),
+        value: String = "",
         onValueChanged: (String) -> Unit = {}
     ) {
         EquipmentInfoTextField(
@@ -254,25 +274,23 @@ class ModifyEqScreen {
     @Composable
     fun EquipmentImagePicker(
         modifier: Modifier = Modifier,
-        imageUri: StateFlow<Uri> = MutableStateFlow(Uri.EMPTY),
-        imageURL: StateFlow<String> = MutableStateFlow(""),
+        imageUri: Uri = Uri.EMPTY,
+        imageURL: String = "",
         openGallery: () -> Unit = {},
         deleteImage: () -> Unit = {}
     ) {
-        val _imageUri = imageUri.collectAsState()
-        val _imageURL = imageURL.collectAsState()
 
         Box(modifier = modifier.padding(top = 18.dp)) {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(
-                        if (_imageUri.value == Uri.EMPTY && _imageURL.value == "")
+                        if (imageUri == Uri.EMPTY && imageURL == "")
                             R.drawable.ic_add_image
-                        else if (_imageUri.value != Uri.EMPTY){
-                            _imageUri.value
+                        else if (imageUri != Uri.EMPTY){
+                            imageUri
                         }
-                        else if (_imageURL.value != ""){
-                            _imageURL.value
+                        else if (imageURL != ""){
+                            imageURL
                         } else {
                             R.drawable.ic_add_image
                         }
@@ -288,12 +306,12 @@ class ModifyEqScreen {
                     .height(86.dp)
                     .clip(RoundedCornerShape(10.dp))
                     .clickable {
-                        if(_imageUri.value == Uri.EMPTY && _imageURL.value == ""){
+                        if (imageUri == Uri.EMPTY && imageURL == "") {
                             openGallery()
                         }
                     }
             )
-            if (_imageUri.value != Uri.EMPTY || _imageURL.value != "") {
+            if (imageUri != Uri.EMPTY || imageURL != "") {
                 Box(
                     modifier = modifier
                         .padding(start = 66.dp)
@@ -324,7 +342,7 @@ class ModifyEqScreen {
     @Composable
     fun EquipmentInfoTextField(
         modifier: Modifier = Modifier,
-        value: StateFlow<String>,
+        value: String,
         onValueChanged: (String) -> Unit,
         labelParams: TextParams,
         textFieldParams: TextParams,
@@ -332,10 +350,10 @@ class ModifyEqScreen {
         placeHolderParams: TextParams = textFieldParams.copy().apply { textColor = HintGray },
         valueVisible: Boolean = true
     ) {
-        val state = value.collectAsState(initial = "")
+//        val state = value.collectAsState(initial = "")
 
         BasicTextField(
-            value = state.value,
+            value = value,
             modifier = modifier.padding(top = 26.dp),
             keyboardOptions = keyboardOptions,
             singleLine = true,
@@ -363,7 +381,7 @@ class ModifyEqScreen {
                         fontSize = labelParams.size
                     )
                     if (placeHolderParams.text.isNotBlank()) {
-                        if (state.value.isBlank()) {
+                        if (value.isBlank()) {
                             Box(modifier = Modifier.padding(9.dp)) {
                                 // PlaceHolder
                                 ExcludeFontPaddingText(
@@ -395,8 +413,8 @@ class ModifyEqScreen {
     @OptIn(ExperimentalMaterialApi::class)
     @Composable
     fun CategoryDropdownMenu(
-        categories: StateFlow<List<String>> = MutableStateFlow(listOf("카테고리를 선택하세요.")).asStateFlow(),
-        selectedOptionText: StateFlow<String> = MutableStateFlow(categories.value[0]),
+        categories: List<String> = listOf("카테고리를 선택하세요."),
+        selectedOptionText: String = categories[0],
         onCategorySelected: (String) -> Unit = { },
         labelParams: TextParams = TextParams(
             text = "카테고리",
@@ -408,7 +426,7 @@ class ModifyEqScreen {
     ) {
         var expanded by remember { mutableStateOf(false) }
         var selectedOptionText by remember {
-            mutableStateOf(selectedOptionText.value)
+            mutableStateOf(selectedOptionText)
         }
 
         Column(
@@ -470,7 +488,7 @@ class ModifyEqScreen {
                         expanded = false
                     }
                 ) {
-                    categories.value.forEach { selectionOption ->
+                    categories.forEach { selectionOption ->
                         DropdownMenuItem(
                             modifier = Modifier
                                 .height(22.dp)

@@ -2,9 +2,9 @@ package com.depotato.jubjub_manager.ui.modify_equipment.edit_equipment
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import com.depotato.jubjub_manager.ui.main.equipment_list.Equipment
 import com.depotato.jubjub_manager.ui.modify_equipment.ModifyEqComposeActivity
 import com.depotato.jubjub_manager.ui.modify_equipment.ModifyEqScreen
-import com.depotato.jubjub_manager.ui.main.equipment_list.Equipment
 import org.koin.android.ext.android.inject
 
 class EditEquipmentComposeActivity : ModifyEqComposeActivity<EditEquipmentViewModel>() {
@@ -40,9 +40,7 @@ class EditEquipmentComposeActivity : ModifyEqComposeActivity<EditEquipmentViewMo
     }
 
     fun editEquipment(){
-        if(viewModel.isEquipmentDataValid()){
-            viewModel.editEquipment()
-        }
+        viewModel.editEquipment()
     }
 
 }

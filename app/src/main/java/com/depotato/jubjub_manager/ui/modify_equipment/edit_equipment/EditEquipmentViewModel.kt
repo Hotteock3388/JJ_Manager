@@ -21,31 +21,36 @@ class EditEquipmentViewModel(
     fun initEquipmentData(equipment: Equipment){
         try {
             equipmentId = equipment.id
-            _equipmentImageUrl.value = equipment.imageUrl
-            _equipmentName.value = equipment.name
-            _equipmentMaxAmount.value = equipment.maxAmount.toString()
-            _equipmentCurrentAmount.value = equipment.currentAmount.toString()
-//            __equipmentCategory =
-            updateEquipmentCategory(equipment.category)
+//            _equipmentImageUrl.value = equipment.imageUrl
+            updateImageURL(equipment.imageUrl)
+//            _equipmentName.value = equipment.name
+            updateName(equipment.name)
+//            _equipmentMaxAmount.value = equipment.maxAmount.toString()
+            updateMaxAmount(equipment.maxAmount.toString())
+//            _equipmentCurrentAmount.value = equipment.currentAmount.toString()
+            updateCurrentAmount(equipment.currentAmount.toString())
+            updateCategory(equipment.category)
         }catch (e: Exception){
             e.printStackTrace()
         }
     }
 
     fun editEquipment() {
-        if(equipmentImageUri.value == Uri.EMPTY){
-            setHandler(
-                editEquipmentUseCase.excludeImage(
-                    getEquipmentRequestBody()
+        if(isEquipmentDataValid()){
+            if(modifyEquipmentUiState.value.imageUri == Uri.EMPTY){
+                setHandler(
+                    editEquipmentUseCase.excludeImage(
+                        getEquipmentRequestBody()
+                    )
                 )
-            )
-        } else {
-            setHandler(
-                editEquipmentUseCase.includeImage(
-                    getImageMultipartFile(),
-                    getEquipmentRequestBody()
+            } else {
+                setHandler(
+                    editEquipmentUseCase.includeImage(
+                        getImageMultipartFile(),
+                        getEquipmentRequestBody()
+                    )
                 )
-            )
+            }
         }
     }
 
