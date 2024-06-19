@@ -33,12 +33,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.depotato.jubjub_manager.R
 import com.depotato.jubjub_manager.ui.main.equipment_list.EquipmentListScreen
+import com.depotato.jubjub_manager.ui.main.equipment_list.EquipmentListViewModel
 import com.depotato.jubjub_manager.ui.main.my_page.MyPageScreen
+import com.depotato.jubjub_manager.ui.main.my_page.MyPageViewModel
 import com.depotato.jubjub_manager.ui.modify_equipment.edit_equipment.EditEquipmentComposeActivity
+import com.depotato.jubjub_manager.ui.sign_in.SignInActivity
 import com.depotato.jubjub_manager.ui.theme.JubJub_ManagerTheme
 import com.depotato.jubjub_manager.ui.theme.White
-import com.depotato.jubjub_manager.view.equipment_list.EquipmentListViewModel
-import com.depotato.jubjub_manager.view.my_page.MyPageViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -72,9 +73,10 @@ class MainComposeActivity : ComponentActivity() {
         collectWhenStarted(myPageViewModel.logOutComplete){
             logOut()
         }
+
     }
     private fun logOut(){
-        startActivity(Intent(this, com.depotato.jubjub_manager.ui.sign_in.SignInComposeActivity::class.java))
+        startActivity(Intent(this, SignInActivity::class.java))
         finish()
     }
     inline fun <reified T> LifecycleOwner.collectWhenStarted(
@@ -87,6 +89,12 @@ class MainComposeActivity : ComponentActivity() {
             }
         }
     }
+
+    override fun onResume() {
+        super.onResume()    
+        equipmentListViewModel.getEquipments()
+    }
+
     //뒤로가기 버튼 눌렀을 때
     override fun onBackPressed() {
         //1번 눌렀을 때
@@ -110,6 +118,7 @@ fun MainActivityPreView() {
 
 @Composable
 fun MainScreen() {
+
     var CURRENT_PAGE by rememberSaveable() {
         mutableStateOf(CurrentNavigationItem.HOME)
     }
@@ -160,12 +169,12 @@ fun BottomNavigation(
                 if (currentPage == CurrentNavigationItem.HOME) {
                     Image(
                         painter = painterResource(R.drawable.ic_home_selected),
-                        contentDescription = "기자재 목록"
+                        contentDescription = ""
                     )
                 } else {
                     Image(
                         painter = painterResource(R.drawable.ic_home_unselected),
-                        contentDescription = "기자재 목록"
+                        contentDescription = ""
                     )
                 }
             }

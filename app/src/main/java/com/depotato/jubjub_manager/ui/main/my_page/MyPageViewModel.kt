@@ -1,4 +1,4 @@
-package com.depotato.jubjub_manager.view.my_page
+package com.depotato.jubjub_manager.ui.main.my_page
 
 import androidx.lifecycle.viewModelScope
 import com.depotato.jubjub_manager.base.BaseViewModel
@@ -12,8 +12,6 @@ class MyPageViewModel(private val sharedPref: SharedPref): BaseViewModel("MyPage
     
     private val _logOutComplete = MutableSharedFlow<Unit>()
     val logOutComplete = _logOutComplete.asSharedFlow()
-
-
 
     fun logOut(){
         with(sharedPref){

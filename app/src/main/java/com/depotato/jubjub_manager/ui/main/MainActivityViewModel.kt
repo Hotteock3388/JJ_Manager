@@ -1,4 +1,4 @@
-package com.depotato.jubjub_manager.view.main
+package com.depotato.jubjub_manager.ui.main
 
 import com.depotato.jubjub_manager.base.BaseViewModel
 
