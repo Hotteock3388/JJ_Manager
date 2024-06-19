@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import com.depotato.jubjub_manager.ui.main.equipment_list.Equipment
 import com.depotato.jubjub_manager.ui.modify_equipment.ModifyEqComposeActivity
-import com.depotato.jubjub_manager.ui.modify_equipment.ModifyEqScreen
+import com.depotato.jubjub_manager.ui.modify_equipment.ModifyEquipmentScreen
 import org.koin.android.ext.android.inject
 
 class EditEquipmentComposeActivity : ModifyEqComposeActivity<EditEquipmentViewModel>() {
@@ -16,8 +16,7 @@ class EditEquipmentComposeActivity : ModifyEqComposeActivity<EditEquipmentViewMo
         initEquipmentInfo()
 
         setContent {
-            ModifyEqScreen()
-                .ModifyEquipmentScreen(
+            ModifyEquipmentScreen(
                     viewModel = viewModel,
                     openGallery = { resultLauncher.launch(gallery) },
                     buttonOnClick = { editEquipment() }
