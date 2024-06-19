@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
@@ -17,6 +18,7 @@ abstract class BaseActivity <VM: BaseViewModel>(
 ): ComponentActivity() {
 
     abstract val viewModel: VM
+    private var backKeyPressedTime: Long = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -25,7 +27,6 @@ abstract class BaseActivity <VM: BaseViewModel>(
         init()
         observeToastMessage()
     }
-
     open fun init(){}
     open fun initFlowCollector(){}
     open fun initListener(){}
@@ -61,4 +62,18 @@ abstract class BaseActivity <VM: BaseViewModel>(
         }
     }
 
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            if (System.currentTimeMillis() > backKeyPressedTime + 2000) {
+                backKeyPressedTime = System.currentTimeMillis()
+                Toast.makeText(applicationContext, "\'뒤로\' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show()
+            }
+            //2초 안에 2번 눌렀을 때 종료
+            else if (System.currentTimeMillis() <= backKeyPressedTime + 2000) {
+                finish()
+            }
+        }
+    }
+
+    fun addBackPressedCallback() = this.onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
 }

@@ -2,8 +2,6 @@ package com.depotato.jubjub_manager.ui.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -27,11 +25,8 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.depotato.jubjub_manager.R
+import com.depotato.jubjub_manager.base.BaseActivity
 import com.depotato.jubjub_manager.ui.main.equipment_list.EquipmentListScreen
 import com.depotato.jubjub_manager.ui.main.equipment_list.EquipmentListViewModel
 import com.depotato.jubjub_manager.ui.main.my_page.MyPageScreen
@@ -40,24 +35,24 @@ import com.depotato.jubjub_manager.ui.modify_equipment.edit_equipment.EditEquipm
 import com.depotato.jubjub_manager.ui.sign_in.SignInActivity
 import com.depotato.jubjub_manager.ui.theme.JubJub_ManagerTheme
 import com.depotato.jubjub_manager.ui.theme.White
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 enum class CurrentNavigationItem {
     HOME, MY_PAGE
 }
 
-class MainComposeActivity : ComponentActivity() {
+class MainComposeActivity() : BaseActivity<MainActivityViewModel>("MainComposeActivity") {
 
     // 마지막으로 뒤로가기 누른 시각
-    private var backKeyPressedTime: Long = 0
+
+    override val viewModel: MainActivityViewModel by viewModel()
 
     private val equipmentListViewModel : EquipmentListViewModel by viewModel()
     private val myPageViewModel: MyPageViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        addBackPressedCallback()
 
         setContent {
             MainScreen()
@@ -79,33 +74,10 @@ class MainComposeActivity : ComponentActivity() {
         startActivity(Intent(this, SignInActivity::class.java))
         finish()
     }
-    inline fun <reified T> LifecycleOwner.collectWhenStarted(
-        flow: Flow<T>, // 제네릭 타입으로 변경
-        noinline collect: suspend (T) -> Unit // 타입 변경
-    ) {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                flow.collect(collect)
-            }
-        }
-    }
 
     override fun onResume() {
         super.onResume()    
         equipmentListViewModel.getEquipments()
-    }
-
-    //뒤로가기 버튼 눌렀을 때
-    override fun onBackPressed() {
-        //1번 눌렀을 때
-        if (System.currentTimeMillis() > backKeyPressedTime + 2000) {
-            backKeyPressedTime = System.currentTimeMillis()
-            Toast.makeText(applicationContext, "\'뒤로\' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show()
-        }
-        //2초 안에 2번 눌렀을 때 종료
-        else if (System.currentTimeMillis() <= backKeyPressedTime + 2000) {
-            super.onBackPressed()
-        }
     }
 
 }
