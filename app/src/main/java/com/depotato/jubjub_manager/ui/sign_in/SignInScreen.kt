@@ -121,7 +121,7 @@ fun SignInJubJubLogo(
     ) {
         Image(
             painter = painterResource(id = R.drawable.ic_login_title),
-            contentDescription = "Login Title Logo"
+            contentDescription = ""
         )
     }
 }
@@ -168,7 +168,7 @@ fun SignInButton(
             onSignInButtonClick()
         }) {
         Text(
-            text = "로그인",
+            text = stringResource(id = R.string.sign_in_button_text),
             color = White
         )
     }

@@ -169,12 +169,12 @@ fun BottomNavigation(
                 if (currentPage == CurrentNavigationItem.HOME) {
                     Image(
                         painter = painterResource(R.drawable.ic_home_selected),
-                        contentDescription = "기자재 목록"
+                        contentDescription = ""
                     )
                 } else {
                     Image(
                         painter = painterResource(R.drawable.ic_home_unselected),
-                        contentDescription = "기자재 목록"
+                        contentDescription = ""
                     )
                 }
             }

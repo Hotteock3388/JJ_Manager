@@ -50,7 +50,14 @@ abstract class BaseActivity <VM: BaseViewModel>(
     // viewModel의 toastMessage를 관찰
     private fun observeToastMessage(){
         collectWhenStarted(viewModel.toastMessage){
-            showToast(it)
+            when (it) {
+                is Int -> {
+                    showToast(getString(it))
+                }
+                is String -> {
+                    showToast(it)
+                }
+            }
         }
     }
 

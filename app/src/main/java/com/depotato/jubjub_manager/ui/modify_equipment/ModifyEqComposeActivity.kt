@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.depotato.jubjub_manager.base.BaseActivity
 import com.depotato.jubjub_manager.function_module.UriConverter
@@ -27,10 +26,6 @@ abstract class ModifyEqComposeActivity<VM: ModifyEquipmentViewModel>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        collectWhenStarted(viewModel.toastMessage){
-            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-        }
 
         collectWhenStarted(viewModel.onNewImageSelected){
             viewModel.updateImageFile(UriConverter().getFileFromUri(contentResolver, viewModel.modifyEquipmentUiState.value.imageUri))

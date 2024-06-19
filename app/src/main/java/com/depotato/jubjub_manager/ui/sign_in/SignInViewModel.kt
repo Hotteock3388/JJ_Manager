@@ -1,6 +1,7 @@
 package com.depotato.jubjub_manager.ui.sign_in
 
 import androidx.lifecycle.viewModelScope
+import com.depotato.jubjub_manager.R
 import com.depotato.jubjub_manager.base.BaseViewModel
 import com.depotato.jubjub_manager.domain.auth.login_hisotry.CheckLoginHistoryUseCase
 import com.depotato.jubjub_manager.domain.auth.sign_in.SignInResult
@@ -11,7 +12,6 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-
 
 
 data class SignInUiState(
@@ -59,13 +59,13 @@ class SignInViewModel(
 
     private fun isInputValid(): Boolean {
         return if (signInUiState.value.userId.isBlank()) {
-            invalidInput("아이디를 입력해주세요.")
+            invalidInput(R.string.invalid_input_id_blank)
         } else if (signInUiState.value.userPw.isBlank()) {
-            invalidInput("비밀번호를 입력해주세요.")
+            invalidInput(R.string.invalid_input_pw_blank)
         } else true
     }
 
-    private fun invalidInput(msg: String): Boolean {
+    private fun invalidInput(msg: Int): Boolean {
         emitToastMessage(msg)
         return false
     }

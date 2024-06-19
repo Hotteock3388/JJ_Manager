@@ -197,7 +197,7 @@ private fun SearchBar(
                             .width(14.dp)
                             .padding(),
                         painter = painterResource(id = R.drawable.ic_search),
-                        contentDescription = "기자재 검색"
+                        contentDescription = ""
                     )
                 }
             }
@@ -289,7 +289,7 @@ fun EquipmentItem(
                 )
                 ExcludeFontPaddingText(
                     modifier = modifier.padding(top = 16.dp),
-                    text = "수량 : ${equipment.currentAmount}/${equipment.maxAmount}개",
+                    text = stringResource(id = R.string.equipment_amount_status, equipment.currentAmount, equipment.maxAmount),
                     style = commonTextStyle,
                     fontWeight = FontWeight.Normal,
                     fontSize = 10.sp
