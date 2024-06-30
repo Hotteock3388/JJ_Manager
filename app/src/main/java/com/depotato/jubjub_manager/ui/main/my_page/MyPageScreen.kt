@@ -69,11 +69,11 @@ fun MyPageScreen(
             JJLogo()
             MyPageTitle(modifier = Modifier.padding(top = 20.dp))
             MyPageMenuItem(
-                text = stringResource(R.string.menu_add_equipment),
+                textResourceId = R.string.menu_add_equipment,
                 onClick = onAddEquipmentClick,
                 modifier = Modifier.padding(top = 50.dp))
             MyPageMenuItem(
-                text = stringResource(R.string.menu_log_out),
+                textResourceId = R.string.menu_log_out,
                 textColor = LogOut,
                 onClick = onLogOutClick
             )
@@ -101,10 +101,10 @@ fun MyPageTitle(modifier: Modifier = Modifier){
 
 @Composable
 fun MyPageMenuItem(
-    text: String,
+    modifier: Modifier = Modifier,
+    textResourceId: Int,
     textColor: Color = Black,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier,
 ){
     TextButton(
         modifier = modifier
@@ -113,7 +113,7 @@ fun MyPageMenuItem(
         onClick = onClick
     ){
         Text(
-            text = text,
+            text = stringResource(textResourceId),
             color = textColor,
             fontFamily = notoSansFamily,
             fontWeight = FontWeight.Medium,

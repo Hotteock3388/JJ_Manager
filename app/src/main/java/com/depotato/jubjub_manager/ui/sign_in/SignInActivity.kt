@@ -15,13 +15,13 @@ class SignInActivity : BaseActivity<SignInViewModel>("SignInActivity") {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        addBackPressedCallback()
 
         setContent {
             SignInScreen(
                 viewModel = viewModel
             )
         }
-        initFlowCollector()
     }
 
     override fun initFlowCollector() {
