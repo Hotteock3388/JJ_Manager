@@ -1,6 +1,5 @@
 package com.depotato.jubjub_manager.ui.main.equipment_list
 
-import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -22,13 +21,15 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.PlatformTextStyle
@@ -38,6 +39,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.depotato.jubjub_manager.R
@@ -47,76 +49,80 @@ import com.depotato.jubjub_manager.ui.text.notoSansFamily
 import com.depotato.jubjub_manager.ui.theme.Blue
 import com.depotato.jubjub_manager.ui.theme.HintGray
 import com.depotato.jubjub_manager.ui.theme.SearchBar
-import com.depotato.jubjub_manager.view.equipment_list.EquipmentListViewModel
-import com.depotato.jubjub_manager.view.equipment_list.adapter.Equipment
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import org.koin.androidx.compose.koinViewModel
+
 
 @Preview(showBackground = true)
 @Composable
 fun EquipmentListScreenPreview() {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        JJLogo()
-        Spacer(modifier = Modifier.padding(top = 16.dp))
-        _SearchBar(searchText = MutableStateFlow<String>("").asStateFlow(), onValueChanged = { })
-        val list = MutableStateFlow<List<Equipment>>(
-            listOf(
+
+
+
+    EquipmentListScreen(
+        EquipmentListUiState(
+            equipments = listOf(
                 Equipment(id = 0, name = "기자재 테스트 1", category = "카테고리", maxAmount = 100, currentAmount = 10, imageUrl = ""),
                 Equipment(id = 1, name = "기자재 테스트 2", category = "카테고리", maxAmount = 100, currentAmount = 10, imageUrl = ""),
                 Equipment(id = 2, name = "기자재 테스트 3", category = "카테고리", maxAmount = 100, currentAmount = 10, imageUrl = ""),
                 Equipment(id = 3, name = "기자재 테스트 4", category = "카테고리", maxAmount = 100, currentAmount = 10, imageUrl = ""),
                 Equipment(id = 4, name = "기자재 테스트 5", category = "카테고리", maxAmount = 100, currentAmount = 10, imageUrl = "")
             )
-        ).asStateFlow()
-
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(18.dp),
-            contentPadding = PaddingValues(top = 22.dp, bottom = 22.dp)
-        ) {
-            items(items = list.value) {
-                EquipmentItem(
-                    equipment = it,
-                    onEquipmentItemClick = { }
-                )
-            }
-        }
-    }
+        ), {}, {}
+    )
 }
 
 @Composable
-fun EquipmentListScreen(viewModel: EquipmentListViewModel = koinViewModel()) {
+fun EquipmentListScreen(
+    viewModel: EquipmentListViewModel = koinViewModel()
+) {
+    val equipmentListUiState by viewModel.equipmentListUiState.collectAsStateWithLifecycle(
+        lifecycleOwner = LocalLifecycleOwner.current
+    )
+
+    LaunchedEffect(viewModel) {
+        viewModel.getEquipments()
+    }
+
+    EquipmentListScreen(
+        equipmentListUiState,
+        onSearchTextChanged = { text -> viewModel.emitSearchText(text) },
+        onEquipmentItemClick = { equipment -> viewModel.emitClickedEquipment(equipment) }
+    )
+
+}
+
+@Composable
+fun EquipmentListScreen(
+    equipmentListUiState: EquipmentListUiState = EquipmentListUiState(),
+    onSearchTextChanged: (String) -> Unit = {},
+    onEquipmentItemClick: (Equipment) -> Unit = {}
+) {
+
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         JJLogo()
         Spacer(modifier = Modifier.padding(top = 16.dp))
-        _SearchBar(
-            searchText = viewModel.searchText,
-            onValueChanged = { text -> viewModel.emitSearchText(text) }
+        SearchBar(
+            searchText = equipmentListUiState.searchText,
+            onValueChanged = onSearchTextChanged
         )
         EquipmentList(
-            equipments = viewModel.equipments,
-            searchText = viewModel.searchText,
-            context = LocalContext.current,
-            onEquipmentItemClick = { equipment -> viewModel.emitClickedEquipment(equipment) }
+            equipments = equipmentListUiState.equipments,
+            searchText = equipmentListUiState.searchText,
+            onEquipmentItemClick = onEquipmentItemClick
         )
     }
 }
 
 
 @Composable
-private fun _SearchBar(
+private fun SearchBar(
     modifier: Modifier = Modifier,
-    searchText: StateFlow<String>,
+    searchText: String,
     onValueChanged: (String) -> Unit
 ) {
-    val _searchText = searchText.collectAsState(initial = "")
     val modifier = modifier.height(35.dp)
 
     BasicTextField(
@@ -124,7 +130,7 @@ private fun _SearchBar(
             .fillMaxWidth()
             .wrapContentHeight(align = Alignment.CenterVertically)
             .padding(start = 20.dp, end = 20.dp, top = 0.dp, bottom = 0.dp),
-        value = _searchText.value,
+        value = searchText,
         textStyle = TextStyle(
             platformStyle = PlatformTextStyle(
                 includeFontPadding = false
@@ -141,7 +147,7 @@ private fun _SearchBar(
                     .clip(RoundedCornerShape(10.dp))
                     .background(SearchBar)
             ) {
-                if (_searchText.value.isBlank()) {
+                if (searchText.isBlank()) {
                     Row(
                         modifier = modifier
                             .fillMaxWidth(),
@@ -191,7 +197,7 @@ private fun _SearchBar(
                             .width(14.dp)
                             .padding(),
                         painter = painterResource(id = R.drawable.ic_search),
-                        contentDescription = "기자재 검색"
+                        contentDescription = ""
                     )
                 }
             }
@@ -201,21 +207,17 @@ private fun _SearchBar(
 
 @Composable
 fun EquipmentList(
-    equipments: StateFlow<List<Equipment>>,
-    searchText: StateFlow<String>,
-    context: Context,
+    equipments: List<Equipment>,
+    searchText: String,
     onEquipmentItemClick: (Equipment) -> Unit
 ) {
-    val _items = equipments.collectAsState(initial = kotlin.collections.listOf())
-    val _searchText = searchText.collectAsState()
-
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(18.dp),
         contentPadding = PaddingValues(top = 22.dp, bottom = 22.dp)
     ) {
-        items(items = _items.value.filter {
-            it.name.lowercase().trim().contains(_searchText.value.trim()) ||
-                    it.category.lowercase().trim().contains(_searchText.value.trim())
+        items(items = equipments.filter {
+            it.name.lowercase().trim().contains(searchText.trim()) ||
+                    it.category.lowercase().trim().contains(searchText.trim())
         }) {
             EquipmentItem(
                 equipment = it,
@@ -225,7 +227,6 @@ fun EquipmentList(
     }
 }
 
-//    @Preview(showBackground = true)
 @Composable
 fun EquipmentItem(
     modifier: Modifier = Modifier,
@@ -288,7 +289,7 @@ fun EquipmentItem(
                 )
                 ExcludeFontPaddingText(
                     modifier = modifier.padding(top = 16.dp),
-                    text = "수량 : ${equipment.currentAmount}/${equipment.maxAmount}개",
+                    text = stringResource(id = R.string.equipment_amount_status, equipment.currentAmount, equipment.maxAmount),
                     style = commonTextStyle,
                     fontWeight = FontWeight.Normal,
                     fontSize = 10.sp

@@ -29,41 +29,13 @@ import com.depotato.jubjub_manager.ui.modify_equipment.add_equipment.AddEquipmen
 import com.depotato.jubjub_manager.ui.text.notoSansFamily
 import com.depotato.jubjub_manager.ui.theme.Black
 import com.depotato.jubjub_manager.ui.theme.LogOut
-import com.depotato.jubjub_manager.view.my_page.MyPageViewModel
 import org.koin.androidx.compose.koinViewModel
 
 
 @Preview(showBackground = true)
 @Composable
-fun MyPageScreenPreview(
-    modifier: Modifier = Modifier
-) {
-    val context = LocalContext.current
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.SpaceBetween
-    ) {
-        Column(
-//        modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            JJLogo()
-            MyPageTitle(modifier = Modifier.padding(top = 20.dp))
-            MyPageMenuItem(
-                text = "기자재 추가",
-                onClick = {},
-                modifier = Modifier.padding(top = 50.dp))
-            MyPageMenuItem(
-                text = "로그아웃",
-                textColor = LogOut,
-                onClick = {})
-        }
-        Image(
-            painter = painterResource(id = R.drawable.group_3),
-            modifier = modifier.fillMaxWidth().height(182.dp),
-            contentScale = ContentScale.FillBounds,
-            contentDescription = "")
-    }
+fun MyPageScreenPreview() {
+    MyPageScreen({}, {})
 }
 
 fun openAddEquipmentActivity(context: Context) {
@@ -72,36 +44,45 @@ fun openAddEquipmentActivity(context: Context) {
 
 @Composable
 fun MyPageScreen(
-    modifier: Modifier = Modifier,
-    viewModel: MyPageViewModel = koinViewModel()
-) {
+    viewModel: MyPageViewModel = koinViewModel(),
+){
     val context = LocalContext.current
+
+    MyPageScreen(
+        onAddEquipmentClick = { openAddEquipmentActivity(context) },
+        onLogOutClick = { viewModel.logOut() }
+    )
+}
+
+@Composable
+fun MyPageScreen(
+    onAddEquipmentClick: () -> Unit,
+    onLogOutClick: () -> Unit,
+) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Column(
-//        modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             JJLogo()
             MyPageTitle(modifier = Modifier.padding(top = 20.dp))
             MyPageMenuItem(
-                text = "기자재 추가",
-                onClick = {
-                    openAddEquipmentActivity(context)
-                },
+                textResourceId = R.string.menu_add_equipment,
+                onClick = onAddEquipmentClick,
                 modifier = Modifier.padding(top = 50.dp))
             MyPageMenuItem(
-                text = "로그아웃",
+                textResourceId = R.string.menu_log_out,
                 textColor = LogOut,
-                onClick = {
-                    viewModel.logOut()
-                })
+                onClick = onLogOutClick
+            )
         }
         Image(
             painter = painterResource(id = R.drawable.group_3),
-            modifier = modifier.fillMaxWidth().height(182.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(182.dp),
             contentScale = ContentScale.FillBounds,
             contentDescription = "")
     }
@@ -120,10 +101,10 @@ fun MyPageTitle(modifier: Modifier = Modifier){
 
 @Composable
 fun MyPageMenuItem(
-    text: String,
+    modifier: Modifier = Modifier,
+    textResourceId: Int,
     textColor: Color = Black,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier,
 ){
     TextButton(
         modifier = modifier
@@ -132,7 +113,7 @@ fun MyPageMenuItem(
         onClick = onClick
     ){
         Text(
-            text = text,
+            text = stringResource(textResourceId),
             color = textColor,
             fontFamily = notoSansFamily,
             fontWeight = FontWeight.Medium,

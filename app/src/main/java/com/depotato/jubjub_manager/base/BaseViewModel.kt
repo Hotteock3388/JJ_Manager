@@ -9,10 +9,13 @@ import kotlinx.coroutines.launch
 
 open class BaseViewModel(private val className: String): ViewModel() {
 
-    private val _toastMessage = MutableSharedFlow<String>()
+    private val _toastMessage = MutableSharedFlow<Any>()
     val toastMessage = _toastMessage.asSharedFlow()
 
     fun emitToastMessage(msg: String) = viewModelScope.launch {
+        _toastMessage.emit(msg)
+    }
+    fun emitToastMessage(msg: Int) = viewModelScope.launch {
         _toastMessage.emit(msg)
     }
 
