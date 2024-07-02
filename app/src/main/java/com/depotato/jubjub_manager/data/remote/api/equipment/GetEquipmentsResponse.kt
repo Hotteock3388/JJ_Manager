@@ -1,6 +1,6 @@
 package com.depotato.jubjub_manager.data.remote.api.equipment
 
-import com.depotato.jubjub_manager.view.equipment_list.adapter.Equipment
+import com.depotato.jubjub_manager.ui.main.equipment_list.Equipment
 
 data class GetEquipmentsResponse(
     val status: Int,

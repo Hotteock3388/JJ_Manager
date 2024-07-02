@@ -5,8 +5,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:allowBackup="true"
         android:name=".di.app.MyApplication"
+        android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -16,27 +16,37 @@
         android:theme="@style/Theme.JubJub_Manager"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        
         <activity
-            android:name=".view.equipment_info.EquipmentInfoActivity"
-            android:exported="false" />
+            android:name=".ui.modify_equipment.add_equipment.AddEquipmentComposeActivity"
+            android:exported="false"
+            android:label="@string/title_activity_add_equipment_compose"
+            android:theme="@style/Theme.JubJub_Manager" />
+
         <activity
-            android:name=".view.modify_equipment.edit.EditEquipmentActivity"
-            android:exported="false" />
+            android:name=".ui.modify_equipment.edit_equipment.EditEquipmentComposeActivity"
+            android:exported="false"
+            android:label="@string/title_activity_add_equipment_compose"
+            android:theme="@style/Theme.JubJub_Manager" />
+
         <activity
-            android:name=".view.modify_equipment.add.AddEquipmentActivity"
-            android:exported="false" />
+            android:name=".ui.main.MainComposeActivity"
+            android:exported="false"
+            android:label="@string/title_activity_main_compose"
+            android:theme="@style/Theme.JubJub_Manager" />
+
         <activity
-            android:name=".view.main.MainActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view.sign_in.SignInActivity"
-            android:exported="true">
+            android:name=".ui.sign_in.SignInActivity"
+            android:exported="true"
+            android:label="@string/title_activity_sign_in_compose"
+            android:theme="@style/Theme.JubJub_Manager">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
