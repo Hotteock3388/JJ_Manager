@@ -68,6 +68,7 @@ dependencies {
     val RETROFIT_VERSION = "2.9.0"
     val KOIN_VERSION = "3.2.0"
     val HILT_VERSION = "2.49"
+    val HILT_COMPOSE_VERSION = "1.2.0"
 
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.0")
     implementation("androidx.activity:activity-compose:1.9.0")
@@ -136,5 +137,8 @@ dependencies {
     // Hilt
     implementation("com.google.dagger:hilt-android:$HILT_VERSION")
     kapt("com.google.dagger:hilt-android-compiler:$HILT_VERSION")
+
+    //Hilt - Compose
+    implementation("androidx.hilt:hilt-navigation-compose:$HILT_COMPOSE_VERSION")
 
 }
