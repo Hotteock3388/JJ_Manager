@@ -6,19 +6,23 @@ import com.depotato.jubjub_manager.base.BaseViewModel
 import com.depotato.jubjub_manager.domain.auth.login_hisotry.CheckLoginHistoryUseCase
 import com.depotato.jubjub_manager.domain.auth.sign_in.SignInResult
 import com.depotato.jubjub_manager.domain.auth.sign_in.SignInUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 data class SignInUiState(
     val userId: String = "",
     val userPw: String = ""
 )
-class SignInViewModel(
+
+@HiltViewModel
+class SignInViewModel @Inject constructor (
     private val checkLoginHistoryUseCase: CheckLoginHistoryUseCase,
     private val signInUseCase: SignInUseCase
 ) : BaseViewModel("SignInViewModel") {

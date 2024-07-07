@@ -8,8 +8,9 @@ import com.depotato.jubjub_manager.entity.singleton.Constants
 import com.depotato.jubjub_manager.entity.singleton.Constants.UNKNOWN_ERROR_OCCURRED
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class AuthRepositoryImpl(
+class AuthRepositoryImpl @Inject constructor (
     private val sharedPref: SharedPref
 ) : AuthRepository {
 

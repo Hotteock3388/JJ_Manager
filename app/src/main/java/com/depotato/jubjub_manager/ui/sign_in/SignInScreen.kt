@@ -31,6 +31,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.depotato.jubjub_manager.R
 import com.depotato.jubjub_manager.ui.text.ExcludeFontPaddingText
@@ -41,8 +42,6 @@ import com.depotato.jubjub_manager.ui.theme.HintGray
 import com.depotato.jubjub_manager.ui.theme.JubJub_ManagerTheme
 import com.depotato.jubjub_manager.ui.theme.NoticeGray
 import com.depotato.jubjub_manager.ui.theme.White
-import org.koin.androidx.compose.koinViewModel
-
 
 
 @Preview
@@ -53,7 +52,7 @@ fun SignInScreenPreView(){
 
 @Composable
 fun SignInScreen(
-    viewModel: SignInViewModel = koinViewModel()
+    viewModel: SignInViewModel = hiltViewModel()
 ){
     val signInUiState by viewModel.signInUiState.collectAsStateWithLifecycle(
         lifecycleOwner = LocalLifecycleOwner.current
