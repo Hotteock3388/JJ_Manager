@@ -3,6 +3,7 @@ package com.depotato.jubjub_manager.ui.main
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -35,20 +36,21 @@ import com.depotato.jubjub_manager.ui.modify_equipment.edit_equipment.EditEquipm
 import com.depotato.jubjub_manager.ui.sign_in.SignInActivity
 import com.depotato.jubjub_manager.ui.theme.JubJub_ManagerTheme
 import com.depotato.jubjub_manager.ui.theme.White
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 enum class CurrentNavigationItem {
     HOME, MY_PAGE
 }
 
+@AndroidEntryPoint
 class MainComposeActivity() : BaseActivity<MainActivityViewModel>("MainComposeActivity") {
 
     // 마지막으로 뒤로가기 누른 시각
 
-    override val viewModel: MainActivityViewModel by viewModel()
+    override val viewModel: MainActivityViewModel by viewModels()
 
-    private val equipmentListViewModel : EquipmentListViewModel by viewModel()
-    private val myPageViewModel: MyPageViewModel by viewModel()
+    private val equipmentListViewModel : EquipmentListViewModel by viewModels()
+    private val myPageViewModel: MyPageViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
