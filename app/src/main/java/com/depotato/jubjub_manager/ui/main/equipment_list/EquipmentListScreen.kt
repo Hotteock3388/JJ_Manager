@@ -39,6 +39,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -49,14 +50,10 @@ import com.depotato.jubjub_manager.ui.text.notoSansFamily
 import com.depotato.jubjub_manager.ui.theme.Blue
 import com.depotato.jubjub_manager.ui.theme.HintGray
 import com.depotato.jubjub_manager.ui.theme.SearchBar
-import org.koin.androidx.compose.koinViewModel
-
 
 @Preview(showBackground = true)
 @Composable
 fun EquipmentListScreenPreview() {
-
-
 
     EquipmentListScreen(
         EquipmentListUiState(
@@ -73,7 +70,7 @@ fun EquipmentListScreenPreview() {
 
 @Composable
 fun EquipmentListScreen(
-    viewModel: EquipmentListViewModel = koinViewModel()
+    viewModel: EquipmentListViewModel = hiltViewModel()
 ) {
     val equipmentListUiState by viewModel.equipmentListUiState.collectAsStateWithLifecycle(
         lifecycleOwner = LocalLifecycleOwner.current

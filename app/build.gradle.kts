@@ -66,7 +66,6 @@ android {
 dependencies {
     val OK_HTTP_VERSION = "4.9.0"
     val RETROFIT_VERSION = "2.9.0"
-    val KOIN_VERSION = "3.2.0"
     val HILT_VERSION = "2.49"
     val HILT_COMPOSE_VERSION = "1.2.0"
 
@@ -86,11 +85,6 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-
-    // koin
-    implementation("io.insert-koin:koin-android:$KOIN_VERSION")
-    // koin - compose
-    implementation("io.insert-koin:koin-androidx-compose:$KOIN_VERSION")
 
     // ViewModel
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
