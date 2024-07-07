@@ -5,9 +5,12 @@ import com.depotato.jubjub_manager.domain.equipment.CommonResult
 import com.depotato.jubjub_manager.domain.equipment.add.AddEquipmentUseCase
 import com.depotato.jubjub_manager.domain.equipment.category.GetCategoriesUseCase
 import com.depotato.jubjub_manager.ui.modify_equipment.ModifyEquipmentViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AddEquipmentViewModel(
+@HiltViewModel
+class AddEquipmentViewModel @Inject constructor (
     private val addEquipmentUseCase: AddEquipmentUseCase,
     getCategoriesUseCase: GetCategoriesUseCase
 ) : ModifyEquipmentViewModel(getCategoriesUseCase, "AddEquipmentViewModel") {

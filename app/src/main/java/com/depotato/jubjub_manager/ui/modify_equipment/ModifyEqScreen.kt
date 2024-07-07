@@ -53,6 +53,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.text.isDigitsOnly
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -68,7 +69,6 @@ import com.depotato.jubjub_manager.ui.theme.JubJub_ManagerTheme
 import com.depotato.jubjub_manager.ui.theme.SpinnerBG
 import com.depotato.jubjub_manager.ui.theme.SpinnerStroke
 import com.depotato.jubjub_manager.ui.theme.White
-import org.koin.androidx.compose.koinViewModel
 
 
 private val equipmentInfoLabelParams = TextParams(
@@ -94,7 +94,7 @@ fun ModifyEquipmentScreenPreview() {
 
 @Composable
 fun ModifyEquipmentScreen(
-    viewModel: ModifyEquipmentViewModel = koinViewModel(),
+    viewModel: ModifyEquipmentViewModel = hiltViewModel(),
     openGallery: () -> Unit = {},
     buttonOnClick: () -> Unit = {}
 ) {
