@@ -5,8 +5,9 @@ import com.depotato.jubjub_manager.domain.equipment.EquipmentRepository
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import javax.inject.Inject
 
-class EditEquipmentUseCase(
+class EditEquipmentUseCase @Inject constructor (
     private val equipmentRepository: EquipmentRepository
 ) {
 

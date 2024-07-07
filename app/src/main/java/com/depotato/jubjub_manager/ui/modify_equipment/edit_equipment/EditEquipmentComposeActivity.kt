@@ -2,14 +2,16 @@ package com.depotato.jubjub_manager.ui.modify_equipment.edit_equipment
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import com.depotato.jubjub_manager.ui.main.equipment_list.Equipment
 import com.depotato.jubjub_manager.ui.modify_equipment.ModifyEqComposeActivity
 import com.depotato.jubjub_manager.ui.modify_equipment.ModifyEquipmentScreen
-import org.koin.android.ext.android.inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class EditEquipmentComposeActivity : ModifyEqComposeActivity<EditEquipmentViewModel>() {
 
-    override val viewModel : EditEquipmentViewModel by inject()
+    override val viewModel : EditEquipmentViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -38,7 +40,7 @@ class EditEquipmentComposeActivity : ModifyEqComposeActivity<EditEquipmentViewMo
         }
     }
 
-    fun editEquipment(){
+    private fun editEquipment(){
         viewModel.editEquipment()
     }
 
