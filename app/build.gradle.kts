@@ -64,6 +64,11 @@ android {
 }
 
 dependencies {
+
+    implementation(project(":presentation"))
+    implementation(project(":domain"))
+    implementation(project(":data"))
+
     val OK_HTTP_VERSION = "4.9.0"
     val RETROFIT_VERSION = "2.9.0"
     val HILT_VERSION = "2.49"

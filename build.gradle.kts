@@ -7,5 +7,6 @@ plugins {
     id ("org.jetbrains.kotlin.plugin.serialization") version "1.9.23"
 
     id("com.google.dagger.hilt.android") version "2.49" apply false
+    id("com.android.library") version "8.1.1" apply false
 
 }
