@@ -23,13 +23,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.depotato.jubjub_manager.R
 import com.depotato.jubjub_manager.ui.components.JJLogo
 import com.depotato.jubjub_manager.ui.modify_equipment.add_equipment.AddEquipmentComposeActivity
 import com.depotato.jubjub_manager.ui.text.notoSansFamily
 import com.depotato.jubjub_manager.ui.theme.Black
 import com.depotato.jubjub_manager.ui.theme.LogOut
-import org.koin.androidx.compose.koinViewModel
 
 
 @Preview(showBackground = true)
@@ -44,7 +44,7 @@ fun openAddEquipmentActivity(context: Context) {
 
 @Composable
 fun MyPageScreen(
-    viewModel: MyPageViewModel = koinViewModel(),
+    viewModel: MyPageViewModel = hiltViewModel(),
 ){
     val context = LocalContext.current
 

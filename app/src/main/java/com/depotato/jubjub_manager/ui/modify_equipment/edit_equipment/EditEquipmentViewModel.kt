@@ -7,10 +7,13 @@ import com.depotato.jubjub_manager.domain.equipment.category.GetCategoriesUseCas
 import com.depotato.jubjub_manager.domain.equipment.edit.EditEquipmentUseCase
 import com.depotato.jubjub_manager.ui.main.equipment_list.Equipment
 import com.depotato.jubjub_manager.ui.modify_equipment.ModifyEquipmentViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class EditEquipmentViewModel(
+@HiltViewModel
+class EditEquipmentViewModel @Inject constructor (
     getCategoriesUseCase: GetCategoriesUseCase,
     private val editEquipmentUseCase: EditEquipmentUseCase
 ) : ModifyEquipmentViewModel(

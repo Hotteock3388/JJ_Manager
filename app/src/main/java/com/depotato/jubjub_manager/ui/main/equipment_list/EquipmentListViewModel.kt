@@ -4,12 +4,14 @@ import androidx.lifecycle.viewModelScope
 import com.depotato.jubjub_manager.base.BaseViewModel
 import com.depotato.jubjub_manager.domain.equipment.list.GetEquipmentsResult
 import com.depotato.jubjub_manager.domain.equipment.list.GetEquipmentsUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 data class EquipmentListUiState(
@@ -17,7 +19,8 @@ data class EquipmentListUiState(
     var searchText: String = ""
 )
 
-class EquipmentListViewModel(
+@HiltViewModel
+class EquipmentListViewModel @Inject constructor(
     private val getEquipmentsUseCase: GetEquipmentsUseCase
 ): BaseViewModel("EquipmentListViewModel") {
 

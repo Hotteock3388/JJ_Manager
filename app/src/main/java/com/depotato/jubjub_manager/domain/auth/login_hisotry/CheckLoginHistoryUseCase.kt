@@ -1,8 +1,9 @@
 package com.depotato.jubjub_manager.domain.auth.login_hisotry
 
 import com.depotato.jubjub_manager.domain.auth.AuthRepository
+import javax.inject.Inject
 
-class CheckLoginHistoryUseCase(
+class CheckLoginHistoryUseCase @Inject constructor (
     private val authRepository: AuthRepository
 ) {
     operator fun invoke(): CheckLoginHistoryResult {

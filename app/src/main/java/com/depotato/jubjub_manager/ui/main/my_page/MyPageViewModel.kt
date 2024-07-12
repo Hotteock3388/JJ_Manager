@@ -4,11 +4,16 @@ import androidx.lifecycle.viewModelScope
 import com.depotato.jubjub_manager.base.BaseViewModel
 import com.depotato.jubjub_manager.data.local.SharedPref
 import com.depotato.jubjub_manager.entity.singleton.Constants
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MyPageViewModel(private val sharedPref: SharedPref): BaseViewModel("MyPageViewModel") {
+@HiltViewModel
+class MyPageViewModel @Inject constructor (
+    private val sharedPref: SharedPref
+): BaseViewModel("MyPageViewModel") {
     
     private val _logOutComplete = MutableSharedFlow<Unit>()
     val logOutComplete = _logOutComplete.asSharedFlow()

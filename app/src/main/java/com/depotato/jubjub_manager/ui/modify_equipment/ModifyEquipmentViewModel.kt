@@ -32,9 +32,9 @@ data class ModifyEquipmentUiState(
     var category: String = categories[0]
 )
 
-open class ModifyEquipmentViewModel(
+open class ModifyEquipmentViewModel (
     private val getCategoriesUseCase: GetCategoriesUseCase,
-    className: String
+    className: String = ""
 ) : BaseViewModel(className) {
 
     private val _modifyEquipmentUiState = MutableStateFlow(ModifyEquipmentUiState())

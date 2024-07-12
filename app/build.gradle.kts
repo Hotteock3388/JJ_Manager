@@ -5,15 +5,13 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
-
-
     val keystorePropertiesFile = rootProject.file("keystore.properties")
     val keystoreProperties = Properties()
     keystoreProperties.load(FileInputStream(keystorePropertiesFile))
-
 
     namespace = "com.depotato.jubjub_manager"
     compileSdk = 34
@@ -68,7 +66,8 @@ android {
 dependencies {
     val OK_HTTP_VERSION = "4.9.0"
     val RETROFIT_VERSION = "2.9.0"
-    val KOIN_VERSION = "3.2.0"
+    val HILT_VERSION = "2.49"
+    val HILT_COMPOSE_VERSION = "1.2.0"
 
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.0")
     implementation("androidx.activity:activity-compose:1.9.0")
@@ -86,11 +85,6 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-
-    // koin
-    implementation("io.insert-koin:koin-android:$KOIN_VERSION")
-    // koin - compose
-    implementation("io.insert-koin:koin-androidx-compose:$KOIN_VERSION")
 
     // ViewModel
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
@@ -133,5 +127,12 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.6.0")
 
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.1")
+
+    // Hilt
+    implementation("com.google.dagger:hilt-android:$HILT_VERSION")
+    kapt("com.google.dagger:hilt-android-compiler:$HILT_VERSION")
+
+    //Hilt - Compose
+    implementation("androidx.hilt:hilt-navigation-compose:$HILT_COMPOSE_VERSION")
 
 }

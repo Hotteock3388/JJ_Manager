@@ -11,7 +11,6 @@ import com.depotato.jubjub_manager.function_module.UriConverter
 abstract class ModifyEqComposeActivity<VM: ModifyEquipmentViewModel>
     : BaseActivity<VM>("ModifyEqComposeActivity") {
 
-
     val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
 
     val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
