@@ -43,68 +43,54 @@ android {
 }
 
 dependencies {
-//    val OK_HTTP_VERSION = "4.9.0"
-    val RETROFIT_VERSION = "2.9.0"
-    val HILT_VERSION = "2.49"
-    val HILT_COMPOSE_VERSION = "1.2.0"
-
     implementation(project(":domain"))
 
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.0")
-    implementation("androidx.activity:activity-compose:1.9.0")
-    implementation("androidx.compose.ui:ui-graphics")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3")
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    implementation(platform("androidx.compose:compose-bom:2023.03.00"))
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.material3)
+    androidTestImplementation(libs.androidx.ui.test.junit4)
+    implementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(platform(libs.androidx.compose.bom))
 
-    implementation("androidx.core:core-ktx:1.9.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.11.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    implementation(libs.androidx.constraintlayout)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
 
-    // ViewModel
-    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.5.0")
+    // Lifecycle
+    implementation(libs.androidx.lifecycle.extensions)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 
     // Retrofit2
-    implementation("com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION")
+    implementation(libs.retrofit.converter.gson)
 
     // JSON Serialization
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+    implementation(libs.kotlinx.serialization)
 
-
-    // Compose
-    val composeBom = platform("androidx.compose:compose-bom:2023.03.00")
-    implementation(composeBom)
-    androidTestImplementation(composeBom)
-
-    implementation("androidx.compose.runtime:runtime")
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.foundation:foundation")
-    implementation("androidx.compose.foundation:foundation-layout")
-    implementation("androidx.compose.material:material")
-    implementation("androidx.compose.runtime:runtime-livedata")
-    implementation("androidx.compose.ui:ui-tooling")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
-
-    // Compose ViewModel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0")
+    implementation(libs.androidx.runtime)
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.foundation)
+    implementation(libs.androidx.foundation.layout)
+    implementation(libs.androidx.material)
+    implementation(libs.androidx.runtime.livedata)
+    implementation(libs.androidx.ui.tooling)
+    debugImplementation(libs.androidx.ui.test.manifest)
 
     // Compose Image
-    implementation("io.coil-kt:coil-compose:2.6.0")
-
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.1")
+    implementation(libs.coil.compose)
 
     // Hilt
-    implementation("com.google.dagger:hilt-android:$HILT_VERSION")
-    kapt("com.google.dagger:hilt-android-compiler:$HILT_VERSION")
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
 
     //Hilt - Compose
-    implementation("androidx.hilt:hilt-navigation-compose:$HILT_COMPOSE_VERSION")
+    implementation(libs.hilt.navigation.compose)
 }

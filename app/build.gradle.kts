@@ -51,10 +51,6 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":data"))
 
-    val HILT_VERSION = "2.49"
-
-    // Hilt
-    implementation("com.google.dagger:hilt-android:$HILT_VERSION")
-    kapt("com.google.dagger:hilt-android-compiler:$HILT_VERSION")
-    
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
 }
