@@ -1,7 +1,7 @@
 package com.depotato.jubjub_manager.di.module
 
 import android.content.Context
-import com.depotato.jubjub_manager.data.local.SharedPref
+import com.depotato.data.local.SharedPref
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

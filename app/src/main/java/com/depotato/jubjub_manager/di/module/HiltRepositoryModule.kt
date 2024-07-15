@@ -1,9 +1,9 @@
 package com.depotato.jubjub_manager.di.module
 
-import com.depotato.jubjub_manager.domain.auth.AuthRepository
-import com.depotato.jubjub_manager.domain.auth.AuthRepositoryImpl
-import com.depotato.jubjub_manager.domain.equipment.EquipmentRepository
-import com.depotato.jubjub_manager.domain.equipment.EquipmentRepositoryImpl
+import com.depotato.data.remote.api.auth.AuthRepositoryImpl
+import com.depotato.data.remote.api.equipment.EquipmentRepositoryImpl
+import com.depotato.domain.auth.AuthRepository
+import com.depotato.domain.equipment.EquipmentRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

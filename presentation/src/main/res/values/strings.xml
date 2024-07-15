@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name">JubJub_Manager</string>
+    <string name="title_activity_sign_in_compose">SignInComposeActivity</string>
+
+    <string name="unknown_error_occurred">알 수 없는 오류가 발생했습니다.</string>
+
+    <!--    SignIn Activity-->
+    <string name="sign_in">Sign in</string>
+
+    <string name="id_label">ID</string>
+    <string name="enter_id">아이디를 입럭하세요.</string>
+
+    <string name="pw_label">Password</string>
+    <string name="enter_password">비밀번호를 입력하세요.</string>
+
+    <string name="password_miss_notice">비밀번호를 잊으신 경우, 관리자에게 문의해주세요.</string>
+    <string name="title_activity_main_compose">MainComposeActivity</string>
+
+    <string name="sign_in_button_text">로그인</string>
+
+
+    <string name="invalid_input_id_blank">아이디를 입력해주세요.</string>
+    <string name="invalid_input_pw_blank">비밀번호를 입력해주세요.</string>
+
+    <!--    SignIn Activity-->
+
+    <!--    Equipment List Activity-->
+    <string name="search">검색</string>
+    <string name="equipment_image_description">기자재 이미지</string>
+    <string name="my_page">마이페이지</string>
+    <string name="title_activity_add_equipment_compose">AddEquipmentComposeActivity</string>
+
+    <string name="equipment_amount_status">수량 : %1$s/%2$s개</string>
+    <!--    Equipment List Activity-->
+
+    <!--    My Page Activity -->
+    <string name="menu_add_equipment">기자재 추가</string>
+    <string name="menu_logout">로그아웃</string>
+    <string name="logout_complete">로그아웃 완료</string>
+    <!--    My Page Activity-->
+
+    <!--    Modify Equipment Activity-->
+    <string name="please_select_category"></string>
+
+    <!--    Modify Equipment Activity-->
+
+
+</resources>
