@@ -10,13 +10,10 @@ import javax.inject.Inject
 class EditEquipmentUseCase @Inject constructor (
     private val equipmentRepository: EquipmentRepository
 ) {
-
     fun includeImage(imageFile: MultipartBody.Part, equipment: RequestBody): Flow<CommonResult> {
         return equipmentRepository.editEquipmentIncludeImage(imageFile, equipment)
     }
-
     fun excludeImage(equipment: RequestBody): Flow<CommonResult> {
         return equipmentRepository.editEquipmentExcludeImage(equipment)
     }
-
 }

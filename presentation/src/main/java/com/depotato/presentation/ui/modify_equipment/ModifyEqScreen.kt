@@ -333,7 +333,6 @@ fun EquipmentInfoTextField(
     placeHolderParams: TextParams = textFieldParams.copy().apply { textColor = HintGray },
     valueVisible: Boolean = true
 ) {
-//        val state = value.collectAsState(initial = "")
 
     BasicTextField(
         value = value,

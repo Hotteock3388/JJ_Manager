@@ -6,6 +6,7 @@ import com.depotato.domain.equipment.Equipment
 import com.depotato.domain.equipment.GetCategoryResult
 import com.depotato.domain.equipment.category.GetCategoriesUseCase
 import com.depotato.presentation.base.BaseViewModel
+import com.depotato.presentation.model.EquipmentReq
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -131,7 +132,7 @@ open class ModifyEquipmentViewModel (
         getCategories()
     }
 
-    fun getCategories(){
+    private fun getCategories(){
         viewModelScope.launch {
             getCategoriesUseCase().collect{
                 when(it){

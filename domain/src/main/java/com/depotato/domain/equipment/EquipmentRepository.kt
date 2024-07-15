@@ -6,7 +6,6 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
 interface EquipmentRepository {
-
     fun getEquipments(): Flow<GetEquipmentsResult>
     fun addEquipment(imageFile: MultipartBody.Part, equipment: RequestBody): Flow<CommonResult>
     fun editEquipmentIncludeImage(imageFile: MultipartBody.Part, equipment: RequestBody): Flow<CommonResult>

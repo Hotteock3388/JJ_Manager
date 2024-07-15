@@ -1,6 +1,6 @@
 package com.depotato.data.remote.api.auth
 
-import com.depotato.data.remote.api.CommonResponse
+import com.depotato.data.remote.model.CommonResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

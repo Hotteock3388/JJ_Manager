@@ -10,9 +10,7 @@ import javax.inject.Inject
 class AddEquipmentUseCase @Inject constructor (
     private val equipmentRepository: EquipmentRepository
 ) {
-
     operator fun invoke(imageFile: MultipartBody.Part, equipment: RequestBody): Flow<CommonResult> {
         return equipmentRepository.addEquipment(imageFile, equipment)
     }
-
 }

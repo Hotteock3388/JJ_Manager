@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import androidx.activity.result.contract.ActivityResultContracts
 import com.depotato.presentation.base.BaseActivity
+import com.depotato.presentation.util.UriConverter
 
 abstract class ModifyEqComposeActivity<VM: ModifyEquipmentViewModel>
     : BaseActivity<VM>("ModifyEqComposeActivity") {

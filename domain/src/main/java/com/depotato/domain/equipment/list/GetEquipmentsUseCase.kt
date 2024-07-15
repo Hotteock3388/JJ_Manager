@@ -7,8 +7,7 @@ import javax.inject.Inject
 class GetEquipmentsUseCase @Inject constructor(
     private val equipmentRepository: EquipmentRepository
 ) {
-
-    suspend operator fun invoke(): Flow<GetEquipmentsResult> {
+    operator fun invoke(): Flow<GetEquipmentsResult> {
         return equipmentRepository.getEquipments()
     }
 }

@@ -1,6 +1,5 @@
 package com.depotato.data.remote.api.auth
 
-import com.depotato.data.entity.singleton.Constants
 import com.depotato.data.entity.singleton.Constants.UNKNOWN_ERROR_OCCURRED
 import com.depotato.data.local.SharedPref
 import com.depotato.data.remote.retrofit.NetRetrofit
@@ -15,6 +14,9 @@ import javax.inject.Inject
 class AuthRepositoryImpl @Inject constructor (
     private val sharedPref: SharedPref
 ) : AuthRepository {
+
+    private val USER_ID = "userId"
+    private val USER_PW = "userPw"
 
     override fun signIn(userId: String, userPw: String): Flow<SignInResult> = flow {
 
@@ -33,9 +35,9 @@ class AuthRepositoryImpl @Inject constructor (
     override fun checkLoginHistoryExist(): CheckLoginHistoryResult {
         with(sharedPref) {
             return CheckLoginHistoryResult(
-                isExist(Constants.USER_ID),
-                getDataString(Constants.USER_ID),
-                getDataString(Constants.USER_PW)
+                isExist(USER_ID),
+                getDataString(USER_ID),
+                getDataString(USER_PW)
             )
         }
     }
@@ -43,8 +45,8 @@ class AuthRepositoryImpl @Inject constructor (
     override fun logout(): CommonResult {
         try {
             with(sharedPref){
-                removeData(Constants.USER_ID)
-                removeData(Constants.USER_PW)
+                removeData(USER_ID)
+                removeData(USER_PW)
             }
             return CommonResult.Success("")
         }catch (e: Exception){
@@ -54,8 +56,8 @@ class AuthRepositoryImpl @Inject constructor (
 
     private fun saveLoginData(userId: String, userPw: String) {
         with(sharedPref) {
-            saveData(Constants.USER_ID, userId)
-            saveData(Constants.USER_PW, userPw)
+            saveData(USER_ID, userId)
+            saveData(USER_PW, userPw)
         }
     }
 }

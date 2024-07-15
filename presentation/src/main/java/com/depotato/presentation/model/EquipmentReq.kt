@@ -1,4 +1,4 @@
-package com.depotato.presentation.ui.modify_equipment
+package com.depotato.presentation.model
 
 import com.depotato.domain.equipment.Equipment
 import com.google.gson.annotations.SerializedName

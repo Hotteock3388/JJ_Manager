@@ -10,5 +10,4 @@ class LogoutUseCase @Inject constructor (
     operator fun invoke(): CommonResult {
         return authRepository.logout()
     }
-
 }

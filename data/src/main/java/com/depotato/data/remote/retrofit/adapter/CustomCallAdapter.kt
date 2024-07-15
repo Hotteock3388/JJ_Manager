@@ -40,9 +40,7 @@ class ResultCallAdapterFactory : CallAdapter.Factory() {
     }
 }
 
-
 class CustomCallAdapter {
-
     class ResultCall<T>(private val delegate: Call<T>) : Call<Result<T>> {
         override fun enqueue(callback: Callback<Result<T>>) {
             delegate.enqueue(

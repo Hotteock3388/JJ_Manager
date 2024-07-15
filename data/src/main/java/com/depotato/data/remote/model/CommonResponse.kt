@@ -1,4 +1,4 @@
-package com.depotato.data.remote.api
+package com.depotato.data.remote.model
 
 data class CommonResponse(
     val status: Int,

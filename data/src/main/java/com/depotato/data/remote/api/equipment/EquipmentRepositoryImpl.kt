@@ -1,7 +1,7 @@
 package com.depotato.data.remote.api.equipment
 
 import com.depotato.data.entity.singleton.Constants.UNKNOWN_ERROR_OCCURRED
-import com.depotato.data.remote.api.CommonResponse
+import com.depotato.data.remote.model.CommonResponse
 import com.depotato.data.remote.retrofit.NetRetrofit
 import com.depotato.domain.equipment.CommonResult
 import com.depotato.domain.equipment.EquipmentRepository

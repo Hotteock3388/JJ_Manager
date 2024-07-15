@@ -156,10 +156,10 @@ private fun SearchBar(
     searchText: String,
     onValueChanged: (String) -> Unit
 ) {
-    val modifier = modifier.height(35.dp)
+    val _modifier = modifier.height(35.dp)
 
     BasicTextField(
-        modifier = modifier
+        modifier = _modifier
             .fillMaxWidth()
             .wrapContentHeight(align = Alignment.CenterVertically)
             .padding(start = 20.dp, end = 20.dp, top = 0.dp, bottom = 0.dp),
@@ -182,13 +182,13 @@ private fun SearchBar(
             ) {
                 if (searchText.isBlank()) {
                     Row(
-                        modifier = modifier
+                        modifier = _modifier
                             .fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center
                     ) {
                         Box(
-                            modifier = modifier
+                            modifier = _modifier
                                 .width(2.dp)
                                 .wrapContentHeight()
                         ) {
@@ -196,7 +196,7 @@ private fun SearchBar(
                         }
                         // PlaceHolder
                         ExcludeFontPaddingText(
-                            modifier = modifier.wrapContentHeight(),
+                            modifier = _modifier.wrapContentHeight(),
                             text = stringResource(id = R.string.search),
                             color = HintGray,
                             textAlign = TextAlign.Center,
@@ -208,7 +208,7 @@ private fun SearchBar(
                 } else {
                     //TextField
                     Box(
-                        modifier = modifier
+                        modifier = _modifier
                             .fillMaxWidth()
                             .padding(end = 5.dp),
                         contentAlignment = Alignment.Center
@@ -218,14 +218,14 @@ private fun SearchBar(
                 }
 
                 Row(
-                    modifier = modifier
+                    modifier = _modifier
                         .fillMaxWidth()
                         .padding(end = 14.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.End
                 ) {
                     Image(
-                        modifier = modifier
+                        modifier = _modifier
                             .height(14.dp)
                             .width(14.dp)
                             .padding(),

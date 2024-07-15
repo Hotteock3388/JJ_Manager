@@ -1,6 +1,8 @@
 package com.depotato.data.remote.api.equipment
 
-import com.depotato.data.remote.api.CommonResponse
+import com.depotato.data.remote.model.CommonResponse
+import com.depotato.data.remote.model.GetCategoriesResponse
+import com.depotato.data.remote.model.GetEquipmentsResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.GET

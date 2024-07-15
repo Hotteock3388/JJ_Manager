@@ -1,4 +1,4 @@
-package com.depotato.presentation.ui.modify_equipment
+package com.depotato.presentation.util
 
 import android.content.ContentResolver
 import android.net.Uri

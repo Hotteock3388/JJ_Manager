@@ -9,5 +9,4 @@ interface AuthRepository {
     fun signIn(userId: String, userPw: String): Flow<SignInResult>
     fun checkLoginHistoryExist(): CheckLoginHistoryResult
     fun logout(): CommonResult
-//    fun saveLoginData(userId: String, userPw: String)
 }

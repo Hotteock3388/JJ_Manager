@@ -1,4 +1,4 @@
-package com.depotato.data.remote.api.equipment
+package com.depotato.data.remote.model
 
 data class GetCategoriesResponse(
     val status: Int,
