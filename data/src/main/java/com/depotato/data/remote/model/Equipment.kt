@@ -3,7 +3,7 @@ package com.depotato.data.remote.model
 import com.depotato.domain.equipment.Equipment
 import com.google.gson.annotations.SerializedName
 
-data class EquipmentResponse(
+data class Equipment(
     override var id: Int = 0,
     @SerializedName("name") override var name: String,
     @SerializedName("category") override var category: String,

@@ -16,13 +16,13 @@ class AddEquipmentViewModel @Inject constructor (
 ) : ModifyEquipmentViewModel(getCategoriesUseCase, "AddEquipmentViewModel") {
 
     fun addEquipment() {
-        if(isEquipmentDataValid()){
+        if (isEquipmentDataValid()) {
             viewModelScope.launch {
-                addEquipmentUseCase(getImageMultipartFile(), getEquipmentRequestBody())
+                addEquipmentUseCase(getImageMultipartFile(), createEquipmentObject())
                     .collect {
                         when (it) {
                             is CommonResult.Success -> {
-                                _addComplete.emit(Unit)
+                                addComplete()
                                 emitToastMessage(it.responseMessage)
                             }
 

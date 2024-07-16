@@ -24,13 +24,9 @@ class EditEquipmentViewModel @Inject constructor (
     fun initEquipmentData(equipment: Equipment){
         try {
             equipmentId = equipment.id
-//            _equipmentImageUrl.value = equipment.imageUrl
             updateImageURL(equipment.imageUrl)
-//            _equipmentName.value = equipment.name
             updateName(equipment.name)
-//            _equipmentMaxAmount.value = equipment.maxAmount.toString()
             updateMaxAmount(equipment.maxAmount.toString())
-//            _equipmentCurrentAmount.value = equipment.currentAmount.toString()
             updateCurrentAmount(equipment.currentAmount.toString())
             updateCategory(equipment.category)
         }catch (e: Exception){
@@ -43,14 +39,14 @@ class EditEquipmentViewModel @Inject constructor (
             if(modifyEquipmentUiState.value.imageUri == Uri.EMPTY){
                 setHandler(
                     editEquipmentUseCase.excludeImage(
-                        getEquipmentRequestBody()
+                        createEquipmentObject()
                     )
                 )
             } else {
                 setHandler(
                     editEquipmentUseCase.includeImage(
                         getImageMultipartFile(),
-                        getEquipmentRequestBody()
+                        createEquipmentObject()
                     )
                 )
             }
@@ -69,7 +65,7 @@ class EditEquipmentViewModel @Inject constructor (
         when(result){
             is CommonResult.Success -> {
                 viewModelScope.launch {
-                    _addComplete.emit(Unit)
+                    addComplete()
                 }
                 emitToastMessage(result.responseMessage)
             }

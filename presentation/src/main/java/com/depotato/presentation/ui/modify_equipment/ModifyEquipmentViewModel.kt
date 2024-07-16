@@ -6,8 +6,6 @@ import com.depotato.domain.equipment.Equipment
 import com.depotato.domain.equipment.GetCategoryResult
 import com.depotato.domain.equipment.category.GetCategoriesUseCase
 import com.depotato.presentation.base.BaseViewModel
-import com.depotato.presentation.model.EquipmentReq
-import com.google.gson.Gson
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -16,9 +14,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 
 
@@ -44,9 +40,12 @@ open class ModifyEquipmentViewModel (
     private val _onNewImageSelected = MutableSharedFlow<Unit>()
     val onNewImageSelected = _onNewImageSelected.asSharedFlow()
 
-    private fun emitNewImageSelected() = viewModelScope.launch { _onNewImageSelected.emit(Unit) }
+    private val _addComplete = MutableSharedFlow<Unit>()
+    val addComplete = _addComplete.asSharedFlow()
 
     var equipmentId = 0
+
+    private fun emitNewImageSelected() = viewModelScope.launch { _onNewImageSelected.emit(Unit) }
 
     fun updateImageUri(value: Uri) {
         viewModelScope.launch {
@@ -100,25 +99,24 @@ open class ModifyEquipmentViewModel (
 
     fun updateCategory(value: String){
         viewModelScope.launch {
-            viewModelScope.launch {
-                _modifyEquipmentUiState.update {
-                    it.copy(category = value)
-                }
-            }
-        }
-    }
-    fun updateCategories(value: List<String>){
-        viewModelScope.launch {
-            viewModelScope.launch {
-                _modifyEquipmentUiState.update {
-                    it.copy(categories = value)
-                }
+            _modifyEquipmentUiState.update {
+                it.copy(category = value)
             }
         }
     }
 
-    protected val _addComplete = MutableSharedFlow<Unit>()
-    val addComplete = _addComplete.asSharedFlow()
+    private fun updateCategories(value: List<String>){
+        viewModelScope.launch {
+            _modifyEquipmentUiState.update {
+                it.copy(categories = value)
+            }
+        }
+    }
+
+    fun addComplete() = viewModelScope.launch {
+        _addComplete.emit(Unit)
+    }
+
 
     fun deleteImage(){
         if(modifyEquipmentUiState.value.imageUri == Uri.EMPTY){
@@ -164,21 +162,21 @@ open class ModifyEquipmentViewModel (
             )
         }
     }
-    fun getEquipmentRequestBody(): RequestBody {
-        return Gson().toJson(createEquipmentObject())
-            .toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
-    }
+//    fun getEquipmentRequestBody(): RequestBody {
+//        return Gson().toJson(createEquipmentObject())
+//            .toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
+//    }
 
-    private fun createEquipmentObject(): Equipment {
-        with(modifyEquipmentUiState.value){
-            return EquipmentReq(
-                id = equipmentId,
-                name = name,
-                category = category,
-                currentAmount = currentAmount.toInt(),
-                maxAmount = maxAmount.toInt(),
-                imageUrl = "" + imageURL
-            )
+    fun createEquipmentObject(): Equipment {
+        modifyEquipmentUiState.value.let {
+            return object: Equipment{
+                override var id: Int = equipmentId
+                override var name: String = it.name
+                override var category: String = it.category
+                override var currentAmount: Int = it.currentAmount.toInt()
+                override var maxAmount: Int = it.maxAmount.toInt()
+                override var imageUrl: String = "" + it.imageURL
+            }
         }
     }
 

@@ -1,16 +1,21 @@
 package com.depotato.data.remote.api.equipment
 
 import com.depotato.data.entity.singleton.Constants.UNKNOWN_ERROR_OCCURRED
+import com.depotato.data.mapper.EquipmentMapper
 import com.depotato.data.remote.model.CommonResponse
 import com.depotato.data.remote.retrofit.NetRetrofit
 import com.depotato.domain.equipment.CommonResult
+import com.depotato.domain.equipment.Equipment
 import com.depotato.domain.equipment.EquipmentRepository
 import com.depotato.domain.equipment.GetCategoryResult
 import com.depotato.domain.equipment.list.GetEquipmentsResult
+import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import javax.inject.Inject
 
 
@@ -27,36 +32,41 @@ class EquipmentRepositoryImpl @Inject constructor(
                     )
                 )
             }.onFailure {
-                emit(
-                    GetEquipmentsResult.Failure(it.message ?: UNKNOWN_ERROR_OCCURRED)
-                )
+                emit(GetEquipmentsResult.Failure(it.message ?: UNKNOWN_ERROR_OCCURRED))
             }
     }
 
     override fun addEquipment(
         imageFile: MultipartBody.Part,
-        equipment: RequestBody
+        equipment: Equipment
     ): Flow<CommonResult> = flow {
         emit(emitCommonResult(
-            NetRetrofit.getEquipmentApi().addEquipment(imageFile, equipment)
+            NetRetrofit.getEquipmentApi().addEquipment(imageFile, getEquipmentRequestBody(equipment))
         ))
     }
 
     override fun editEquipmentIncludeImage(
         imageFile: MultipartBody.Part,
-        equipment: RequestBody
+        equipment: Equipment
     ): Flow<CommonResult> = flow {
         emit(emitCommonResult(
-            NetRetrofit.getEquipmentApi().editEquipmentIncludeImage(imageFile, equipment)
+            NetRetrofit.getEquipmentApi().editEquipmentIncludeImage(imageFile, getEquipmentRequestBody(equipment))
         ))
     }
 
     override fun editEquipmentExcludeImage(
-        equipment: RequestBody
+        equipment: Equipment
     ): Flow<CommonResult> = flow {
         emit(emitCommonResult(
-            NetRetrofit.getEquipmentApi().editEquipmentExcludeImage(equipment)
+            NetRetrofit.getEquipmentApi().editEquipmentExcludeImage(getEquipmentRequestBody(equipment))
         ))
+    }
+
+
+    private fun getEquipmentRequestBody(equipment: Equipment): RequestBody {
+
+        return Gson().toJson(EquipmentMapper().equipmentToSerializedEquipment(equipment))
+            .toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
     }
 
     override fun getCategories(): Flow<GetCategoryResult> = flow {
