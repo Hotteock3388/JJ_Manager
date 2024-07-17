@@ -19,7 +19,6 @@ class AuthRepositoryImpl @Inject constructor (
     private val USER_PW = "userPw"
 
     override fun signIn(userId: String, userPw: String): Flow<SignInResult> = flow {
-
         NetRetrofit.getAuthApi().signIn(
             userId,
             userPw
@@ -29,7 +28,6 @@ class AuthRepositoryImpl @Inject constructor (
         }.onFailure {
             emit(SignInResult.Failure(it.message ?: UNKNOWN_ERROR_OCCURRED))
         }
-
     }
 
     override fun checkLoginHistoryExist(): CheckLoginHistoryResult {
