@@ -16,36 +16,6 @@
         android:theme="@style/Theme.JubJub_Manager"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-        
-        <activity
-            android:name=".ui.modify_equipment.add_equipment.AddEquipmentComposeActivity"
-            android:exported="false"
-            android:label="@string/title_activity_add_equipment_compose"
-            android:theme="@style/Theme.JubJub_Manager" />
-
-        <activity
-            android:name=".ui.modify_equipment.edit_equipment.EditEquipmentComposeActivity"
-            android:exported="false"
-            android:label="@string/title_activity_add_equipment_compose"
-            android:theme="@style/Theme.JubJub_Manager" />
-
-        <activity
-            android:name=".ui.main.MainComposeActivity"
-            android:exported="false"
-            android:label="@string/title_activity_main_compose"
-            android:theme="@style/Theme.JubJub_Manager" />
-
-        <activity
-            android:name=".ui.sign_in.SignInActivity"
-            android:exported="true"
-            android:label="@string/title_activity_sign_in_compose"
-            android:theme="@style/Theme.JubJub_Manager">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
 
     </application>
 

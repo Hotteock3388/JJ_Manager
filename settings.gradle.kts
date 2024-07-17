@@ -15,4 +15,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "JubJub_Manager"
 include(":app")
- 
+include(":domain")
+include(":data")
+include(":presentation")

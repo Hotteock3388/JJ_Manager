@@ -34,7 +34,7 @@
 
     <!--    My Page Activity -->
     <string name="menu_add_equipment">기자재 추가</string>
-    <string name="menu_log_out">로그아웃</string>
+    <string name="menu_logout">로그아웃</string>
     <!--    My Page Activity-->
 
     <!--    Modify Equipment Activity-->

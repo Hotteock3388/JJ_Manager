@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+<!--    GuideLine    -->
+    <style name="GuideLine">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="GuideLine_Horizontal" parent="GuideLine">
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="GuideLine_Vertical" parent="GuideLine">
+        <item name="android:orientation">vertical</item>
+    </style>
+<!--    GuideLine    -->
+
+
+<!--    TextView    -->
+    <style name="TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="TextView_Black" parent="TextView">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TextView_Blue" parent="TextView">
+        <item name="android:textColor">@color/main_blue</item>
+    </style>
+
+    <style name="TextView_Blue_W_Shadow" parent="TextView_Blue">
+        <item name="android:outlineSpotShadowColor">@color/main_blue</item>
+        <item name="android:elevation">8dp</item>
+    </style>
+
+    <style name="TextView_pageTitle" parent="TextView_Black">
+        <item name="android:textSize">15dp</item>
+        <item name="android:fontFamily">@font/notosanskr_bold</item>
+    </style>
+<!--    TextView    -->
+
+
+
+<!--    EditText    -->
+    <style name="EditText">
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:background">@null</item>
+        <item name="android:gravity">center|start</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/notosanskr_medium</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>-
+<!--    EditText    -->
+
+
+<!--    Button    -->
+    <style name="Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/bg_button_border_20</item>
+        <item name="android:fontFamily">@font/notosanskr_medium</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:elevation">8dp</item>
+        <item name="android:outlineSpotShadowColor">@color/main_blue</item>
+    </style>
+
+    <style name="Button_b_10" parent="Button">
+        <item name="android:background">@drawable/bg_button_border_10</item>
+    </style>
+
+    <style name="Button_b_20" parent="Button">
+        <item name="android:background">@drawable/bg_button_border_20</item>
+    </style>
+<!--    Button    -->
+
+
+<!--    ImageView    -->
+    <style name="IC_dropdown">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:src">@drawable/ic_dropdown_closed</item>
+        <item name="android:clickable">false</item>
+    </style>
+
+    <style name="IC_mainLogo">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:src">@drawable/ic_main_logo</item>
+
+    </style>
+<!--    ImageView    -->
+
+
+<!--    ETC    -->
+    <style name="SpinnerDivider">
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_marginEnd">30dp</item>
+        <item name="android:clickable">false</item>
+        <item name="android:background">@color/gray_spinner_stroke</item>
+    </style>
+<!--    ETC    -->
+
+
+</resources>
