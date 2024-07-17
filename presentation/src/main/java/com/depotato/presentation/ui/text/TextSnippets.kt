@@ -18,7 +18,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
 import com.depotato.presentation.R
 
-
 val notoSansFamily = FontFamily(
     Font(R.font.notosanskr_bold, FontWeight.Bold),
     Font(R.font.notosanskr_semibold, FontWeight.SemiBold),

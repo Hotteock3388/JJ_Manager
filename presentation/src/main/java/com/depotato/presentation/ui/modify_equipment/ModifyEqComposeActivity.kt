@@ -25,11 +25,8 @@ abstract class ModifyEqComposeActivity<VM: ModifyEquipmentViewModel>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         collectWhenStarted(viewModel.onNewImageSelected){
             viewModel.updateImageFile(UriConverter().getFileFromUri(contentResolver, viewModel.modifyEquipmentUiState.value.imageUri))
         }
-
     }
-
 }

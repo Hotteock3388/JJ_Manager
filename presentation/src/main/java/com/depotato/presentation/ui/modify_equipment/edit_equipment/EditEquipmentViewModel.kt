@@ -79,5 +79,4 @@ class EditEquipmentViewModel @Inject constructor (
         emitToastMessage(error.localizedMessage)
         error.printStackTrace()
     }
-
 }

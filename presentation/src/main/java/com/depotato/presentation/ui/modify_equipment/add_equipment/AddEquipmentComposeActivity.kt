@@ -25,7 +25,5 @@ class AddEquipmentComposeActivity: ModifyEqComposeActivity<AddEquipmentViewModel
         collectWhenStarted(viewModel.addComplete){
             finish()
         }
-
     }
-
 }

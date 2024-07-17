@@ -43,7 +43,6 @@ import com.depotato.presentation.ui.theme.JubJub_ManagerTheme
 import com.depotato.presentation.ui.theme.NoticeGray
 import com.depotato.presentation.ui.theme.White
 
-
 @Preview
 @Composable
 fun SignInScreenPreView(){
@@ -182,7 +181,6 @@ fun SignInInputBox(
     placeHolder: String,
     onValueChanged: (String) -> Unit,
 ) {
-
     MyInputBox(
         modifier = modifier.padding(top = 6.dp, start = 2.dp, bottom = 9.dp),
         value = value,
@@ -220,8 +218,6 @@ fun MyInputBox(
     textFieldParams: TextParams,
     valueVisible: Boolean = true
 ) {
-//    val state = value.collectAsState(initial = "")
-
     BasicTextField(
         value = value,
         visualTransformation = if(valueVisible) VisualTransformation.None else PasswordVisualTransformation(),

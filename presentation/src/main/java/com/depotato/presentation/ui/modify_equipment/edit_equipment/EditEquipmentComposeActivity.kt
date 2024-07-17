@@ -19,16 +19,15 @@ class EditEquipmentComposeActivity : ModifyEqComposeActivity<EditEquipmentViewMo
 
         setContent {
             ModifyEquipmentScreen(
-                    viewModel = viewModel,
-                    openGallery = { resultLauncher.launch(gallery) },
-                    buttonOnClick = { editEquipment() }
-                )
+                viewModel = viewModel,
+                openGallery = { resultLauncher.launch(gallery) },
+                buttonOnClick = { editEquipment() }
+            )
         }
 
         collectWhenStarted(viewModel.addComplete){
             finish()
         }
-
     }
 
     private fun initEquipmentInfo(){
@@ -43,5 +42,4 @@ class EditEquipmentComposeActivity : ModifyEqComposeActivity<EditEquipmentViewMo
     private fun editEquipment(){
         viewModel.editEquipment()
     }
-
 }

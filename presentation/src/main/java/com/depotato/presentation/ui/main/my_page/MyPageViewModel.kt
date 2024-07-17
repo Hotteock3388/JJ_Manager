@@ -20,7 +20,6 @@ class MyPageViewModel @Inject constructor (
     val logOutComplete = _logOutComplete.asSharedFlow()
 
     fun logOut(){
-
         when(logoutUseCase()){
             is CommonResult.Success -> {
                 emitToastMessage(R.string.menu_logout)
@@ -35,5 +34,4 @@ class MyPageViewModel @Inject constructor (
 
         }
     }
-
 }

@@ -64,7 +64,6 @@ class EquipmentRepositoryImpl @Inject constructor(
 
 
     private fun getEquipmentRequestBody(equipment: Equipment): RequestBody {
-
         return Gson().toJson(EquipmentMapper().equipmentToSerializedEquipment(equipment))
             .toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
     }

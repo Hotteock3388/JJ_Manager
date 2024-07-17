@@ -15,7 +15,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
 data class SignInUiState(
     val userId: String = "",
     val userPw: String = ""

@@ -57,7 +57,6 @@ open class ModifyEquipmentViewModel (
             }
         }
     }
-
     fun updateImageFile(value: File) {
         viewModelScope.launch {
             _modifyEquipmentUiState.update {
@@ -72,7 +71,6 @@ open class ModifyEquipmentViewModel (
             }
         }
     }
-
     fun updateName(value: String) {
         viewModelScope.launch {
             _modifyEquipmentUiState.update {
@@ -80,7 +78,6 @@ open class ModifyEquipmentViewModel (
             }
         }
     }
-
     fun updateMaxAmount(value: String){
         viewModelScope.launch {
             _modifyEquipmentUiState.update {
@@ -88,7 +85,6 @@ open class ModifyEquipmentViewModel (
             }
         }
     }
-
     fun updateCurrentAmount(value: String){
         viewModelScope.launch {
             _modifyEquipmentUiState.update {
@@ -96,7 +92,6 @@ open class ModifyEquipmentViewModel (
             }
         }
     }
-
     fun updateCategory(value: String){
         viewModelScope.launch {
             _modifyEquipmentUiState.update {
@@ -104,7 +99,6 @@ open class ModifyEquipmentViewModel (
             }
         }
     }
-
     private fun updateCategories(value: List<String>){
         viewModelScope.launch {
             _modifyEquipmentUiState.update {
@@ -112,11 +106,9 @@ open class ModifyEquipmentViewModel (
             }
         }
     }
-
     fun addComplete() = viewModelScope.launch {
         _addComplete.emit(Unit)
     }
-
 
     fun deleteImage(){
         if(modifyEquipmentUiState.value.imageUri == Uri.EMPTY){
@@ -162,10 +154,6 @@ open class ModifyEquipmentViewModel (
             )
         }
     }
-//    fun getEquipmentRequestBody(): RequestBody {
-//        return Gson().toJson(createEquipmentObject())
-//            .toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
-//    }
 
     fun createEquipmentObject(): Equipment {
         modifyEquipmentUiState.value.let {
@@ -204,5 +192,4 @@ open class ModifyEquipmentViewModel (
         emitToastMessage(msg)
         return false
     }
-
 }

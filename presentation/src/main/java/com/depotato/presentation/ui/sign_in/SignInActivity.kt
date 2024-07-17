@@ -13,8 +13,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SignInActivity : BaseActivity<SignInViewModel>("SignInActivity") {
 
-//    override val viewModel: SignInViewModel by inject()
-
     override val viewModel: SignInViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -70,7 +70,6 @@ import com.depotato.presentation.ui.theme.SpinnerBG
 import com.depotato.presentation.ui.theme.SpinnerStroke
 import com.depotato.presentation.ui.theme.White
 
-
 private val equipmentInfoLabelParams = TextParams(
     textColor = Blue,
     size = 16.sp,
@@ -161,7 +160,6 @@ fun ModifyEquipmentScreen(
                         value = modifyEquipmentUiState.currentAmount,
                         onValueChanged = onCurrentAmountChanged
                     )
-
                     CategoryDropdownMenu(
                         categories = modifyEquipmentUiState.categories,
                         selectedOptionText = modifyEquipmentUiState.category,
@@ -263,7 +261,6 @@ fun EquipmentImagePicker(
     openGallery: () -> Unit = {},
     deleteImage: () -> Unit = {}
 ) {
-
     Box(modifier = modifier.padding(top = 18.dp)) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
@@ -318,7 +315,6 @@ fun EquipmentImagePicker(
                 )
             }
         }
-
     }
 }
 
@@ -333,7 +329,6 @@ fun EquipmentInfoTextField(
     placeHolderParams: TextParams = textFieldParams.copy().apply { textColor = HintGray },
     valueVisible: Boolean = true
 ) {
-
     BasicTextField(
         value = value,
         modifier = modifier.padding(top = 26.dp),
@@ -422,7 +417,6 @@ fun CategoryDropdownMenu(
             fontWeight = labelParams.fontWeight,
             fontSize = labelParams.size
         )
-
         ExposedDropdownMenuBox(
             expanded = expanded,
             modifier = Modifier
@@ -433,7 +427,6 @@ fun CategoryDropdownMenu(
                 .background(SpinnerBG),
             onExpandedChange = { expanded = it },
         ) {
-
             ExcludeFontPaddingText(
                 text = selectedOptionText,
                 modifier = Modifier
@@ -461,7 +454,6 @@ fun CategoryDropdownMenu(
                     contentDescription = ""
                 )
             }
-
             ExposedDropdownMenu(
                 expanded = expanded,
                 modifier = Modifier

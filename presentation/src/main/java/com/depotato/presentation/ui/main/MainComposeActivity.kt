@@ -70,7 +70,6 @@ class MainComposeActivity() : BaseActivity<MainActivityViewModel>("MainComposeAc
         collectWhenStarted(myPageViewModel.logOutComplete){
             logOut()
         }
-
     }
     private fun logOut(){
         startActivity(Intent(this, SignInActivity::class.java))

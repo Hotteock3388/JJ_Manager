@@ -58,48 +58,7 @@ fun EquipmentListScreenPreview() {
 
     EquipmentListScreen(
         EquipmentListUiState(
-            equipments = listOf(
-//                com.depotato.data.remote.api.equipment.EquipmentRes(
-//                    id = 0,
-//                    name = "기자재 테스트 1",
-//                    category = "카테고리",
-//                    maxAmount = 100,
-//                    currentAmount = 10,
-//                    imageUrl = ""
-//                ),
-//                com.depotato.data.remote.api.equipment.EquipmentRes(
-//                    id = 1,
-//                    name = "기자재 테스트 2",
-//                    category = "카테고리",
-//                    maxAmount = 100,
-//                    currentAmount = 10,
-//                    imageUrl = ""
-//                ),
-//                com.depotato.data.remote.api.equipment.EquipmentRes(
-//                    id = 2,
-//                    name = "기자재 테스트 3",
-//                    category = "카테고리",
-//                    maxAmount = 100,
-//                    currentAmount = 10,
-//                    imageUrl = ""
-//                ),
-//                com.depotato.data.remote.api.equipment.EquipmentRes(
-//                    id = 3,
-//                    name = "기자재 테스트 4",
-//                    category = "카테고리",
-//                    maxAmount = 100,
-//                    currentAmount = 10,
-//                    imageUrl = ""
-//                ),
-//                com.depotato.data.remote.api.equipment.EquipmentRes(
-//                    id = 4,
-//                    name = "기자재 테스트 5",
-//                    category = "카테고리",
-//                    maxAmount = 100,
-//                    currentAmount = 10,
-//                    imageUrl = ""
-//                )
-            )
+            equipments = listOf()
         ), {}, {}
     )
 }
@@ -130,7 +89,6 @@ fun EquipmentListScreen(
     onSearchTextChanged: (String) -> Unit = {},
     onEquipmentItemClick: (Equipment) -> Unit = {}
 ) {
-
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally

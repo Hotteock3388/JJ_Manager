@@ -9,5 +9,4 @@ class CheckLoginHistoryUseCase @Inject constructor (
     operator fun invoke(): CheckLoginHistoryResult {
         return authRepository.checkLoginHistoryExist()
     }
-
 }
