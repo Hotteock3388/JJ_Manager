@@ -7,9 +7,7 @@ import io.reactivex.Observable
 class GetCategoriesUseCase(
     private val equipmentRepository: EquipmentRepository
 ) {
-
     operator fun invoke(): Observable<GetCategoryResult> {
         return equipmentRepository.getCategories()
     }
-
 }

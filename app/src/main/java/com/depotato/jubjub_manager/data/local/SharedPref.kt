@@ -23,7 +23,6 @@ class SharedPref(private val context: Context) {
 
     fun removeData(key: String){
         getPref().edit().remove(key).apply()
-
     }
 
 }

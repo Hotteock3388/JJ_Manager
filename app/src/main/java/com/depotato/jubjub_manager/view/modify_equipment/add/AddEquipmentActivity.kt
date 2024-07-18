@@ -10,7 +10,7 @@ class AddEquipmentActivity : ModifyEquipmentBaseActivity<ActivityAddEquipmentBin
     override val viewModel: AddEquipmentViewModel by inject()
 
     fun addEquipment(){
-        //send EquipmentData
+        //기자재 정보 전달
         if(viewModel.isEquipmentDataValid()){
             viewModel.addEquipment()
         }

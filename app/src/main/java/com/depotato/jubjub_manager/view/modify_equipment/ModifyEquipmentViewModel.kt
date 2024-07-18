@@ -44,7 +44,6 @@ open class ModifyEquipmentViewModel(
     protected val _addComplete = SingleEventLiveData<Unit>()
     val addComplete: LiveData<Unit> = _addComplete
 
-
     fun getCategories(){
         addDisposable(
             getCategoriesUseCase()
@@ -84,8 +83,7 @@ open class ModifyEquipmentViewModel(
         )
     }
 
-
-    protected fun createEquipmentObject(): Equipment {
+    private fun createEquipmentObject(): Equipment {
         return Equipment(
             equipmentId,
             equipmentName.value!!,
@@ -97,7 +95,6 @@ open class ModifyEquipmentViewModel(
     }
 
     fun isEquipmentDataValid(): Boolean {
-
         return if (equipmentImageUri.value == null && equipmentImageUrl.value!!.isBlank()) {
             invalidData("기자재 사진을 등록해주세요")
         } else if (equipmentName.value!!.isBlank()) {
@@ -113,7 +110,6 @@ open class ModifyEquipmentViewModel(
         } else {
             true
         }
-
     }
 
     private fun invalidData(msg: String): Boolean {

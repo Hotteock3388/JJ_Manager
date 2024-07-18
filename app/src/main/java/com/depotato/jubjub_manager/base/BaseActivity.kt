@@ -80,5 +80,4 @@ abstract class BaseActivity <B: ViewDataBinding, VM: BaseViewModel>(
     }
 
     fun addBackPressedCallback() = this.onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
-
 }

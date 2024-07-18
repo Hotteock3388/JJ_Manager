@@ -6,7 +6,6 @@ import io.reactivex.Observable
 class GetEquipmentsUseCase(
     private val equipmentRepository: EquipmentRepository
 ) {
-
     operator fun invoke(): Observable<GetEquipmentsResult> {
         return equipmentRepository.getEquipments()
     }

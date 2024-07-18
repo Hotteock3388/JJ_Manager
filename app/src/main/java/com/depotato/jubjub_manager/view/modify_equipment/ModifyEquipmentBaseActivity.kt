@@ -27,7 +27,6 @@ abstract class ModifyEquipmentBaseActivity<B : ViewDataBinding, VM : ModifyEquip
     private lateinit var imageViewDeleteImage: ImageView
     private lateinit var spinnerCategory: Spinner
 
-
     private val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
 
     private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
@@ -99,7 +98,6 @@ abstract class ModifyEquipmentBaseActivity<B : ViewDataBinding, VM : ModifyEquip
                 deactivateRemoveButton()
                 setEquipmentBGGray()
             }
-
             ImageAddState.ADDED -> {
                 setEquipmentImage()
                 activateRemoveButton()
@@ -116,7 +114,6 @@ abstract class ModifyEquipmentBaseActivity<B : ViewDataBinding, VM : ModifyEquip
 
     private fun setEquipmentBGWhite() = imageViewEquipmentImage.setBackgroundResource(R.drawable.bg_equipment_image)
     private fun setEquipmentBGGray() = imageViewEquipmentImage.setBackgroundResource(R.drawable.bg_add_image)
-
 
     open fun removeImage(){
         viewModel._equipmentImageUri.value = null

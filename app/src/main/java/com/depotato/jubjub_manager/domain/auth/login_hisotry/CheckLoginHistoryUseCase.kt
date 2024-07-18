@@ -8,13 +8,4 @@ class CheckLoginHistoryUseCase(
     operator fun invoke(): CheckLoginHistoryResult {
         return authRepository.checkLoginHistoryExist()
     }
-
-//    operator fun invoke(): CheckLoginHistoryResult {
-//        authRepository.checkLoginHistoryExist().let {
-//            if(it.isExist){
-//                authRepository.signIn(it.userId, it.userPw)
-//            }
-//        }
-//        return authRepository.checkLoginHistoryExist()
-//    }
 }

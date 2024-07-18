@@ -8,9 +8,7 @@ import okhttp3.RequestBody
 class EditEquipmentExcludeImageUseCase(
     private val equipmentRepository: EquipmentRepository
 ) {
-
     operator fun invoke(equipment: RequestBody): Observable<CommonResult> {
         return equipmentRepository.editEquipmentExcludeImage(equipment)
     }
-
 }

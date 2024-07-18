@@ -9,8 +9,11 @@ import android.widget.Filterable
 import android.widget.TextView
 import com.depotato.jubjub_manager.R
 
-class CategorySpinnerAdapter(context: Context, private val categories: List<String>) : ArrayAdapter<String>(context, R.layout.layout_spinner_item, categories),
-    Filterable {
+class CategorySpinnerAdapter(
+    context: Context,
+    private val categories: List<String>
+) : ArrayAdapter<String>(context, R.layout.layout_spinner_item, categories), Filterable {
+
     private var inflater: LayoutInflater = LayoutInflater.from(context)
 
     override fun getCount(): Int {

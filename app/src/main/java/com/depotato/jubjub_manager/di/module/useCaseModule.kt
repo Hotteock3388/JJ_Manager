@@ -20,6 +20,4 @@ val useCaseModule = module {
     factory { EditEquipmentUseCase(get()) }
     factory { GetCategoriesUseCase(get()) }
 
-
-
 }

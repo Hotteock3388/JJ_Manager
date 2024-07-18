@@ -22,5 +22,4 @@ open class BaseViewModel(private val className: String): ViewModel() {
     fun addDisposable(disposable: Disposable) = compositeDisposable.add(disposable)
 
     fun showLog(msg: String) = Log.d("TestLog_$className", msg)
-
 }

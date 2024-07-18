@@ -32,8 +32,6 @@ class AddEquipmentViewModel(
                     _toastMessage.value = it.localizedMessage
                 })
         )
-
     }
-
 
 }

@@ -55,7 +55,6 @@ class EquipmentListRVAdapter(private val _event: EquipmentItemEventListener) : R
         val diffCallback = EquipmentsDiffCallback(equipments, newEquipments)
         val diffResult = DiffUtil.calculateDiff(diffCallback) // 계산
         diffResult.dispatchUpdatesTo(this) // 리사이클러뷰 갱신!
-
         updateEquipments(newEquipments)
     }
     private fun updateEquipments(newEquipments: List<Equipment>){
@@ -66,7 +65,6 @@ class EquipmentListRVAdapter(private val _event: EquipmentItemEventListener) : R
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence): FilterResults {
-
                 val searchText = constraint.toString().lowercase()
 
                 filteredEquipments = if (searchText.isEmpty()) {
@@ -85,13 +83,11 @@ class EquipmentListRVAdapter(private val _event: EquipmentItemEventListener) : R
                 return FilterResults().apply {
                     values = filteredEquipments
                 }
-
             }
 
             override fun publishResults(constraint: CharSequence, results: FilterResults) {
                 filteredEquipments = results.values as List<Equipment>
                 updateItems(filteredEquipments)
-//                notifyDataSetChanged()
             }
         }
     }

@@ -34,7 +34,6 @@ class EquipmentListViewModel(
     val adapter = EquipmentListRVAdapter(event)
 
     fun getEquipments(){
-
         addDisposable(
             getEquipmentsUseCase()
                 .subscribeOn(Schedulers.io())
@@ -54,7 +53,6 @@ class EquipmentListViewModel(
                     _toastMessage.value = it.localizedMessage
                 })
         )
-
     }
 
 }

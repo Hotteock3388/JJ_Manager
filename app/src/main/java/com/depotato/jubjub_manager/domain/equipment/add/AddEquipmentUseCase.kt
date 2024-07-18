@@ -9,9 +9,7 @@ import okhttp3.RequestBody
 class AddEquipmentUseCase(
     private val equipmentRepository: EquipmentRepository
 ) {
-
     operator fun invoke(imageFile: MultipartBody.Part, equipment: RequestBody): Observable<CommonResult> {
         return equipmentRepository.addEquipment(imageFile, equipment)
     }
-
 }

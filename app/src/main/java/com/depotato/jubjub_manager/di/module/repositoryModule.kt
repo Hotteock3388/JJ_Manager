@@ -9,7 +9,9 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val repositoryModule = module {
+
     single { SharedPref(androidContext()) }
     single<AuthRepository> { AuthRepositoryImpl(get()) }
     single<EquipmentRepository> { EquipmentRepositoryImpl() }
+
 }

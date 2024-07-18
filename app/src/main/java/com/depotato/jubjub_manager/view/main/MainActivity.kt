@@ -40,4 +40,5 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityViewModel>(R.
             .replace(binding.fragmentContainerView.id, fr)
             .commit()
     }
+
 }

@@ -35,7 +35,6 @@ interface EquipmentApi {
         @Part("equipment") equipment: RequestBody
     ): Observable<CommonResponse>
 
-
     @GET("equipment/category")
     fun getCategories(): Observable<GetCategoriesResponse>
 

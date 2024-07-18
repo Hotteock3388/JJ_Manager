@@ -71,6 +71,6 @@ class EquipmentRepositoryImpl: EquipmentRepository {
                 response.message
             )
         }
-
     }
+
 }

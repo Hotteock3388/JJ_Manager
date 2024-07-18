@@ -13,6 +13,7 @@ interface EquipmentRepository {
     fun editEquipmentExcludeImage(equipment: RequestBody): Observable<CommonResult>
 
     fun getCategories(): Observable<GetCategoryResult>
+
 }
 
 sealed class CommonResult{
@@ -25,12 +26,10 @@ sealed class AddEquipmentResult{
     data class Failure(val errorMessage: String) : AddEquipmentResult()
 }
 
-
 sealed class EditEquipmentResult{
     data class Success(val responseMessage: String) : EditEquipmentResult()
     data class Failure(val errorMessage: String) : EditEquipmentResult()
 }
-
 
 sealed class GetCategoryResult{
     data class Success(val categories: List<String>) : GetCategoryResult()
