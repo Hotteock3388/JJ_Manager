@@ -12,15 +12,17 @@ class EditEquipmentActivity : ModifyEquipmentBaseActivity<ActivityEditEquipmentB
     override val viewModel: EditEquipmentViewModel by inject()
 
     override fun init() {
-        super.init()
         initEquipmentInfo()
-        binding.spinnerCategory.setSelection(viewModel.getCategoryIdx())
+        super.init()
     }
 
     override fun initLiveData() {
         super.initLiveData()
         viewModel.equipmentImageUrl.observe(this){
             setEquipmentImage(it)
+        }
+        viewModel.getCategoriesComplete.observe(this){
+            binding.spinnerCategory.setSelection(viewModel.getCategoryIdx())
         }
     }
 

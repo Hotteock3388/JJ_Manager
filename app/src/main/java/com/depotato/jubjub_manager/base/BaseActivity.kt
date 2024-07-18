@@ -39,8 +39,8 @@ abstract class BaseActivity <B: ViewDataBinding, VM: BaseViewModel>(
             lifecycleOwner = this@BaseActivity
         }
 
-        init()
         initLiveData()
+        init()
         initListener()
         observeToastMessage()
     }

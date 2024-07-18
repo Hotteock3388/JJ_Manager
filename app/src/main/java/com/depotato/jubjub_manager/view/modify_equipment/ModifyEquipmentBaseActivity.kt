@@ -13,6 +13,7 @@ import com.depotato.jubjub_manager.R
 import com.depotato.jubjub_manager.base.BaseActivity
 import com.depotato.jubjub_manager.function_module.UriConverter
 import com.depotato.jubjub_manager.view.modify_equipment.category.CategorySpinnerAdapter
+import com.depotato.jubjub_manager.view.modify_equipment.edit.EditEquipmentViewModel
 import com.depotato.jubjub_manager.view.modify_equipment.image.ImageAddState
 
 abstract class ModifyEquipmentBaseActivity<B : ViewDataBinding, VM : ModifyEquipmentViewModel>(
@@ -47,7 +48,6 @@ abstract class ModifyEquipmentBaseActivity<B : ViewDataBinding, VM : ModifyEquip
     }
 
     override fun initLiveData() {
-
         viewModel.equipmentImageUri.observe(this){
             if(it == null){
                 onImageRemoved()
@@ -56,19 +56,15 @@ abstract class ModifyEquipmentBaseActivity<B : ViewDataBinding, VM : ModifyEquip
                 onImageAdded()
             }
         }
-
         viewModel.getCategoriesComplete.observe(this){
             initCategorySpinner()
+            if(viewModel.equipmentCategory.isNotBlank()){
+                spinnerCategory.setSelection((viewModel as EditEquipmentViewModel).getCategoryIdx())
+            }
         }
-
-        viewModel.equipmentMaxAmount.observe(this){
-            viewModel.equipmentCurrentAmount.value = it
-        }
-
         viewModel.addComplete.observe(this){
             finish()
         }
-
     }
 
     fun onSpinnerItemSelected(parent: AdapterView<*>?, position: Int) {
