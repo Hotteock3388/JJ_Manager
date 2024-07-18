@@ -31,7 +31,7 @@ class EditEquipmentViewModel(
     }
 
     fun getCategoryIdx(): Int {
-        return categoryArray.indexOf(equipmentCategory)
+        return categories.indexOf(equipmentCategory)
     }
 
     fun editEquipment() {

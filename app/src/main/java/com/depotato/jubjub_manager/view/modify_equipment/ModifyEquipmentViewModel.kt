@@ -21,10 +21,9 @@ open class ModifyEquipmentViewModel(
     className: String
 ) : BaseViewModel(className) {
 
-    var categoryArray = arrayOf("")
+    var categories = listOf("")
 
     var equipmentId = 0
-
 
     var equipmentImageUrl = SingleEventLiveData<String>()
     var equipmentImageFile = File("")
@@ -54,7 +53,7 @@ open class ModifyEquipmentViewModel(
                 .subscribe({
                     when(it){
                         is GetCategoryResult.Success -> {
-                            categoryArray = arrayOf("카테고리를 선택하세요.").plus(it.categories)
+                            categories = listOf("카테고리를 선택하세요.").plus(it.categories)
                             _getCategoriesComplete.value = Unit
                         }
                         is GetCategoryResult.Failure -> {

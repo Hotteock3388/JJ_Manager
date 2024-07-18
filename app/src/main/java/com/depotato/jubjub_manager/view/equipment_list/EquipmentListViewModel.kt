@@ -15,7 +15,7 @@ class EquipmentListViewModel(
     private val getEquipmentsUseCase: GetEquipmentsUseCase
 ): BaseViewModel("EquipmentListViewModel") {
 
-    var equipmentsList = arrayOf<Equipment>()
+    var equipmentsList = listOf<Equipment>()
 
     private val _getEquipmentsCompete = SingleEventLiveData<Unit>()
     val getEquipmentsComplete = _getEquipmentsCompete

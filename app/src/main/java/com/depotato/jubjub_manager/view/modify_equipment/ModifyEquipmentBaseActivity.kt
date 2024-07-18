@@ -76,7 +76,7 @@ abstract class ModifyEquipmentBaseActivity<B : ViewDataBinding, VM : ModifyEquip
             equipmentCategory = if(position == 0){
                 ""
             }else{
-                categoryArray[position]
+                categories[position]
             }
         }
     }
@@ -127,7 +127,7 @@ abstract class ModifyEquipmentBaseActivity<B : ViewDataBinding, VM : ModifyEquip
     }
 
     private fun initCategorySpinner(){
-        spinnerCategory.adapter = CategorySpinnerAdapter(this, viewModel.categoryArray)
+        spinnerCategory.adapter = CategorySpinnerAdapter(this, viewModel.categories)
     }
 
 }

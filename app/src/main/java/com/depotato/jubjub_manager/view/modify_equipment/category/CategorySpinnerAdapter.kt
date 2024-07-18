@@ -9,16 +9,16 @@ import android.widget.Filterable
 import android.widget.TextView
 import com.depotato.jubjub_manager.R
 
-class CategorySpinnerAdapter(private val con: Context, private val dataList: Array<String>) : ArrayAdapter<String>(con, R.layout.layout_spinner_item, dataList),
+class CategorySpinnerAdapter(context: Context, private val categories: List<String>) : ArrayAdapter<String>(context, R.layout.layout_spinner_item, categories),
     Filterable {
-    private var inflater: LayoutInflater = LayoutInflater.from(con)
+    private var inflater: LayoutInflater = LayoutInflater.from(context)
 
     override fun getCount(): Int {
-        return dataList.size
+        return categories.size
     }
 
     override fun getItem(position: Int): String {
-        return dataList[position]
+        return categories[position]
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -27,7 +27,7 @@ class CategorySpinnerAdapter(private val con: Context, private val dataList: Arr
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         createView(convertView, parent).apply {
-            setCategoryText(this, dataList[position])
+            setCategoryText(this, categories[position])
             return this
         }
     }
@@ -36,10 +36,9 @@ class CategorySpinnerAdapter(private val con: Context, private val dataList: Arr
     }
 
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
-
         return createView(convertView, parent).apply {
             with(this.tag as ViewHolder){
-                bind(dataList[position])
+                bind(categories[position])
             }
         }
     }
