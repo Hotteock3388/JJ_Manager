@@ -18,6 +18,11 @@ class EquipmentListFragment : BaseFragment<FragmentEquipmentListBinding, Equipme
         viewModel.getEquipments()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getEquipments()
+    }
+
     private fun setRecyclerViewAdapter() {
         binding.recyclerViewEquipmentList.adapter = viewModel.adapter
     }
