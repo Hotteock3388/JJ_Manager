@@ -10,7 +10,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.depotato.jubjub_manager.BR
 
-
 abstract class BaseActivity <B: ViewDataBinding, VM: BaseViewModel>(
     @LayoutRes
     private val layoutResId: Int,
