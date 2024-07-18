@@ -3,6 +3,7 @@ package com.depotato.jubjub_manager.base
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -19,6 +20,9 @@ abstract class BaseActivity <B: ViewDataBinding, VM: BaseViewModel>(
     lateinit var binding: B
 
     abstract val viewModel: VM
+
+    // 마지막으로 뒤로가기 누른 시각
+    private var backKeyPressedTime: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,4 +65,20 @@ abstract class BaseActivity <B: ViewDataBinding, VM: BaseViewModel>(
             showToast(it)
         }
     }
+
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            if (System.currentTimeMillis() > backKeyPressedTime + 2000) {
+                backKeyPressedTime = System.currentTimeMillis()
+                Toast.makeText(applicationContext, "\'뒤로\' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show()
+            }
+            //2초 안에 2번 눌렀을 때 종료
+            else if (System.currentTimeMillis() <= backKeyPressedTime + 2000) {
+                finish()
+            }
+        }
+    }
+
+    fun addBackPressedCallback() = this.onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+
 }
