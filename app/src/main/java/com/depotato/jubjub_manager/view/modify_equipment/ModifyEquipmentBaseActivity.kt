@@ -66,7 +66,7 @@ abstract class ModifyEquipmentBaseActivity<B : ViewDataBinding, VM : ModifyEquip
         }
     }
 
-    fun onSpinnerItemSelected(parent: AdapterView<*>?, position: Int) {
+    fun onCategoryItemSelected(parent: AdapterView<*>?, position: Int) {
         with(viewModel){
             equipmentCategory = if(position == 0){
                 ""
