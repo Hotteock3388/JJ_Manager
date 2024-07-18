@@ -85,12 +85,12 @@ open class ModifyEquipmentViewModel(
 
     private fun createEquipmentObject(): Equipment {
         return Equipment(
-            equipmentId,
-            equipmentName.value!!,
-            equipmentCategory,
-            equipmentMaxAmount.value!!.toInt(),
-            equipmentMaxAmount.value!!.toInt(),
-            if(equipmentImageUrl.value != null) equipmentImageUrl.value!! else ""
+            id = equipmentId,
+            name = equipmentName.value!!,
+            category = equipmentCategory,
+            currentAmount = equipmentCurrentAmount.value!!.toInt(),
+            maxAmount = equipmentMaxAmount.value!!.toInt(),
+            imageUrl = if(equipmentImageUrl.value != null) equipmentImageUrl.value!! else ""
         )
     }
 
