@@ -41,7 +41,7 @@ class EquipmentListViewModel(
                 .subscribe({
                    when (it) {
                        is GetEquipmentsResult.Success -> {
-                           equipmentsList = it.equipments
+                           equipmentsList = it.equipments.sortedByDescending { it.id }
                            _getEquipmentsCompete.value = Unit
                        }
                        is GetEquipmentsResult.Failure -> {
