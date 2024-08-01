@@ -21,15 +21,15 @@ class AddEquipmentViewModel(
                   when(it){
                       is CommonResult.Success -> {
                           _addComplete.value = Unit
-                          _toastMessage.value = it.responseMessage
+                          updateToastMessage(it.responseMessage)
                       }
                       is CommonResult.Failure -> {
-                          _toastMessage.value = it.errorMessage
+                          updateToastMessage(it.errorMessage)
                       }
                   }
                 }, {
                     it.printStackTrace()
-                    _toastMessage.value = it.localizedMessage
+                    updateToastMessage(it.localizedMessage)
                 })
         )
     }

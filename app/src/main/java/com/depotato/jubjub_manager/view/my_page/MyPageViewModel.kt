@@ -1,5 +1,6 @@
 package com.depotato.jubjub_manager.view.my_page
 
+import com.depotato.jubjub_manager.R
 import com.depotato.jubjub_manager.base.BaseViewModel
 import com.depotato.jubjub_manager.domain.auth.login_data.DeleteAuthDataUseCase
 import com.depotato.jubjub_manager.domain.equipment.CommonResult
@@ -16,11 +17,11 @@ class MyPageViewModel(
         deleteAuthDataUseCase().let {
             when(it){
                 is CommonResult.Success -> {
-                    _toastMessage.value = "로그아웃 완료"
+                    updateToastMessage(R.string.logout_complete)
                     _logOutComplete.value = Unit
                 }
                 is CommonResult.Failure -> {
-                    _toastMessage.value = it.errorMessage
+                    updateToastMessage(it.errorMessage)
                 }
             }
         }

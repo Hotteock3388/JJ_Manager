@@ -20,7 +20,7 @@
 
         <TextView
             style="@style/TextView_pageTitle"
-            android:text="추가하기"
+            android:text="@string/add_equipment_page_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline15" />
@@ -48,14 +48,14 @@
             android:id="@+id/textView_name"
             style="@style/EquipmentInfoTitle"
             android:layout_marginTop="35dp"
-            android:text="제품명"
+            android:text="@string/equipment_name_label"
             app:layout_constraintStart_toStartOf="@+id/guideline17"
             app:layout_constraintTop_toBottomOf="@+id/imageView_equipmentImage" />
 
         <EditText
             android:id="@+id/editText_name"
             style="@style/EquipmentInfoContents"
-            android:hint="제품명을 입력하세요."
+            android:hint="@string/enter_equipment_name"
             android:text="@={vm.equipmentName}"
             app:layout_constraintEnd_toStartOf="@+id/guideline18"
             app:layout_constraintHorizontal_bias="0"
@@ -66,14 +66,14 @@
         <TextView
             android:id="@+id/textView_max_amount"
             style="@style/EquipmentInfoTitle"
-            android:text="전체 수량"
+            android:text="@string/equipment_max_amount_label"
             app:layout_constraintStart_toStartOf="@+id/guideline17"
             app:layout_constraintTop_toBottomOf="@+id/editText_name" />
 
         <EditText
             android:id="@+id/editText_max_amount"
             style="@style/EquipmentInfoContents"
-            android:hint="기자재 전체 보유 수량을 입력하세요."
+            android:hint="@string/enter_equipment_max_amount"
             android:inputType="number"
             android:text="@={vm.equipmentMaxAmount}"
             app:layout_constraintEnd_toStartOf="@+id/guideline18"
@@ -84,14 +84,14 @@
         <TextView
             android:id="@+id/textView_current_amount"
             style="@style/EquipmentInfoTitle"
-            android:text="잔여 수량"
+            android:text="@string/equipment_current_amount_label"
             app:layout_constraintStart_toStartOf="@+id/guideline17"
             app:layout_constraintTop_toBottomOf="@+id/editText_max_amount" />
 
         <EditText
             android:id="@+id/editText_current_amount"
             style="@style/EquipmentInfoContents"
-            android:hint="대여 가능한 잔여 기자재 수량을 입력하세요."
+            android:hint="@string/enter_equipment_current_amount"
             android:inputType="number"
             android:text="@={vm.equipmentCurrentAmount}"
             app:layout_constraintEnd_toStartOf="@+id/guideline18"
@@ -103,7 +103,7 @@
         <TextView
             android:id="@+id/textView_category"
             style="@style/EquipmentInfoTitle"
-            android:text="카테고리"
+            android:text="@string/equipment_category_label"
             app:layout_constraintStart_toStartOf="@+id/guideline17"
             app:layout_constraintTop_toBottomOf="@+id/editText_current_amount" />
 
@@ -132,7 +132,7 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_addEquipment"
             style="@style/AddEquipmentButton"
-            android:text="추가"
+            android:text="@string/add_equipment_button_text"
             android:onClick="@{() -> ac.addEquipment()}"
             app:layout_constraintBottom_toTopOf="@+id/guideline19"
             app:layout_constraintEnd_toStartOf="@+id/guideline18" />

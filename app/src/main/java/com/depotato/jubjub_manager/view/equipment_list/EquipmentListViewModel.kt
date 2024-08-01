@@ -45,12 +45,12 @@ class EquipmentListViewModel(
                            _getEquipmentsCompete.value = Unit
                        }
                        is GetEquipmentsResult.Failure -> {
-                           _toastMessage.value = it.errorMessage
+                           updateToastMessage(it.errorMessage)
                        }
                    }
                 }, {
                     it.printStackTrace()
-                    _toastMessage.value = it.localizedMessage
+                    updateToastMessage(it.localizedMessage)
                 })
         )
     }

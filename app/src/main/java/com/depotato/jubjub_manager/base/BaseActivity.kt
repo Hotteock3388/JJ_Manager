@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.depotato.jubjub_manager.BR
+import com.depotato.jubjub_manager.R
 
 abstract class BaseActivity <B: ViewDataBinding, VM: BaseViewModel>(
     @LayoutRes
@@ -45,11 +46,7 @@ abstract class BaseActivity <B: ViewDataBinding, VM: BaseViewModel>(
     }
 
     open fun init(){}
-    open fun initLiveData(){
-        viewModel.toastMessage.observe(this){
-            showToast(it)
-        }
-    }
+    open fun initLiveData(){}
     open fun initListener(){}
 
     // 토스트 메시지 띄우기
@@ -61,7 +58,14 @@ abstract class BaseActivity <B: ViewDataBinding, VM: BaseViewModel>(
     // viewModel의 toastMessage를 관찰
     private fun observeToastMessage(){
         viewModel.toastMessage.observe(this){
-            showToast(it)
+            when (it) {
+                is Int -> {
+                    showToast(getString(it))
+                }
+                is String -> {
+                    showToast(it)
+                }
+            }
         }
     }
 
@@ -69,7 +73,7 @@ abstract class BaseActivity <B: ViewDataBinding, VM: BaseViewModel>(
         override fun handleOnBackPressed() {
             if (System.currentTimeMillis() > backKeyPressedTime + 2000) {
                 backKeyPressedTime = System.currentTimeMillis()
-                Toast.makeText(applicationContext, "\'뒤로\' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, getString(R.string.press_back_to_finish_app), Toast.LENGTH_SHORT).show()
             }
             //2초 안에 2번 눌렀을 때 종료
             else if (System.currentTimeMillis() <= backKeyPressedTime + 2000) {

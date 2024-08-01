@@ -25,12 +25,12 @@ open class ModifyEquipmentViewModel(
 
     var equipmentId = 0
 
-    var equipmentImageUrl = SingleEventLiveData<String>()
+    var equipmentImageUrl = MutableLiveData<String>("")
     var equipmentImageFile = File("")
 
-    val equipmentName = MutableLiveData<String>()
+    val equipmentName = MutableLiveData<String>("")
 
-    val equipmentMaxAmount = MutableLiveData<String>()
+    val equipmentMaxAmount = MutableLiveData<String>("")
     val equipmentCurrentAmount = MutableLiveData<String>("")
 
     var equipmentCategory = ""
@@ -56,12 +56,12 @@ open class ModifyEquipmentViewModel(
                             _getCategoriesComplete.value = Unit
                         }
                         is GetCategoryResult.Failure -> {
-                            _toastMessage.value = it.errorMessage
+                            updateToastMessage(it.errorMessage)
                         }
                     }
                 }, {
                     it.printStackTrace()
-                    _toastMessage.value = it.localizedMessage
+                    updateToastMessage(it.localizedMessage)
                 })
         )
     }
@@ -95,7 +95,8 @@ open class ModifyEquipmentViewModel(
     }
 
     fun isEquipmentDataValid(): Boolean {
-        return if (equipmentImageUri.value == null && equipmentImageUrl.value!!.isBlank()) {
+        return if (equipmentImageUri.value == null
+            && equipmentImageUrl.value!!.isBlank()) {
             invalidData("기자재 사진을 등록해주세요")
         } else if (equipmentName.value!!.isBlank()) {
             invalidData("기자재 이름을 입력해주세요.")
@@ -113,7 +114,7 @@ open class ModifyEquipmentViewModel(
     }
 
     private fun invalidData(msg: String): Boolean {
-        _toastMessage.value = msg
+        updateToastMessage(msg)
         return false
     }
 

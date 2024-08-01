@@ -27,7 +27,7 @@
             app:layout_constraintTop_toTopOf="@+id/guideline11" />
 
         <TextView style="@style/MyPageTitle"
-            android:text="마이페이지"
+            android:text="@string/my_page"
             android:elevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +36,7 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/textView"
             style="@style/MyPageItem"
-            android:text="기자재 추가"
+            android:text="@string/menu_add_equipment"
             android:onClick="@{() -> fr.openAddEquipmentActivity()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +44,7 @@
 
         <androidx.appcompat.widget.AppCompatButton
             style="@style/MyPageItem"
-            android:text="로그아웃"
+            android:text="@string/menu_logout"
             android:onClick="@{() -> vm.logOut()}"
             android:textColor="@color/red"
             app:layout_constraintEnd_toEndOf="parent"

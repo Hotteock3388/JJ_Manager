@@ -68,16 +68,16 @@ class EditEquipmentViewModel(
         when(result){
             is CommonResult.Success -> {
                 _addComplete.value = Unit
-                _toastMessage.value = result.responseMessage
+                updateToastMessage(result.responseMessage)
             }
             is CommonResult.Failure -> {
-                _toastMessage.value = result.errorMessage
+                updateToastMessage(result.errorMessage)
             }
         }
     }
 
     private fun handleEditEquipmentError(error: Throwable){
-        _toastMessage.value = error.localizedMessage
+        updateToastMessage(error.localizedMessage)
         error.printStackTrace()
     }
 

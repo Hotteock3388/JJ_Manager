@@ -11,12 +11,19 @@ open class BaseViewModel(private val className: String): ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
 
-    protected val _toastMessage = SingleEventLiveData<String>()
-    val toastMessage: LiveData<String> = _toastMessage
+    private val _toastMessage = SingleEventLiveData<Any>()
+    val toastMessage: LiveData<Any> = _toastMessage
 
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.clear()
+    }
+
+    fun updateToastMessage(msg: String){
+        _toastMessage.value = msg
+    }
+    fun updateToastMessage(msg: Int){
+        _toastMessage.value = msg
     }
 
     fun addDisposable(disposable: Disposable) = compositeDisposable.add(disposable)

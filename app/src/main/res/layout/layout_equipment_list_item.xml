@@ -56,7 +56,7 @@
             android:id="@+id/textView_max_amount"
             style="@style/TextView_Blue"
             android:fontFamily="@font/notosanskr_regular"
-            android:text="@{@string/equipment_amount_info(equipment.currentAmount, equipment.maxAmount)}"
+            android:text="@{@string/equipment_amount_status(equipment.currentAmount, equipment.maxAmount)}"
             android:textSize="10dp"
             app:layout_constraintBottom_toBottomOf="@+id/imageView_image"
             app:layout_constraintStart_toStartOf="@+id/textView_name"/>

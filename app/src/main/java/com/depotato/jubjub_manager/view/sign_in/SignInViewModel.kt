@@ -34,7 +34,7 @@ class SignInViewModel(
                                 _signInComplete.value = Unit
                             }
                             is SignInResult.Failure -> {
-                                _toastMessage.value = it.errorMessage
+                                updateToastMessage(it.errorMessage)
                             }
                         }
                     }, {
@@ -53,7 +53,7 @@ class SignInViewModel(
     }
 
     private fun invalidInput(msg: String): Boolean {
-        _toastMessage.value = msg
+        updateToastMessage(msg)
         return false
     }
 

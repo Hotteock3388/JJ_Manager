@@ -34,14 +34,14 @@
 
         <TextView style="@style/EditTextTitle"
             android:id="@+id/textView_id"
-            android:text="ID"
+            android:text="@string/id_label"
             app:layout_constraintStart_toStartOf="@+id/guideline"
             app:layout_constraintTop_toTopOf="@+id/guideline6" />
 
 
         <EditText style="@style/EditText_SignIn"
             android:id="@+id/editText_id"
-            android:hint="아이디를 입력하세요."
+            android:hint="@string/enter_id"
             android:text="@={vm.userId}"
             app:layout_constraintEnd_toStartOf="@+id/guideline9"
             app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -55,14 +55,14 @@
 
         <TextView style="@style/EditTextTitle"
             android:id="@+id/textView_pw"
-            android:text="Password"
+            android:text="@string/pw_label"
             app:layout_constraintStart_toStartOf="@+id/guideline"
             app:layout_constraintTop_toTopOf="@+id/guideline7" />
 
 
         <EditText style="@style/EditText_SignIn"
             android:id="@+id/editText_pw"
-            android:hint="비밀번호를 입력하세요."
+            android:hint="@string/enter_password"
             android:inputType="textPassword"
             android:text="@={vm.userPw}"
             app:layout_constraintEnd_toStartOf="@+id/guideline9"
@@ -75,14 +75,14 @@
             app:layout_constraintTop_toBottomOf="@+id/editText_pw" />
 
         <TextView style="@style/TextView_Black"
-            android:text="비밀번호를 잊으신 경우, 관리자에게 문의해주세요."
+            android:text="@string/password_miss_notice"
             android:textSize="10dp"
             app:layout_constraintStart_toStartOf="@+id/guideline"
             app:layout_constraintTop_toTopOf="@+id/guideline8" />
 
 
         <androidx.appcompat.widget.AppCompatButton style="@style/Button_SignIn"
-            android:text="로그인"
+            android:text="@string/sign_in_button_text"
             android:onClick="@{() -> vm.signIn()}"
             app:layout_constraintEnd_toStartOf="@+id/guideline9"
             app:layout_constraintStart_toStartOf="@+id/guideline"
